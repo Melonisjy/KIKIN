@@ -6,11 +6,11 @@ import { TeamCard } from "@/components/TeamCard";
 import { TeamListSkeleton } from "@/components/LoadingSkeleton";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { DashboardActions } from "./dashboard-actions";
+import { LockerRoomActions } from "./locker-room-actions";
 import { SetNameModal } from "@/components/SetNameModal";
 import { ProfileCard } from "@/components/ProfileCard";
 
-export default async function DashboardPage() {
+export default async function LockerRoomPage() {
   const supabase = await createClient();
 
   const {
@@ -109,7 +109,7 @@ export default async function DashboardPage() {
                 <Users className="h-6 w-6" />내 팀
               </h2>
               <div className="flex flex-col gap-2 sm:flex-row">
-                <DashboardActions />
+                <LockerRoomActions />
                 <Link href="/team/new">
                   <Button className="w-full sm:w-auto">
                     <Plus className="mr-2 h-4 w-4" />팀 생성
@@ -148,7 +148,7 @@ export default async function DashboardPage() {
                   아직 가입한 팀이 없습니다.
                 </p>
                 <div className="flex flex-col gap-2 items-center sm:flex-row sm:justify-center">
-                  <DashboardActions />
+                  <LockerRoomActions />
                   <Link href="/team/new">
                     <Button>
                       <Plus className="mr-2 h-4 w-4" />첫 팀 만들기

@@ -312,7 +312,7 @@ export default async function NewMatchPage({
   const { teamId } = await searchParams;
 
   if (!teamId) {
-    redirect("/dashboard");
+    redirect("/locker-room");
   }
 
   return (

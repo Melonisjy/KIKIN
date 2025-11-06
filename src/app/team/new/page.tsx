@@ -121,7 +121,7 @@ export default function NewTeamPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
       <Link
-        href="/dashboard"
+        href="/locker-room"
         className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6"
       >
         <ArrowLeft className="h-4 w-4" />
@@ -191,7 +191,7 @@ export default function NewTeamPage() {
             >
               {isLoading ? "생성 중..." : "팀 생성"}
             </Button>
-            <Link href="/dashboard">
+            <Link href="/locker-room">
               <Button
                 type="button"
                 variant="outline"

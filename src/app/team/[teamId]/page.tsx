@@ -45,7 +45,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
     .single();
 
   if (!member) {
-    redirect("/dashboard");
+    redirect("/locker-room");
   }
 
   // 팀의 경기 목록 가져오기 (날짜순 정렬)
@@ -61,7 +61,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       <Link
-        href="/dashboard"
+        href="/locker-room"
         className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6"
       >
         <ArrowLeft className="h-4 w-4" />

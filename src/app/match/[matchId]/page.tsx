@@ -52,7 +52,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
     .single();
 
   if (!member) {
-    redirect("/dashboard");
+    redirect("/locker-room");
   }
 
   // 참여자 목록 가져오기

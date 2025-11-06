@@ -167,7 +167,7 @@ export default function Navbar() {
             {isLoggedIn ? (
               <>
                 <Link
-                  href="/dashboard"
+                  href="/locker-room"
                   className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
                 >
                   라커룸
@@ -223,7 +223,7 @@ export default function Navbar() {
               {isLoggedIn ? (
                 <>
                   <Link
-                    href="/dashboard"
+                    href="/locker-room"
                     className="flex items-center gap-2 px-3 py-2 text-base font-medium text-foreground hover:bg-muted rounded-md transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >

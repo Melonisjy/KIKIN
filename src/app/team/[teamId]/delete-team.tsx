@@ -60,7 +60,7 @@ export function DeleteTeam({ teamId, teamName, isLeader }: DeleteTeamProps) {
       }
 
       // 성공
-      router.push("/dashboard");
+      router.push("/locker-room");
       router.refresh();
     } catch (err: any) {
       setError(err.message || "팀 삭제 중 오류가 발생했습니다.");

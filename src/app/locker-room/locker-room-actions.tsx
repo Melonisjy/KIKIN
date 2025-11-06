@@ -5,7 +5,7 @@ import { UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { JoinTeamModal } from "@/components/JoinTeamModal";
 
-export function DashboardActions() {
+export function LockerRoomActions() {
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
 
   return (
