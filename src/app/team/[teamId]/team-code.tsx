@@ -22,18 +22,18 @@ export function TeamCode({ teamId }: TeamCodeProps) {
   };
 
   return (
-    <div className="mt-4 p-4 bg-muted/50 rounded-lg border border-border">
+    <div className="mt-4 p-4 bg-[#27272A]/50 rounded-lg border border-[#27272A]">
       <div className="flex items-center justify-between gap-3">
         <div className="flex-1 min-w-0">
-          <label className="block text-xs font-medium text-muted-foreground mb-1">
+          <label className="block text-xs font-medium text-[#A1A1AA] mb-1">
             팀 코드
           </label>
           <div className="flex items-center gap-2">
-            <code className="text-sm font-mono text-foreground break-all bg-background px-2 py-1 rounded border">
+            <code className="text-sm font-mono text-[#F4F4F5] break-all bg-[#181A1F] px-2 py-1 rounded border border-[#27272A]">
               {teamId}
             </code>
           </div>
-          <p className="mt-2 text-xs text-muted-foreground">
+          <p className="mt-2 text-xs text-[#A1A1AA]">
             이 코드를 공유하여 팀원을 초대하세요.
           </p>
         </div>

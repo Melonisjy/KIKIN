@@ -45,12 +45,12 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4">
-      <div className="w-full max-w-md space-y-8 rounded-xl border bg-card p-8 shadow-lg bg-gradient-to-br from-white to-[#f7fafc]">
+      <div className="w-full max-w-md space-y-8 rounded-xl border border-[#27272A] bg-[#181A1F] p-8">
         <div className="text-center">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold text-[#00C16A]">
             킥-인
           </h1>
-          <p className="mt-2 text-muted-foreground">
+          <p className="mt-2 text-[#A1A1AA]">
             풋살 팀 경기 일정 관리 플랫폼
           </p>
         </div>
@@ -59,7 +59,7 @@ export default function LoginPage() {
           <button
             onClick={handleGoogleLogin}
             disabled={isLoading}
-            className="flex w-full items-center justify-center gap-3 rounded-xl border-2 border-[#667eea]/30 bg-background px-4 py-3 font-medium text-foreground transition-all duration-300 hover:bg-[#667eea]/10 hover:border-[#667eea] hover:shadow-[0_4px_20px_rgba(102,126,234,0.2)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex w-full items-center justify-center gap-3 rounded-lg border border-[#27272A] bg-transparent px-4 py-3 font-medium text-[#F4F4F5] transition-all duration-200 hover:bg-[#181A1F] hover:border-[#27272A] active:scale-[0.98] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <>
@@ -95,7 +95,7 @@ export default function LoginPage() {
             )}
           </button>
 
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="text-center text-sm text-[#A1A1AA]">
             로그인하면 킥-인의{" "}
             <a href="#" className="underline">
               이용약관

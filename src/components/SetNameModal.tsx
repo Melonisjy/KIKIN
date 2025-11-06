@@ -95,15 +95,13 @@ export function SetNameModal({
         onClose ? (e) => e.target === e.currentTarget && onClose() : undefined
       }
     >
-      <div className="w-full max-w-md rounded-xl border-2 border-primary/20 bg-card p-8 shadow-xl mx-4">
+      <div className="w-full max-w-md rounded-xl border-2 border-[#00C16A]/20 bg-[#181A1F] p-8 shadow-xl mx-4">
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-card-foreground mb-2">
-            이름 설정
-          </h2>
-          <p className="text-muted-foreground">
+          <h2 className="text-2xl font-bold text-[#F4F4F5] mb-2">이름 설정</h2>
+          <p className="text-[#A1A1AA]">
             풋살 경기에서 사용할 이름을 설정해주세요.
             <br />
-            <span className="text-sm text-muted-foreground/80">
+            <span className="text-sm text-[#A1A1AA] opacity-80">
               이 이름은 경기 참여 시 표시됩니다.
             </span>
           </p>
@@ -113,7 +111,7 @@ export function SetNameModal({
           <div>
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-foreground mb-2"
+              className="block text-sm font-medium text-[#F4F4F5] mb-2"
             >
               이름 <span className="text-destructive">*</span>
             </label>
@@ -123,7 +121,7 @@ export function SetNameModal({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="이름을 입력하세요"
-              className="w-full rounded-lg border border-input bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2"
               maxLength={100}
               disabled={isLoading}
               autoFocus
@@ -148,7 +146,7 @@ export function SetNameModal({
             </Button>
           </div>
 
-          <p className="text-xs text-muted-foreground text-center">
+          <p className="text-xs text-[#A1A1AA] text-center">
             이름은 나중에 프로필에서 변경할 수 있습니다.
           </p>
         </form>

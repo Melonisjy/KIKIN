@@ -68,7 +68,7 @@ export default async function LockerRoomPage() {
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-bold text-foreground">라커룸</h1>
+              <h1 className="text-3xl font-bold text-[#F4F4F5]">라커룸</h1>
               {isPremium && (
                 <Link href="/premium">
                   <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
@@ -78,7 +78,7 @@ export default async function LockerRoomPage() {
                 </Link>
               )}
             </div>
-            <p className="mt-2 text-muted-foreground">
+            <p className="mt-2 text-[#A1A1AA]">
               환영합니다, {userName || user.email}님!
             </p>
           </div>
@@ -95,7 +95,7 @@ export default async function LockerRoomPage() {
         <div className="space-y-6">
           {/* 프로필 섹션 */}
           <section>
-            <h2 className="mb-4 text-2xl font-semibold text-foreground flex items-center gap-2">
+            <h2 className="mb-4 text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
               <User className="h-6 w-6" />
               프로필
             </h2>
@@ -105,7 +105,7 @@ export default async function LockerRoomPage() {
           {/* 내 팀 섹션 */}
           <section>
             <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-2xl font-semibold text-foreground flex items-center gap-2">
+              <h2 className="text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
                 <Users className="h-6 w-6" />내 팀
               </h2>
               <div className="flex flex-col gap-2 sm:flex-row">
@@ -142,9 +142,9 @@ export default async function LockerRoomPage() {
                 </div>
               </Suspense>
             ) : (
-              <div className="rounded-lg border border-dashed bg-muted/50 p-12 text-center">
-                <Users className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-                <p className="text-muted-foreground mb-4">
+              <div className="rounded-lg border border-dashed border-[#27272A] bg-[#27272A]/50 p-12 text-center">
+                <Users className="mx-auto h-12 w-12 text-[#A1A1AA] mb-4" />
+                <p className="text-[#A1A1AA] mb-4">
                   아직 가입한 팀이 없습니다.
                 </p>
                 <div className="flex flex-col gap-2 items-center sm:flex-row sm:justify-center">
@@ -161,13 +161,13 @@ export default async function LockerRoomPage() {
 
           {/* 최근 경기 섹션 (추후 구현) */}
           <section>
-            <h2 className="mb-4 text-2xl font-semibold text-foreground flex items-center gap-2">
+            <h2 className="mb-4 text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
               <Calendar className="h-6 w-6" />
               최근 경기
             </h2>
             <div className="rounded-lg border border-dashed bg-muted/50 p-12 text-center">
-              <Calendar className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-              <p className="text-muted-foreground">예정된 경기가 없습니다.</p>
+              <Calendar className="mx-auto h-12 w-12 text-[#A1A1AA] mb-4" />
+              <p className="text-[#A1A1AA]">예정된 경기가 없습니다.</p>
             </div>
           </section>
         </div>

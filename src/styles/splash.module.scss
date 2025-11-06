@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #0F1115;
   opacity: 1;
   transition: opacity 0.5s ease-out;
   overflow: hidden;
@@ -17,33 +17,6 @@
   &.hidden {
     opacity: 0;
     pointer-events: none;
-  }
-
-  // 배경 애니메이션
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: 
-      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
-      radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
-      radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.1) 0%, transparent 60%);
-    animation: backgroundPulse 4s ease-in-out infinite;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: 
-      repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 2px,
-        rgba(255, 255, 255, 0.03) 2px,
-        rgba(255, 255, 255, 0.03) 4px
-      );
-    opacity: 0.5;
   }
 }
 
@@ -57,183 +30,60 @@
   z-index: 1;
 }
 
-.iconContainer {
-  position: relative;
-  margin-bottom: 2.5rem;
-  animation: fadeInScale 0.8s ease-out 0.2s both;
-}
-
-.icon {
-  position: relative;
-  z-index: 10;
-  animation: float 3s ease-in-out infinite;
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
-}
-
-.iconSvg {
-  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
-}
-
-.iconCircle {
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
-}
-
 .logoContainer {
-  margin-bottom: 2rem;
-  animation: fadeInUp 0.8s ease-out 0.5s both;
+  margin-bottom: 0;
+  animation: fadeInScale 2s ease-out both;
 }
 
 .logo {
   font-size: 4rem;
   font-weight: 800;
-  color: #ffffff;
-  text-shadow: 
-    0 0 40px rgba(255, 255, 255, 0.5),
-    0 4px 20px rgba(0, 0, 0, 0.3),
-    0 2px 8px rgba(0, 0, 0, 0.2);
-  letter-spacing: 0.05em;
+  color: #00C16A;
+  letter-spacing: -0.02em;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.2rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Pretendard", sans-serif;
+  gap: 0;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.2;
 
   @media (min-width: 640px) {
     font-size: 5.5rem;
-    gap: 0.25rem;
-    letter-spacing: 0.08em;
   }
 }
 
 .logoLetter {
   display: inline-block;
-  animation: letterGlow 2s ease-in-out infinite;
-  transform-origin: center;
-  color: #ffffff;
-
-  &:nth-child(1) { 
-    animation-delay: 0s;
-  }
-  &:nth-child(3) { 
-    animation-delay: 0.3s;
-  }
+  color: #00C16A;
 }
 
 .logoDash {
   display: inline-block;
-  opacity: 0.8;
-  animation: dashPulse 2s ease-in-out infinite;
-  animation-delay: 0.15s;
-}
-
-.logoSpace {
-  width: 0.5rem;
-  display: inline-block;
-}
-
-.dots {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 1rem;
-  animation: fadeIn 0.5s ease-out 0.8s both;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: #ffffff;
-  animation: dotBounce 0.8s ease-in-out infinite;
-
-  &:nth-child(1) {
-    animation-delay: 0s;
-  }
-
-  &:nth-child(2) {
-    animation-delay: 0.2s;
-  }
-
-  &:nth-child(3) {
-    animation-delay: 0.4s;
-  }
+  color: #00C16A;
 }
 
 .tagline {
-  margin-top: 1.5rem;
-  font-size: 1.125rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.95);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  animation: fadeInUp 0.5s ease-out 1s both;
+  margin-top: 2rem;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #A1A1AA;
+  letter-spacing: 0.01em;
+  animation: fadeIn 0.5s ease-out 1.5s both;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   @media (min-width: 640px) {
-    font-size: 1.25rem;
-  }
-}
-
-@keyframes backgroundPulse {
-  0%, 100% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 0.8;
+    font-size: 1.125rem;
   }
 }
 
 @keyframes fadeInScale {
   from {
     opacity: 0;
-    transform: scale(0.8);
+    transform: scale(0.95);
   }
   to {
     opacity: 1;
     transform: scale(1);
-  }
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(-20px) scale(1.05);
-  }
-}
-
-@keyframes letterGlow {
-  0%,
-  100% {
-    transform: scale(1);
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
-  }
-  50% {
-    transform: scale(1.05);
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
-  }
-}
-
-@keyframes dashPulse {
-  0%,
-  100% {
-    opacity: 0.6;
-    transform: scaleX(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scaleX(1.2);
-  }
-}
-
-@keyframes dotBounce {
-  0%,
-  100% {
-    transform: translateY(0);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateY(-12px);
-    opacity: 1;
   }
 }
 
@@ -243,16 +93,5 @@
   }
   to {
     opacity: 1;
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }

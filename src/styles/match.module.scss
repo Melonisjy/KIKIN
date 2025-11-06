@@ -1,15 +1,15 @@
 .matchCard {
   display: block;
-  border-radius: 0.5rem;
-  border: 1px solid hsl(var(--border));
-  background-color: hsl(var(--card));
+  border-radius: 0.75rem;
+  border: 1px solid #27272a;
+  background-color: #181a1f;
   transition: all 0.2s;
   text-decoration: none;
   color: inherit;
 
   &:hover {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    border-color: hsl(var(--primary));
+    border-color: #27272a;
+    transform: scale(0.98);
   }
 }
 
@@ -36,8 +36,8 @@
   padding: 0.25rem 0.5rem;
   font-size: 0.75rem;
   font-weight: 500;
-  background-color: hsl(var(--muted));
-  color: hsl(var(--muted-foreground));
+  background-color: #27272a;
+  color: #a1a1aa;
 }
 
 .statusBadge {
@@ -62,24 +62,24 @@
 .icon {
   height: 1.25rem;
   width: 1.25rem;
-  color: hsl(var(--muted-foreground));
+  color: #a1a1aa;
   flex-shrink: 0;
 }
 
 .matchDate {
   font-weight: 600;
-  color: hsl(var(--card-foreground));
+  color: #f4f4f5;
 }
 
 .matchLocation {
-  color: hsl(var(--muted-foreground));
+  color: #a1a1aa;
 }
 
 .matchNote {
   font-size: 0.875rem;
-  color: hsl(var(--muted-foreground));
+  color: #a1a1aa;
   margin-top: 0.5rem;
   padding-top: 0.75rem;
-  border-top: 1px solid hsl(var(--border));
+  border-top: 1px solid #27272a;
   line-height: 1.5;
 }

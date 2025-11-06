@@ -97,7 +97,7 @@ export function JoinTeamModal({ isOpen, onClose }: JoinTeamModalProps) {
         <div>
           <label
             htmlFor="teamCode"
-            className="block text-sm font-medium text-foreground mb-2"
+            className="block text-sm font-medium text-[#F4F4F5] mb-2"
           >
             팀 코드
           </label>
@@ -115,10 +115,10 @@ export function JoinTeamModal({ isOpen, onClose }: JoinTeamModalProps) {
               }
             }}
             placeholder="팀 코드를 입력하세요"
-            className="w-full rounded-lg border border-input bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-colors"
+            className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2 transition-colors"
             disabled={isLoading}
           />
-          <p className="mt-2 text-xs text-muted-foreground">
+          <p className="mt-2 text-xs text-[#A1A1AA]">
             팀장에게 문의하여 팀 코드를 받으세요.
           </p>
         </div>
@@ -131,7 +131,7 @@ export function JoinTeamModal({ isOpen, onClose }: JoinTeamModalProps) {
 
         {isLoading && (
           <div className="flex items-center justify-center py-2">
-            <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+            <Loader2 className="h-4 w-4 animate-spin text-[#A1A1AA]" />
           </div>
         )}
       </div>

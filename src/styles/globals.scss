@@ -44,32 +44,44 @@
 
 :root {
   --radius: 0.75rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  /* 브랜드 컬러: Primary Purple #667EEA */
-  --primary: 102 126 234;
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  
+  /* 미니멀 다크 모드 컬러 시스템 */
+  --background: 15 17 21; /* #0F1115 - 매트한 다크 배경 */
+  --foreground: 244 244 245; /* #F4F4F5 - 텍스트 기본 */
+  --card: 24 26 31; /* #181A1F - 섹션/카드 배경 */
+  --card-foreground: 244 244 245; /* #F4F4F5 */
+  --popover: 24 26 31; /* #181A1F */
+  --popover-foreground: 244 244 245; /* #F4F4F5 */
+  
+  /* 포인트 컬러: 밝은 그린 */
+  --primary: 0 193 106; /* #00C16A */
+  --primary-foreground: 15 17 21; /* #0F1115 */
+  
+  /* 서브 컬러 */
+  --secondary: 39 39 42; /* #27272A */
+  --secondary-foreground: 244 244 245; /* #F4F4F5 */
+  
+  /* 뮤트 컬러 */
+  --muted: 24 26 31; /* #181A1F */
+  --muted-foreground: 161 161 170; /* #A1A1AA - 서브 텍스트 */
+  
+  /* 액센트 */
+  --accent: 39 39 42; /* #27272A */
+  --accent-foreground: 244 244 245; /* #F4F4F5 */
+  
   --destructive: 255 107 107;
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: 102 126 234;
+  --border: 39 39 42; /* #27272A - 경계선 */
+  --input: 39 39 42; /* #27272A */
+  --ring: 0 193 106; /* #00C16A */
   
   /* 브랜드 컬러 변수 */
-  --brand-primary: #667eea;
-  --brand-secondary: #764ba2;
-  --brand-accent-orange: #ff6b6b;
-  --brand-accent-green: #51cf66;
-  --brand-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --brand-bg: #0F1115;
+  --brand-card: #181A1F;
+  --brand-primary: #00C16A;
+  --brand-primary-hover: #00A85B;
+  --brand-text: #F4F4F5;
+  --brand-text-sub: #A1A1AA;
+  --brand-border: #27272A;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -123,15 +135,58 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
+  html {
+    background-color: rgb(var(--background));
+    min-height: 100vh;
+  }
+  
   body {
-    @apply bg-background text-foreground;
-    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    @apply bg-background;
+    background-color: rgb(var(--background)) !important;
+    color: rgb(var(--foreground)) !important;
+    min-height: 100vh;
+    font-family: "Pretendard", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* 기본 텍스트 색상 통일 */
+  p, span, div, label, input, textarea, select, a {
+    color: rgb(var(--foreground));
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: "Pretendard", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: rgb(var(--foreground));
+  }
+  
+  /* 타이포그래피 계층 */
+  h1 {
+    font-size: 2.5rem;
     font-weight: 800;
-    letter-spacing: 0.05em;
+    line-height: 1.2;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+  
+  p, span, div {
+    letter-spacing: 0.01em;
+    line-height: 1.6;
   }
 }
 

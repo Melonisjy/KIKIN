@@ -47,13 +47,6 @@ export function SplashScreen() {
           </h1>
         </div>
 
-        {/* 점 로딩 애니메이션 */}
-        <div className={styles.dots}>
-          <div className={styles.dot} />
-          <div className={styles.dot} />
-          <div className={styles.dot} />
-        </div>
-
         {/* 태그라인 */}
         <p className={styles.tagline}>경기, 클릭으로 시작</p>
       </div>

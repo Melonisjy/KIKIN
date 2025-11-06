@@ -15,17 +15,17 @@ export function ProfileCard({ userName, userEmail }: ProfileCardProps) {
 
   return (
     <>
-      <div className="rounded-xl border bg-card p-6 shadow-sm">
+      <div className="rounded-xl border border-[#27272A] bg-[#181A1F] p-6">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white text-lg font-semibold shadow-sm">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#00C16A] text-[#0F1115] text-lg font-semibold">
               {userName ? userName.charAt(0).toUpperCase() : userEmail.charAt(0).toUpperCase()}
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-card-foreground">
+              <h3 className="text-lg font-semibold text-[#F4F4F5]">
                 {userName || "이름 없음"}
               </h3>
-              <p className="text-sm text-muted-foreground">{userEmail}</p>
+              <p className="text-sm text-[#A1A1AA]">{userEmail}</p>
             </div>
           </div>
           <Button

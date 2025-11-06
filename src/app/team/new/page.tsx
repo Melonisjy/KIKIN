@@ -122,14 +122,14 @@ export default function NewTeamPage() {
     <div className="container mx-auto px-4 py-8 max-w-2xl">
       <Link
         href="/locker-room"
-        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6"
+        className="inline-flex items-center gap-2 text-sm text-[#A1A1AA] hover:text-[#F4F4F5] mb-6"
       >
         <ArrowLeft className="h-4 w-4" />
         라커룸으로 돌아가기
       </Link>
 
-      <div className="rounded-lg border bg-card p-6 shadow-sm">
-        <h1 className="text-2xl font-bold text-card-foreground mb-6">
+      <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6">
+        <h1 className="text-2xl font-bold text-[#F4F4F5] mb-6">
           새 팀 만들기
         </h1>
 
@@ -151,7 +151,7 @@ export default function NewTeamPage() {
           <div>
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-foreground mb-2"
+              className="block text-sm font-medium text-[#F4F4F5] mb-2"
             >
               팀 이름 <span className="text-destructive">*</span>
             </label>
@@ -162,14 +162,14 @@ export default function NewTeamPage() {
               required
               placeholder="예: 우리팀"
               disabled={isLoading}
-              className="w-full rounded-lg border border-input bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50"
+              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2 disabled:opacity-50"
             />
           </div>
 
           <div>
             <label
               htmlFor="description"
-              className="block text-sm font-medium text-foreground mb-2"
+              className="block text-sm font-medium text-[#F4F4F5] mb-2"
             >
               설명
             </label>
@@ -179,7 +179,7 @@ export default function NewTeamPage() {
               rows={4}
               placeholder="팀에 대한 간단한 설명을 입력하세요"
               disabled={isLoading}
-              className="w-full rounded-lg border border-input bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 resize-none disabled:opacity-50"
+              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2 resize-none disabled:opacity-50"
             />
           </div>
 

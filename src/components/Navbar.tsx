@@ -152,12 +152,12 @@ export default function Navbar() {
   const displayText = userName ? userName : userEmail || "";
 
   return (
-    <nav className="w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav className="w-full border-b border-[#27272A] bg-[#0F1115]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0F1115]/60">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <span className="text-xl font-bold text-foreground bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-clip-text text-transparent group-hover:from-[#764ba2] group-hover:to-[#667eea] transition-all duration-300">
+            <span className="text-xl font-bold text-[#00C16A] transition-colors group-hover:text-[#00A85B]">
               킥-인
             </span>
           </Link>
@@ -168,17 +168,17 @@ export default function Navbar() {
               <>
                 <Link
                   href="/locker-room"
-                  className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-[#F4F4F5] hover:text-[#00C16A] transition-colors"
                 >
                   라커룸
                 </Link>
                 <div className="flex items-center gap-3 pl-4 border-l">
                   {displayText && (
                     <div className="flex items-center gap-2">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white text-xs font-medium shadow-sm">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#00C16A] text-[#0F1115] text-xs font-semibold">
                         {getInitials(displayText)}
                       </div>
-                      <span className="text-sm text-muted-foreground max-w-[150px] truncate">
+                      <span className="text-sm text-[#A1A1AA] max-w-[150px] truncate">
                         {displayText}
                       </span>
                     </div>
@@ -204,7 +204,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 rounded-md text-foreground hover:bg-muted transition-colors cursor-pointer"
+            className="md:hidden p-2 rounded-md text-[#F4F4F5] hover:bg-[#181A1F] transition-colors cursor-pointer"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -224,17 +224,17 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/locker-room"
-                    className="flex items-center gap-2 px-3 py-2 text-base font-medium text-foreground hover:bg-muted rounded-md transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 text-base font-medium text-[#F4F4F5] hover:bg-[#181A1F] rounded-md transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     라커룸
                   </Link>
                   {displayText && (
                     <div className="flex items-center gap-2 px-3 py-2">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white text-xs font-medium shadow-sm">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#00C16A] text-[#0F1115] text-xs font-semibold">
                         {getInitials(displayText)}
                       </div>
-                      <span className="text-sm text-muted-foreground truncate flex-1">
+                      <span className="text-sm text-[#A1A1AA] truncate flex-1">
                         {displayText}
                       </span>
                     </div>
@@ -245,7 +245,7 @@ export default function Navbar() {
                       setIsMenuOpen(false);
                     }}
                     disabled={isLoggingOut}
-                    className="flex w-full items-center gap-2 px-3 py-2 text-base font-medium text-foreground hover:bg-muted rounded-md transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex w-full items-center gap-2 px-3 py-2 text-base font-medium text-[#F4F4F5] hover:bg-[#181A1F] rounded-md transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <LogOut className="h-4 w-4" />
                     {isLoggingOut ? "로그아웃 중..." : "로그아웃"}
@@ -254,7 +254,7 @@ export default function Navbar() {
               ) : (
                 <Link
                   href="/login"
-                  className="block px-3 py-2 text-base font-medium text-foreground hover:bg-muted rounded-md transition-colors"
+                  className="block px-3 py-2 text-base font-medium text-[#F4F4F5] hover:bg-[#181A1F] rounded-md transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Login

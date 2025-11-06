@@ -135,7 +135,7 @@ export function MatchParticipantButtons({
         </div>
       )}
       {isLoading && (
-        <div className="text-center text-sm text-muted-foreground">
+        <div className="text-center text-sm text-[#A1A1AA]">
           저장 중...
         </div>
       )}

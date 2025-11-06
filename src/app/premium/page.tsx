@@ -1,16 +1,14 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Check, Crown, Sparkles, CheckCircle, XCircle } from "lucide-react";
+import { Check, Crown, CheckCircle, XCircle } from "lucide-react";
 import { UpgradeButton } from "./upgrade-button";
 
 interface PageProps {
   searchParams: Promise<{ success?: string; canceled?: string }>;
 }
 
-export default async function PremiumPage({
-  searchParams,
-}: PageProps) {
+export default async function PremiumPage({ searchParams }: PageProps) {
   const { success, canceled } = await searchParams;
   const supabase = await createClient();
 
@@ -57,31 +55,31 @@ export default async function PremiumPage({
         "프리미엄 뱃지",
       ],
       current: isPremium,
-      popular: true,
     },
   ];
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       {success && (
-        <div className="mb-6 rounded-lg border border-green-200 bg-green-50 p-4 text-green-800 dark:border-green-800 dark:bg-green-900/20 dark:text-green-200">
+        <div className="mb-6 rounded-lg border border-[#00C16A]/30 bg-[#00C16A]/10 p-4 text-[#00C16A]">
           <div className="flex items-center gap-2">
             <CheckCircle className="h-5 w-5" />
-            <p className="font-medium">결제가 완료되었습니다!</p>
+            <p className="font-medium text-[#00C16A]">결제가 완료되었습니다!</p>
           </div>
-          <p className="mt-2 text-sm">
-            프리미엄 멤버십이 활성화되었습니다. 페이지를 새로고침하면 변경사항이 반영됩니다.
+          <p className="mt-2 text-sm text-[#A1A1AA]">
+            프리미엄 멤버십이 활성화되었습니다. 페이지를 새로고침하면 변경사항이
+            반영됩니다.
           </p>
         </div>
       )}
 
       {canceled && (
-        <div className="mb-6 rounded-lg border border-amber-200 bg-amber-50 p-4 text-amber-800 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-200">
+        <div className="mb-6 rounded-lg border border-[#FFA500]/30 bg-[#FFA500]/10 p-4 text-[#FFA500]">
           <div className="flex items-center gap-2">
             <XCircle className="h-5 w-5" />
-            <p className="font-medium">결제가 취소되었습니다.</p>
+            <p className="font-medium text-[#FFA500]">결제가 취소되었습니다.</p>
           </div>
-          <p className="mt-2 text-sm">
+          <p className="mt-2 text-sm text-[#A1A1AA]">
             언제든지 다시 업그레이드할 수 있습니다.
           </p>
         </div>
@@ -91,10 +89,10 @@ export default async function PremiumPage({
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
           <Crown className="h-8 w-8 text-primary" />
         </div>
-        <h1 className="text-4xl font-bold text-foreground mb-4">
+        <h1 className="text-4xl font-bold text-[#F4F4F5] mb-4">
           프리미엄 플랜
         </h1>
-        <p className="text-lg text-muted-foreground">
+        <p className="text-lg text-[#A1A1AA]">
           무제한 경기 생성을 통해 팀을 더 효율적으로 관리하세요
         </p>
       </div>
@@ -103,31 +101,18 @@ export default async function PremiumPage({
         {plans.map((plan) => (
           <div
             key={plan.name}
-            className={`relative rounded-lg border p-8 ${
-              plan.popular
-                ? "border-primary bg-card shadow-lg"
-                : "border-border bg-card"
-            }`}
+            className="relative rounded-lg border border-[#27272A] bg-[#181A1F] p-8"
           >
-            {plan.popular && (
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                <span className="inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
-                  <Sparkles className="h-3 w-3" />
-                  인기
-                </span>
-              </div>
-            )}
-
             <div className="mb-6">
-              <h3 className="text-2xl font-bold text-card-foreground mb-2">
+              <h3 className="text-2xl font-bold text-[#F4F4F5] mb-2">
                 {plan.name}
               </h3>
               <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-bold text-card-foreground">
+                <span className="text-4xl font-bold text-[#F4F4F5]">
                   {plan.price}
                 </span>
                 {plan.price !== "₩0" && (
-                  <span className="text-muted-foreground">/{plan.period}</span>
+                  <span className="text-[#A1A1AA]">/{plan.period}</span>
                 )}
               </div>
             </div>
@@ -136,18 +121,14 @@ export default async function PremiumPage({
               {plan.features.map((feature, index) => (
                 <li key={index} className="flex items-start gap-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground">{feature}</span>
+                  <span className="text-[#A1A1AA]">{feature}</span>
                 </li>
               ))}
             </ul>
 
             <div className="mt-auto">
               {plan.current ? (
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  disabled
-                >
+                <Button variant="outline" className="w-full" disabled>
                   현재 플랜
                 </Button>
               ) : (
@@ -159,8 +140,8 @@ export default async function PremiumPage({
       </div>
 
       {isPremium && profile?.premium_since && (
-        <div className="mt-8 rounded-lg border bg-card p-6 text-center">
-          <p className="text-muted-foreground">
+        <div className="mt-8 rounded-lg border border-[#27272A] bg-[#181A1F] p-6 text-center">
+          <p className="text-[#A1A1AA]">
             프리미엄 멤버십 시작일:{" "}
             {new Date(profile.premium_since).toLocaleDateString("ko-KR")}
           </p>
@@ -169,4 +150,3 @@ export default async function PremiumPage({
     </div>
   );
 }
-

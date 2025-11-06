@@ -20,9 +20,9 @@ export function MatchCard({ match, showTeam, teamName }: MatchCardProps) {
   const isPast = matchDate < new Date();
 
   const statusColors = {
-    upcoming: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
-    confirmed: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
-    cancelled: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
+    upcoming: "bg-blue-500/10 text-blue-400",
+    confirmed: "bg-[#00C16A]/10 text-[#00C16A]",
+    cancelled: "bg-red-500/10 text-red-400",
   };
 
   const statusLabels = {

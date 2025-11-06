@@ -62,18 +62,18 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
         <div className="container mx-auto px-4 py-8 max-w-2xl">
           <Link
             href={`/team/${teamId}`}
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6"
+            className="inline-flex items-center gap-2 text-sm text-[#A1A1AA] hover:text-[#F4F4F5] mb-6"
           >
             <ArrowLeft className="h-4 w-4" />
             {team.name}으로 돌아가기
           </Link>
 
-          <div className="rounded-lg border bg-card p-8 shadow-sm text-center">
+          <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-8 text-center">
             <Crown className="mx-auto h-12 w-12 text-primary mb-4" />
-            <h2 className="text-2xl font-bold text-card-foreground mb-4">
+            <h2 className="text-2xl font-bold text-[#F4F4F5] mb-4">
               무료 플랜 제한 도달
             </h2>
-            <p className="text-muted-foreground mb-6">
+            <p className="text-[#A1A1AA] mb-6">
               무료 플랜에서는 주당 2경기까지만 생성할 수 있습니다.
               <br />
               프리미엄으로 업그레이드하여 무제한 경기를 생성하세요!
@@ -192,7 +192,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
     <div className="container mx-auto px-4 py-8 max-w-2xl">
       <Link
         href={`/team/${teamId}`}
-        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6"
+        className="inline-flex items-center gap-2 text-sm text-[#A1A1AA] hover:text-[#F4F4F5] mb-6"
       >
         <ArrowLeft className="h-4 w-4" />
         {team.name}으로 돌아가기
@@ -210,8 +210,8 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
         </div>
       )}
 
-      <div className="rounded-lg border bg-card p-6 shadow-sm">
-        <h1 className="text-2xl font-bold text-card-foreground mb-6">
+      <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6">
+        <h1 className="text-2xl font-bold text-[#F4F4F5] mb-6">
           새 경기 만들기
         </h1>
 
@@ -221,7 +221,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
           <div>
             <label
               htmlFor="date"
-              className="block text-sm font-medium text-foreground mb-2"
+              className="block text-sm font-medium text-[#F4F4F5] mb-2"
             >
               날짜 <span className="text-destructive">*</span>
             </label>
@@ -232,14 +232,14 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
               required
               defaultValue={today}
               min={today}
-              className="w-full rounded-lg border border-input bg-background px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] focus:outline-none focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2"
             />
           </div>
 
           <div>
             <label
               htmlFor="time"
-              className="block text-sm font-medium text-foreground mb-2"
+              className="block text-sm font-medium text-[#F4F4F5] mb-2"
             >
               시간 <span className="text-destructive">*</span>
             </label>
@@ -249,14 +249,14 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
               name="time"
               required
               defaultValue={now}
-              className="w-full rounded-lg border border-input bg-background px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] focus:outline-none focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2"
             />
           </div>
 
           <div>
             <label
               htmlFor="location"
-              className="block text-sm font-medium text-foreground mb-2"
+              className="block text-sm font-medium text-[#F4F4F5] mb-2"
             >
               장소 <span className="text-destructive">*</span>
             </label>
@@ -266,14 +266,14 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
               name="location"
               required
               placeholder="예: 서울 풋살장"
-              className="w-full rounded-lg border border-input bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2"
             />
           </div>
 
           <div>
             <label
               htmlFor="note"
-              className="block text-sm font-medium text-foreground mb-2"
+              className="block text-sm font-medium text-[#F4F4F5] mb-2"
             >
               메모
             </label>
@@ -282,7 +282,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
               name="note"
               rows={4}
               placeholder="추가 정보나 안내사항을 입력하세요"
-              className="w-full rounded-lg border border-input bg-background px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 resize-none"
+              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2 resize-none"
             />
           </div>
 
@@ -295,7 +295,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
             </button>
             <Link
               href={`/team/${teamId}`}
-              className="flex-1 rounded-lg border border-border bg-background px-4 py-2 text-center font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer"
+              className="flex-1 rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-center font-medium text-[#F4F4F5] transition-colors hover:bg-[#27272A] hover:text-[#F4F4F5] cursor-pointer"
             >
               취소
             </Link>

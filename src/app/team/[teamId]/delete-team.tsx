@@ -99,7 +99,7 @@ export function DeleteTeam({ teamId, teamName, isLeader }: DeleteTeamProps) {
         variant="danger"
       >
         <div>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-[#A1A1AA] mb-4">
             정말로 <strong>{teamName}</strong> 팀을 삭제하시겠습니까?
             <br />
             이 작업은 되돌릴 수 없으며, 팀의 모든 경기와 멤버 정보가 함께 삭제됩니다.
@@ -113,7 +113,7 @@ export function DeleteTeam({ teamId, teamName, isLeader }: DeleteTeamProps) {
 
           {isLoading && (
             <div className="flex items-center justify-center py-2">
-              <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+              <Loader2 className="h-4 w-4 animate-spin text-[#A1A1AA]" />
             </div>
           )}
         </div>

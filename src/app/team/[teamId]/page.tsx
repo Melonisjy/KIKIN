@@ -62,23 +62,23 @@ export default async function TeamDetailPage({ params }: PageProps) {
     <div className="container mx-auto px-4 py-8">
       <Link
         href="/locker-room"
-        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6"
+        className="inline-flex items-center gap-2 text-sm text-[#A1A1AA] hover:text-[#F4F4F5] mb-6"
       >
         <ArrowLeft className="h-4 w-4" />
         라커룸으로 돌아가기
       </Link>
 
       {/* 팀 정보 */}
-      <div className="rounded-lg border bg-card p-6 shadow-sm mb-6">
+      <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6 mb-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex-1">
-            <h1 className="text-3xl font-bold text-card-foreground mb-2">
+            <h1 className="text-3xl font-bold text-[#F4F4F5] mb-2">
               {team.name}
             </h1>
             {team.description && (
-              <p className="text-muted-foreground">{team.description}</p>
+              <p className="text-[#A1A1AA]">{team.description}</p>
             )}
-            <div className="mt-4 text-sm text-muted-foreground">
+            <div className="mt-4 text-sm text-[#A1A1AA]">
               생성일: {new Date(team.created_at).toLocaleDateString("ko-KR")}
             </div>
             
@@ -99,7 +99,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
             className={`rounded-full px-3 py-1 text-sm font-medium ${
               isLeader
                 ? "bg-primary/10 text-primary"
-                : "bg-muted text-muted-foreground"
+                : "bg-[#27272A] text-[#A1A1AA]"
             }`}
           >
             {isLeader ? "팀장" : "멤버"}
@@ -109,7 +109,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
 
       {/* 경기 목록 */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-4">
-        <h2 className="text-2xl font-semibold text-foreground">경기 일정</h2>
+        <h2 className="text-2xl font-semibold text-[#F4F4F5]">경기 일정</h2>
         {isLeader && (
           <Link href={`/match/new?teamId=${teamId}`}>
             <Button>
@@ -138,8 +138,8 @@ export default async function TeamDetailPage({ params }: PageProps) {
           </div>
         </Suspense>
       ) : (
-        <div className="rounded-lg border border-dashed bg-muted/50 p-12 text-center">
-          <p className="text-muted-foreground mb-4">
+        <div className="rounded-lg border border-dashed border-[#27272A] bg-[#27272A]/50 p-12 text-center">
+          <p className="text-[#A1A1AA] mb-4">
             아직 예정된 경기가 없습니다.
           </p>
           {isLeader && (
