@@ -72,18 +72,18 @@ export default async function TeamDetailPage({ params }: PageProps) {
       <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6 mb-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex-1">
-            <h1 className="text-3xl font-bold text-[#F4F4F5] mb-2">
-              {team.name}
-            </h1>
+            <div className="flex items-center flex-wrap gap-2 mb-2">
+              <h1 className="text-3xl font-bold text-[#F4F4F5]">
+                {team.name}
+              </h1>
+              <TeamCode teamId={teamId} />
+            </div>
             {team.description && (
-              <p className="text-[#A1A1AA]">{team.description}</p>
+              <p className="text-[#A1A1AA] mb-2">{team.description}</p>
             )}
-            <div className="mt-4 text-sm text-[#A1A1AA]">
+            <div className="text-sm text-[#A1A1AA]">
               생성일: {new Date(team.created_at).toLocaleDateString("ko-KR")}
             </div>
-            
-            {/* 팀 코드 표시 */}
-            <TeamCode teamId={teamId} />
             
             {isLeader && (
               <div className="mt-4">

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Copy, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 interface TeamCodeProps {
   teamId: string;
@@ -21,42 +20,28 @@ export function TeamCode({ teamId }: TeamCodeProps) {
     }
   };
 
+  const displayCode = teamId.length > 12 
+    ? `${teamId.slice(0, 6)}...${teamId.slice(-6)}`
+    : teamId;
+
   return (
-    <div className="mt-4 p-4 bg-[#27272A]/50 rounded-lg border border-[#27272A]">
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex-1 min-w-0">
-          <label className="block text-xs font-medium text-[#A1A1AA] mb-1">
-            팀 코드
-          </label>
-          <div className="flex items-center gap-2">
-            <code className="text-sm font-mono text-[#F4F4F5] break-all bg-[#181A1F] px-2 py-1 rounded border border-[#27272A]">
-              {teamId}
-            </code>
-          </div>
-          <p className="mt-2 text-xs text-[#A1A1AA]">
-            이 코드를 공유하여 팀원을 초대하세요.
-          </p>
-        </div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleCopy}
-          className="flex-shrink-0"
-          type="button"
-        >
-          {copied ? (
-            <>
-              <Check className="mr-2 h-4 w-4" />
-              복사됨
-            </>
-          ) : (
-            <>
-              <Copy className="mr-2 h-4 w-4" />
-              복사
-            </>
-          )}
-        </Button>
-      </div>
+    <div className="inline-flex items-center gap-2 ml-3">
+      <span className="text-xs text-[#A1A1AA]">팀코드:</span>
+      <code className="text-xs font-mono text-[#A1A1AA] bg-[#27272A] px-2 py-1 rounded">
+        {displayCode}
+      </code>
+      <button
+        onClick={handleCopy}
+        className="p-1 hover:bg-[#27272A] rounded transition-colors"
+        type="button"
+        title="팀 코드 복사"
+      >
+        {copied ? (
+          <Check className="h-3.5 w-3.5 text-[#00C16A]" />
+        ) : (
+          <Copy className="h-3.5 w-3.5 text-[#A1A1AA] hover:text-[#F4F4F5]" />
+        )}
+      </button>
     </div>
   );
 }

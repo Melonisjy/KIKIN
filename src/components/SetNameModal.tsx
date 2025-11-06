@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { Loader2, ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
@@ -96,6 +96,17 @@ export function SetNameModal({
       }
     >
       <div className="w-full max-w-md rounded-xl border-2 border-[#00C16A]/20 bg-[#181A1F] p-8 shadow-xl mx-4">
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="mb-4 flex items-center gap-2 text-sm text-[#A1A1AA] hover:text-[#F4F4F5] transition-colors"
+            type="button"
+            disabled={isLoading}
+          >
+            <ArrowLeft className="h-4 w-4" />
+            뒤로가기
+          </button>
+        )}
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-[#F4F4F5] mb-2">이름 설정</h2>
           <p className="text-[#A1A1AA]">
