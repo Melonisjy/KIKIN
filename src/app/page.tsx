@@ -39,7 +39,7 @@ export default async function HomePage() {
             <div className="mt-10 flex items-center justify-center gap-4">
               <Link href="/dashboard">
                 <Button size="lg" className="w-full sm:w-auto">
-                  대시보드로 이동
+                  라커룸으로 이동
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
@@ -163,7 +163,7 @@ export default async function HomePage() {
             ) : (
               <Link href="/dashboard">
                 <Button size="lg" className="w-full sm:w-auto">
-                  대시보드로 이동
+                  라커룸으로 이동
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>

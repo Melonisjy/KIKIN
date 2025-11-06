@@ -125,7 +125,7 @@ export default function NewTeamPage() {
         className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6"
       >
         <ArrowLeft className="h-4 w-4" />
-        대시보드로 돌아가기
+        라커룸으로 돌아가기
       </Link>
 
       <div className="rounded-lg border bg-card p-6 shadow-sm">
