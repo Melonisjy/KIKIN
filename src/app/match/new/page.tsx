@@ -199,10 +199,10 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
       </Link>
 
       {!isPremium && (
-        <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-200">
-          <p>
+        <div className="mb-4 rounded-lg border border-[#27272A] bg-[#181A1F] p-4">
+          <p className="text-sm text-[#A1A1AA]">
             무료 플랜: 주당 2경기까지 생성 가능.{" "}
-            <Link href="/premium" className="underline font-medium">
+            <Link href="/premium" className="text-[#00C16A] hover:text-[#00A85B] underline font-medium">
               프리미엄으로 업그레이드
             </Link>
             하면 무제한 경기를 생성할 수 있습니다.
@@ -287,17 +287,13 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
           </div>
 
           <div className="flex gap-3">
-            <button
-              type="submit"
-              className="flex-1 rounded-lg bg-primary px-4 py-2 font-medium text-primary-foreground transition-colors hover:bg-primary/90 cursor-pointer"
-            >
+            <Button type="submit" className="flex-1">
               경기 생성
-            </button>
-            <Link
-              href={`/team/${teamId}`}
-              className="flex-1 rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-center font-medium text-[#F4F4F5] transition-colors hover:bg-[#27272A] hover:text-[#F4F4F5] cursor-pointer"
-            >
-              취소
+            </Button>
+            <Link href={`/team/${teamId}`} className="flex-1">
+              <Button type="button" variant="outline" className="w-full">
+                취소
+              </Button>
             </Link>
           </div>
         </form>

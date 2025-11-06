@@ -188,5 +188,29 @@
     letter-spacing: 0.01em;
     line-height: 1.6;
   }
+  
+  /* 날짜/시간 input 아이콘 제거 */
+  input[type="date"],
+  input[type="time"],
+  input[type="datetime-local"] {
+    color-scheme: dark;
+    
+    /* 브라우저별 아이콘 숨기기 */
+    &::-webkit-calendar-picker-indicator {
+      display: none;
+      -webkit-appearance: none;
+    }
+    
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      display: none;
+      -webkit-appearance: none;
+    }
+    
+    /* Firefox */
+    &::-moz-calendar-picker-indicator {
+      display: none;
+    }
+  }
 }
 

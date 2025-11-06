@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Plus, Users } from "lucide-react";
+import { ArrowLeft, Plus, Users, Calendar } from "lucide-react";
 import { MatchCard } from "@/components/MatchCard";
 import { MatchListSkeleton } from "@/components/LoadingSkeleton";
 import { Button } from "@/components/ui/button";
@@ -193,7 +193,10 @@ export default async function TeamDetailPage({ params }: PageProps) {
 
       {/* 경기 목록 */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-4">
-        <h2 className="text-2xl font-semibold text-[#F4F4F5]">경기 일정</h2>
+        <div className="flex items-center gap-2">
+          <Calendar className="h-6 w-6 text-[#F4F4F5]" />
+          <h2 className="text-2xl font-semibold text-[#F4F4F5]">경기 일정</h2>
+        </div>
         {isLeader && (
           <Link href={`/match/new?teamId=${teamId}`}>
             <Button>
