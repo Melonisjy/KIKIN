@@ -62,14 +62,14 @@ export default async function MatchDetailPage({ params }: PageProps) {
     redirect("/locker-room");
   }
 
-  // 참여자 목록 가져오기
+  // 투표자 목록 가져오기
   const { data: participants, error: participantsError } = await supabase
     .from("match_participants")
     .select("*")
     .eq("match_id", matchId)
     .order("created_at", { ascending: true });
 
-  // 참여자들의 프로필 정보 가져오기
+  // 투표자들의 프로필 정보 가져오기
   const participantUserIds = participants?.map((p: any) => p.user_id) || [];
   let profileMap = new Map<string, string | null>();
 
@@ -95,7 +95,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
     cancelled: "bg-red-500/10 text-red-400",
   };
 
-  // 참여자 통계
+  // 투표자 통계
   const goingCount =
     participants?.filter((p: any) => p.status === "going").length || 0;
   const notGoingCount =
@@ -169,12 +169,10 @@ export default async function MatchDetailPage({ params }: PageProps) {
         </div>
       </div>
 
-      {/* 참여 버튼 */}
+      {/* 투표 버튼 */}
       {!isPast && match.status !== "cancelled" && (
         <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6 mb-6">
-          <h2 className="text-lg font-semibold text-[#F4F4F5] mb-4">
-            참여 여부
-          </h2>
+          <h2 className="text-lg font-semibold text-[#F4F4F5] mb-4">투표</h2>
           <MatchParticipantButtons
             matchId={matchId}
             currentStatus={userParticipant?.status || null}
@@ -182,11 +180,11 @@ export default async function MatchDetailPage({ params }: PageProps) {
         </div>
       )}
 
-      {/* 참여자 목록 */}
+      {/* 투표자 목록 */}
       <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-[#F4F4F5]">
-            참여자 ({participants?.length || 0}명)
+            투표자 ({participants?.length || 0}명)
           </h2>
           <div className="flex gap-4 text-sm text-[#A1A1AA]">
             <span className="flex items-center gap-1">
@@ -206,7 +204,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
 
         {participantsError ? (
           <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-destructive">
-            <p>참여자 정보를 불러오는 중 오류가 발생했습니다.</p>
+            <p>투표자 정보를 불러오는 중 오류가 발생했습니다.</p>
             <p className="mt-2 text-sm">{participantsError.message}</p>
           </div>
         ) : participants && participants.length > 0 ? (
@@ -256,7 +254,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
           </div>
         ) : (
           <div className="text-center py-8 text-[#A1A1AA]">
-            아직 참여자가 없습니다.
+            아직 투표자가 없습니다.
           </div>
         )}
       </div>
