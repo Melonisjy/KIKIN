@@ -126,6 +126,11 @@ export default async function LockerRoomPage() {
             <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <h2 className="text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
                 <Users className="h-6 w-6" />내 팀
+                {teams && teams.length > 0 && (
+                  <span className="text-lg font-medium text-[#A1A1AA] ml-2">
+                    ({teams.length})
+                  </span>
+                )}
               </h2>
               <div className="flex flex-col gap-2 sm:flex-row">
                 <LockerRoomActions />

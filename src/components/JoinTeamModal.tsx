@@ -115,7 +115,7 @@ export function JoinTeamModal({ isOpen, onClose }: JoinTeamModalProps) {
               }
             }}
             placeholder="팀 코드를 입력하세요"
-            className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2 transition-colors"
+            className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] transition-colors"
             disabled={isLoading}
           />
           <p className="mt-2 text-xs text-[#A1A1AA]">

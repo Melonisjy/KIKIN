@@ -232,7 +232,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
               required
               defaultValue={today}
               min={today}
-              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] focus:outline-none focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2"
+              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A]"
             />
           </div>
 
@@ -249,7 +249,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
               name="time"
               required
               defaultValue={now}
-              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] focus:outline-none focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2"
+              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A]"
             />
           </div>
 
@@ -266,7 +266,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
               name="location"
               required
               placeholder="예: 서울 풋살장"
-              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2"
+              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A]"
             />
           </div>
 
@@ -282,7 +282,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
               name="note"
               rows={4}
               placeholder="추가 정보나 안내사항을 입력하세요"
-              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2 resize-none"
+              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] resize-none"
             />
           </div>
 
