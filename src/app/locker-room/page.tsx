@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import { Users, Calendar, Plus, UserPlus, Crown, User } from "lucide-react";
+import { Users, Calendar, Plus, UserPlus, User } from "lucide-react";
 import { TeamCard } from "@/components/TeamCard";
 import { TeamListSkeleton } from "@/components/LoadingSkeleton";
 import { Button } from "@/components/ui/button";
@@ -25,7 +25,7 @@ export default async function LockerRoomPage() {
   // Get user profile with name (no cache to ensure fresh data)
   const { data: profile, error: profileError } = await supabase
     .from("user_profiles")
-    .select("is_premium, name")
+    .select("name")
     .eq("id", user.id)
     .single();
 
@@ -40,7 +40,6 @@ export default async function LockerRoomPage() {
     }
   }
 
-  const isPremium = profile?.is_premium || false;
   const userName = profile?.name;
   const needsName = !userName || userName.trim() === "";
 
@@ -142,31 +141,11 @@ export default async function LockerRoomPage() {
     <>
       {needsName && <SetNameModal isOpen={true} currentName={userName} />}
       <div className="container mx-auto px-4 py-8">
-        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-bold text-[#F4F4F5]">라커룸</h1>
-              {isPremium && (
-                <Link href="/premium">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                    <Crown className="h-3 w-3" />
-                    Premium
-                  </span>
-                </Link>
-              )}
-            </div>
-            <p className="mt-2 text-[#A1A1AA]">
-              환영합니다, {userName || user.email}님!
-            </p>
-          </div>
-          {!isPremium && (
-            <Link href="/premium">
-              <Button variant="outline" size="sm">
-                <Crown className="mr-2 h-4 w-4" />
-                프리미엄 업그레이드
-              </Button>
-            </Link>
-          )}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-[#F4F4F5]">라커룸</h1>
+          <p className="mt-2 text-[#A1A1AA]">
+            환영합니다, {userName || user.email}님!
+          </p>
         </div>
 
         <div className="space-y-6">

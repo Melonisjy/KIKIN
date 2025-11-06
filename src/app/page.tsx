@@ -121,8 +121,7 @@ export default async function HomePage() {
                   팀장 기능
                 </h3>
                 <p className="mt-2 text-sm text-[#A1A1AA]">
-                  팀장은 경기를 생성하고 관리할 수 있습니다. 무료 플랜은 주당
-                  2경기, 프리미엄은 무제한입니다.
+                  팀장은 경기를 생성하고 관리할 수 있습니다.
                 </p>
               </div>
 

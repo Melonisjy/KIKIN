@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
-import { Crown } from "lucide-react";
 
 interface PageProps {
   searchParams: Promise<{ teamId?: string }>;
@@ -34,66 +33,6 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
   }
 
   const team = member.teams as any;
-
-  // Check premium status
-  const { data: profile } = await supabase
-    .from("user_profiles")
-    .select("is_premium")
-    .eq("id", user.id)
-    .single();
-
-  const isPremium = profile?.is_premium || false;
-
-  // Check match limit for free users
-  if (!isPremium) {
-    const now = new Date();
-    const startOfWeek = new Date(now);
-    startOfWeek.setDate(now.getDate() - now.getDay()); // Start of week (Sunday)
-    startOfWeek.setHours(0, 0, 0, 0);
-
-    const { count } = await supabase
-      .from("matches")
-      .select("*", { count: "exact", head: true })
-      .eq("team_id", teamId)
-      .gte("created_at", startOfWeek.toISOString());
-
-    if (count && count >= 2) {
-      return (
-        <div className="container mx-auto px-4 py-8 max-w-2xl">
-          <Link
-            href={`/team/${teamId}`}
-            className="inline-flex items-center gap-2 text-sm text-[#A1A1AA] hover:text-[#F4F4F5] mb-6"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            {team.name}으로 돌아가기
-          </Link>
-
-          <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-8 text-center">
-            <Crown className="mx-auto h-12 w-12 text-primary mb-4" />
-            <h2 className="text-2xl font-bold text-[#F4F4F5] mb-4">
-              무료 플랜 제한 도달
-            </h2>
-            <p className="text-[#A1A1AA] mb-6">
-              무료 플랜에서는 주당 2경기까지만 생성할 수 있습니다.
-              <br />
-              프리미엄으로 업그레이드하여 무제한 경기를 생성하세요!
-            </p>
-            <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-              <Link href="/premium">
-                <Button>
-                  <Crown className="mr-2 h-4 w-4" />
-                  프리미엄으로 업그레이드
-                </Button>
-              </Link>
-              <Link href={`/team/${teamId}`}>
-                <Button variant="outline">돌아가기</Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      );
-    }
-  }
 
   async function createMatch(formData: FormData) {
     "use server";
@@ -126,34 +65,6 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
         throw new Error("팀장만 경기를 생성할 수 있습니다.");
       }
 
-      // Premium check
-      const { data: profile } = await supabase
-        .from("user_profiles")
-        .select("is_premium")
-        .eq("id", user.id)
-        .single();
-
-      const isPremium = profile?.is_premium || false;
-
-      // Check match limit for free users
-      if (!isPremium) {
-        const now = new Date();
-        const startOfWeek = new Date(now);
-        startOfWeek.setDate(now.getDate() - now.getDay());
-        startOfWeek.setHours(0, 0, 0, 0);
-
-        const { count } = await supabase
-          .from("matches")
-          .select("*", { count: "exact", head: true })
-          .eq("team_id", teamId)
-          .gte("created_at", startOfWeek.toISOString());
-
-        if (count && count >= 2) {
-          throw new Error(
-            "무료 플랜에서는 주당 2경기까지만 생성할 수 있습니다. 프리미엄으로 업그레이드하세요."
-          );
-        }
-      }
 
       if (!date || !time || !location) {
         throw new Error("날짜, 시간, 장소는 필수입니다.");
@@ -197,18 +108,6 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
         <ArrowLeft className="h-4 w-4" />
         {team.name}으로 돌아가기
       </Link>
-
-      {!isPremium && (
-        <div className="mb-4 rounded-lg border border-[#27272A] bg-[#181A1F] p-4">
-          <p className="text-sm text-[#A1A1AA]">
-            무료 플랜: 주당 2경기까지 생성 가능.{" "}
-            <Link href="/premium" className="text-[#00C16A] hover:text-[#00A85B] underline font-medium">
-              프리미엄으로 업그레이드
-            </Link>
-            하면 무제한 경기를 생성할 수 있습니다.
-          </p>
-        </div>
-      )}
 
       <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6">
         <h1 className="text-2xl font-bold text-[#F4F4F5] mb-6">
