@@ -62,6 +62,22 @@ export default async function MatchDetailPage({ params }: PageProps) {
     .eq("match_id", matchId)
     .order("created_at", { ascending: true });
 
+  // 참여자들의 프로필 정보 가져오기
+  const participantUserIds = participants?.map((p: any) => p.user_id) || [];
+  let profileMap = new Map<string, string | null>();
+  
+  if (participantUserIds.length > 0) {
+    const { data: profiles } = await supabase
+      .from("user_profiles")
+      .select("id, name")
+      .in("id", participantUserIds);
+
+    // 프로필 맵 생성 (user_id -> name)
+    profileMap = new Map(
+      profiles?.map((p: any) => [p.id, p.name]) || []
+    );
+  }
+
   // 현재 사용자의 참여 상태
   const userParticipant = participants?.find(
     (p: any) => p.user_id === user.id
@@ -199,10 +215,11 @@ export default async function MatchDetailPage({ params }: PageProps) {
                 maybe: "미정",
               };
 
-              // user_id의 일부만 표시 (이메일은 나중에 profile 테이블 추가 시 개선 가능)
-              const displayName = participant.user_id === user.id 
-                ? user.email || "나"
-                : `사용자 ${participant.user_id.slice(0, 8)}...`;
+              // 프로필에서 이름 가져오기, 없으면 이메일 또는 기본값 사용
+              const participantName = profileMap.get(participant.user_id);
+              const displayName = participant.user_id === user.id
+                ? participantName || user.email?.split("@")[0] || "나"
+                : participantName || "이름 없음";
 
               return (
                 <div
