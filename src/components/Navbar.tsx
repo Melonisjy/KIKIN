@@ -12,7 +12,21 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
   const [hasError, setHasError] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  // 프로필 정보 가져오기 함수 (API 라우트 사용)
+  const fetchUserProfile = async () => {
+    try {
+      const response = await fetch("/api/profile/get-name");
+      const data = await response.json();
+      return data.name || null;
+    } catch (error) {
+      console.error("프로필 조회 예외:", error);
+      return null;
+    }
+  };
 
   useEffect(() => {
     let supabase;
@@ -31,6 +45,14 @@ export default function Navbar() {
         } = await supabase.auth.getUser();
         setIsLoggedIn(!!user);
         setUserEmail(user?.email || null);
+
+        // 프로필에서 이름 가져오기
+        if (user) {
+          const name = await fetchUserProfile();
+          setUserName(name);
+        } else {
+          setUserName(null);
+        }
       } catch (error) {
         console.error("Error checking user:", error);
         setHasError(true);
@@ -41,28 +63,93 @@ export default function Navbar() {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setIsLoggedIn(!!session);
       setUserEmail(session?.user?.email || null);
+
+      // 프로필에서 이름 가져오기
+      if (session?.user) {
+        const name = await fetchUserProfile();
+        setUserName(name);
+      } else {
+        setUserName(null);
+      }
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
-  const handleLogout = async () => {
-    try {
-      const supabase = createClient();
-      await supabase.auth.signOut();
-      router.push("/");
-      router.refresh();
-    } catch (error) {
-      console.error("Error signing out:", error);
+  // 페이지 포커스 시 프로필 정보 새로고침 (이름 변경 후 반영)
+  useEffect(() => {
+    const handleFocus = async () => {
+      if (isLoggedIn) {
+        const supabase = createClient();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+
+        if (user) {
+          const name = await fetchUserProfile();
+          setUserName(name);
+        } else {
+          setUserName(null);
+        }
+      }
+    };
+
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, [isLoggedIn]);
+
+  // 컴포넌트 마운트 후 추가로 프로필 조회
+  useEffect(() => {
+    if (isLoggedIn) {
+      const refreshProfile = async () => {
+        const supabase = createClient();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+
+        if (user) {
+          const name = await fetchUserProfile();
+          setUserName(name);
+        }
+      };
+
+      refreshProfile();
     }
+  }, [isLoggedIn]);
+
+  const handleLogout = async () => {
+    if (isLoggingOut) return; // 중복 클릭 방지
+
+    setIsLoggingOut(true);
+
+    // 쿠키 즉시 삭제
+    document.cookie.split(";").forEach((c) => {
+      const eqPos = c.indexOf("=");
+      const name = eqPos > -1 ? c.substr(0, eqPos).trim() : c.trim();
+      if (name.startsWith("sb-")) {
+        document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+      }
+    });
+
+    // signOut을 백그라운드에서 실행하되 기다리지 않음
+    const supabase = createClient();
+    supabase.auth.signOut().catch((error) => {
+      console.error("SignOut error (ignored):", error);
+    });
+
+    // 즉시 리다이렉트
+    window.location.href = "/";
   };
 
-  const getInitials = (email: string) => {
-    return email.charAt(0).toUpperCase();
+  const getInitials = (text: string) => {
+    return text.charAt(0).toUpperCase();
   };
+
+  // 이름이 있으면 이름 우선, 없으면 이메일
+  const displayText = userName ? userName : userEmail || "";
 
   return (
     <nav className="w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -83,16 +170,16 @@ export default function Navbar() {
                   href="/dashboard"
                   className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
                 >
-                  대시보드
+                  라커룸
                 </Link>
                 <div className="flex items-center gap-3 pl-4 border-l">
-                  {userEmail && (
+                  {displayText && (
                     <div className="flex items-center gap-2">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white text-xs font-medium shadow-sm">
-                        {getInitials(userEmail)}
+                        {getInitials(displayText)}
                       </div>
                       <span className="text-sm text-muted-foreground max-w-[150px] truncate">
-                        {userEmail}
+                        {displayText}
                       </span>
                     </div>
                   )}
@@ -100,10 +187,11 @@ export default function Navbar() {
                     variant="ghost"
                     size="sm"
                     onClick={handleLogout}
+                    disabled={isLoggingOut}
                     className="gap-2"
                   >
                     <LogOut className="h-4 w-4" />
-                    로그아웃
+                    {isLoggingOut ? "로그아웃 중..." : "로그아웃"}
                   </Button>
                 </div>
               </>
@@ -139,15 +227,15 @@ export default function Navbar() {
                     className="flex items-center gap-2 px-3 py-2 text-base font-medium text-foreground hover:bg-muted rounded-md transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    대시보드
+                    라커룸
                   </Link>
-                  {userEmail && (
+                  {displayText && (
                     <div className="flex items-center gap-2 px-3 py-2">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white text-xs font-medium shadow-sm">
-                        {getInitials(userEmail)}
+                        {getInitials(displayText)}
                       </div>
                       <span className="text-sm text-muted-foreground truncate flex-1">
-                        {userEmail}
+                        {displayText}
                       </span>
                     </div>
                   )}
@@ -156,10 +244,11 @@ export default function Navbar() {
                       handleLogout();
                       setIsMenuOpen(false);
                     }}
-                    className="flex w-full items-center gap-2 px-3 py-2 text-base font-medium text-foreground hover:bg-muted rounded-md transition-colors cursor-pointer"
+                    disabled={isLoggingOut}
+                    className="flex w-full items-center gap-2 px-3 py-2 text-base font-medium text-foreground hover:bg-muted rounded-md transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <LogOut className="h-4 w-4" />
-                    로그아웃
+                    {isLoggingOut ? "로그아웃 중..." : "로그아웃"}
                   </button>
                 </>
               ) : (
