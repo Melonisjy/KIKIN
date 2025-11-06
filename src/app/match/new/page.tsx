@@ -289,13 +289,13 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
           <div className="flex gap-3">
             <button
               type="submit"
-              className="flex-1 rounded-lg bg-primary px-4 py-2 font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              className="flex-1 rounded-lg bg-primary px-4 py-2 font-medium text-primary-foreground transition-colors hover:bg-primary/90 cursor-pointer"
             >
               경기 생성
             </button>
             <Link
               href={`/team/${teamId}`}
-              className="flex-1 rounded-lg border border-border bg-background px-4 py-2 text-center font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+              className="flex-1 rounded-lg border border-border bg-background px-4 py-2 text-center font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer"
             >
               취소
             </Link>

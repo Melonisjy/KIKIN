@@ -119,7 +119,7 @@ export function MatchParticipantButtons({
               key={btnStatus}
               onClick={() => handleStatusChange(btnStatus)}
               disabled={isLoading}
-              className={`flex-1 flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`flex-1 flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
                 isActive ? activeClassName : className
               }`}
             >
