@@ -1,13 +1,14 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Plus, Users, Calendar } from "lucide-react";
+import { ArrowLeft, Plus, Users, Calendar, Megaphone, Pin } from "lucide-react";
 import { MatchCard } from "@/components/MatchCard";
 import { MatchListSkeleton } from "@/components/LoadingSkeleton";
 import { Button } from "@/components/ui/button";
 import { Suspense } from "react";
 import { DeleteTeam } from "./delete-team";
 import { TeamCode } from "./team-code";
+import { NoticesSection } from "./notices-section";
 
 interface PageProps {
   params: Promise<{ teamId: string }>;
@@ -77,6 +78,37 @@ export default async function TeamDetailPage({ params }: PageProps) {
     .order("date", { ascending: true })
     .order("time", { ascending: true });
 
+  // 팀 공지 전체 개수 가져오기
+  const { count: noticesCount } = await supabase
+    .from("team_notices")
+    .select("*", { count: "exact", head: true })
+    .eq("team_id", teamId);
+
+  // 팀 공지 가져오기 (고정 공지 먼저, 최신순, 최대 10개)
+  const { data: notices, error: noticesError } = await supabase
+    .from("team_notices")
+    .select("*")
+    .eq("team_id", teamId)
+    .order("is_pinned", { ascending: false })
+    .order("created_at", { ascending: false })
+    .limit(10);
+
+  // 공지 작성자 이름 맵 생성 (객체로 변환)
+  const noticeAuthorMap: Record<string, string | null> = {};
+  if (notices && notices.length > 0) {
+    const authorIds = [...new Set(notices.map((notice: any) => notice.created_by))];
+    if (authorIds.length > 0) {
+      const { data: profiles } = await supabase
+        .from("user_profiles")
+        .select("id, name")
+        .in("id", authorIds);
+
+      profiles?.forEach((profile: any) => {
+        noticeAuthorMap[profile.id] = profile.name;
+      });
+    }
+  }
+
   const isLeader = member.role === "leader";
 
   return (
@@ -127,6 +159,16 @@ export default async function TeamDetailPage({ params }: PageProps) {
           </span>
         </div>
       </div>
+
+      {/* 공지 섹션 */}
+      <NoticesSection
+        teamId={teamId}
+        notices={notices || []}
+        noticesError={noticesError}
+        isLeader={isLeader}
+        noticeAuthorMap={noticeAuthorMap}
+        totalCount={noticesCount || 0}
+      />
 
       {/* 팀원 목록 */}
       <div className="mb-6">
@@ -242,3 +284,4 @@ export default async function TeamDetailPage({ params }: PageProps) {
     </div>
   );
 }
+
