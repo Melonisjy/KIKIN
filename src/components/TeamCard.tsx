@@ -11,9 +11,10 @@ interface TeamCardProps {
   };
   role: "leader" | "member";
   joinedAt: string;
+  memberCount?: number;
 }
 
-export function TeamCard({ team, role, joinedAt }: TeamCardProps) {
+export function TeamCard({ team, role, joinedAt, memberCount }: TeamCardProps) {
   return (
     <Link href={`/team/${team.id}`} className={`${styles.teamCard} group`}>
       <div className={styles.teamCardContent}>
@@ -39,6 +40,11 @@ export function TeamCard({ team, role, joinedAt }: TeamCardProps) {
         )}
 
         <div className={styles.teamFooter}>
+          {memberCount !== undefined && (
+            <span className={styles.teamMemberCount}>
+              팀원 {memberCount}명
+            </span>
+          )}
           <span className={styles.teamDate}>
             가입일: {new Date(joinedAt).toLocaleDateString("ko-KR")}
           </span>

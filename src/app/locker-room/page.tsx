@@ -61,6 +61,25 @@ export default async function LockerRoomPage() {
     )
     .eq("user_id", user.id);
 
+  // 각 팀의 멤버 수 계산
+  const teamIds =
+    teams?.map((member: any) => member.teams?.id).filter(Boolean) || [];
+  let memberCountMap = new Map<string, number>();
+
+  if (teamIds.length > 0) {
+    // 각 팀의 멤버 수를 가져오기
+    const { data: memberCounts } = await supabase
+      .from("members")
+      .select("team_id")
+      .in("team_id", teamIds);
+
+    // 팀별로 멤버 수 계산
+    memberCounts?.forEach((member: any) => {
+      const currentCount = memberCountMap.get(member.team_id) || 0;
+      memberCountMap.set(member.team_id, currentCount + 1);
+    });
+  }
+
   return (
     <>
       {needsName && <SetNameModal isOpen={true} currentName={userName} />}
@@ -130,12 +149,15 @@ export default async function LockerRoomPage() {
                     const team = member.teams;
                     if (!team) return null;
 
+                    const memberCount = memberCountMap.get(team.id) || 0;
+
                     return (
                       <TeamCard
                         key={team.id}
                         team={team}
                         role={member.role}
                         joinedAt={member.joined_at}
+                        memberCount={memberCount}
                       />
                     );
                   })}

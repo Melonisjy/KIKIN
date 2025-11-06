@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Plus } from "lucide-react";
+import { ArrowLeft, Plus, Users } from "lucide-react";
 import { MatchCard } from "@/components/MatchCard";
 import { MatchListSkeleton } from "@/components/LoadingSkeleton";
 import { Button } from "@/components/ui/button";
@@ -46,6 +46,27 @@ export default async function TeamDetailPage({ params }: PageProps) {
 
   if (!member) {
     redirect("/locker-room");
+  }
+
+  // 팀원 목록 가져오기
+  const { data: teamMembers, error: membersError } = await supabase
+    .from("members")
+    .select("user_id, role, joined_at")
+    .eq("team_id", teamId)
+    .order("role", { ascending: false }) // leader 먼저
+    .order("joined_at", { ascending: true });
+
+  // 팀원들의 프로필 정보 가져오기
+  const memberUserIds = teamMembers?.map((m: any) => m.user_id) || [];
+  let memberProfileMap = new Map<string, string | null>();
+
+  if (memberUserIds.length > 0) {
+    const { data: profiles } = await supabase
+      .from("user_profiles")
+      .select("id, name")
+      .in("id", memberUserIds);
+
+    memberProfileMap = new Map(profiles?.map((p: any) => [p.id, p.name]) || []);
   }
 
   // 팀의 경기 목록 가져오기 (날짜순 정렬)
@@ -105,6 +126,69 @@ export default async function TeamDetailPage({ params }: PageProps) {
             {isLeader ? "팀장" : "멤버"}
           </span>
         </div>
+      </div>
+
+      {/* 팀원 목록 */}
+      <div className="mb-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Users className="h-6 w-6 text-[#F4F4F5]" />
+          <h2 className="text-2xl font-semibold text-[#F4F4F5]">팀원</h2>
+          <span className="text-sm text-[#A1A1AA]">
+            ({teamMembers?.length || 0}명)
+          </span>
+        </div>
+
+        {membersError ? (
+          <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-destructive">
+            <p>팀원 정보를 불러오는 중 오류가 발생했습니다.</p>
+            <p className="mt-2 text-sm">{membersError.message}</p>
+          </div>
+        ) : teamMembers && teamMembers.length > 0 ? (
+          <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {teamMembers.map((memberItem: any) => {
+                const memberName = memberProfileMap.get(memberItem.user_id);
+                const isMemberLeader = memberItem.role === "leader";
+                const isCurrentUser = memberItem.user_id === user.id;
+
+                return (
+                  <div
+                    key={memberItem.user_id}
+                    className="flex items-center gap-3 p-3 rounded-lg bg-[#27272A]/50 border border-[#27272A]"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#00C16A] text-[#0F1115] text-sm font-semibold">
+                      {memberName
+                        ? memberName.charAt(0).toUpperCase()
+                        : memberItem.user_id.slice(0, 1).toUpperCase()}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-[#F4F4F5] truncate">
+                          {memberName || "이름 없음"}
+                        </span>
+                        {isMemberLeader && (
+                          <span className="rounded-full bg-[#00C16A]/10 text-[#00C16A] px-2 py-0.5 text-xs font-medium">
+                            팀장
+                          </span>
+                        )}
+                        {isCurrentUser && (
+                          <span className="text-xs text-[#A1A1AA]">(나)</span>
+                        )}
+                      </div>
+                      <p className="text-xs text-[#A1A1AA]">
+                        가입일: {new Date(memberItem.joined_at).toLocaleDateString("ko-KR")}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          <div className="rounded-lg border border-dashed border-[#27272A] bg-[#27272A]/50 p-8 text-center">
+            <p className="text-[#A1A1AA]">팀원이 없습니다.</p>
+          </div>
+        )}
       </div>
 
       {/* 경기 목록 */}

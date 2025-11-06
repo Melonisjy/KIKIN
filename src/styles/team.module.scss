@@ -92,6 +92,12 @@
   color: #a1a1aa;
   padding-top: 1rem;
   border-top: 1px solid #27272a;
+  flex-wrap: wrap;
+}
+
+.teamMemberCount {
+  color: #00c16a;
+  font-weight: 500;
 }
 
 .teamDate {
