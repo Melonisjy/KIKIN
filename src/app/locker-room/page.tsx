@@ -85,6 +85,10 @@ export default async function LockerRoomPage() {
   let recentMatches: any[] = [];
   let matchesError = null;
   let teamNameMap = new Map<string, string>();
+  let matchParticipantStats: Record<
+    string,
+    { going: number; notGoing: number; maybe: number }
+  > = {};
 
   if (teamIds.length > 0) {
     // 팀 이름 맵 생성
@@ -107,6 +111,30 @@ export default async function LockerRoomPage() {
       matchesError = matchesErr;
     } else {
       recentMatches = matches || [];
+
+      // 각 경기의 참여자 통계 가져오기
+      if (recentMatches.length > 0) {
+        const matchIds = recentMatches.map((m: any) => m.id);
+        const { data: participants } = await supabase
+          .from("match_participants")
+          .select("match_id, status")
+          .in("match_id", matchIds);
+
+        // 각 경기별로 통계 계산
+        matchIds.forEach((matchId: string) => {
+          const matchParticipants =
+            participants?.filter((p: any) => p.match_id === matchId) || [];
+          matchParticipantStats[matchId] = {
+            going: matchParticipants.filter((p: any) => p.status === "going")
+              .length,
+            notGoing: matchParticipants.filter(
+              (p: any) => p.status === "not_going"
+            ).length,
+            maybe: matchParticipants.filter((p: any) => p.status === "maybe")
+              .length,
+          };
+        });
+      }
     }
   }
 
@@ -251,6 +279,7 @@ export default async function LockerRoomPage() {
                       }}
                       showTeam={true}
                       teamName={teamName}
+                      participantStats={matchParticipantStats[match.id]}
                     />
                   );
                 })}

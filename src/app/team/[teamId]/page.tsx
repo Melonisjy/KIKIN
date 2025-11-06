@@ -78,6 +78,26 @@ export default async function TeamDetailPage({ params }: PageProps) {
     .order("date", { ascending: true })
     .order("time", { ascending: true });
 
+  // 각 경기의 참여자 통계 가져오기
+  const matchParticipantStats: Record<string, { going: number; notGoing: number; maybe: number }> = {};
+  if (matches && matches.length > 0) {
+    const matchIds = matches.map((m: any) => m.id);
+    const { data: participants } = await supabase
+      .from("match_participants")
+      .select("match_id, status")
+      .in("match_id", matchIds);
+
+    // 각 경기별로 통계 계산
+    matchIds.forEach((matchId: string) => {
+      const matchParticipants = participants?.filter((p: any) => p.match_id === matchId) || [];
+      matchParticipantStats[matchId] = {
+        going: matchParticipants.filter((p: any) => p.status === "going").length,
+        notGoing: matchParticipants.filter((p: any) => p.status === "not_going").length,
+        maybe: matchParticipants.filter((p: any) => p.status === "maybe").length,
+      };
+    });
+  }
+
   // 팀 공지 전체 개수 가져오기
   const { count: noticesCount } = await supabase
     .from("team_notices")
@@ -262,6 +282,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
                 key={match.id}
                 match={match}
                 showTeam={false}
+                participantStats={matchParticipantStats[match.id]}
               />
             ))}
           </div>
