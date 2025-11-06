@@ -4,7 +4,7 @@ import Stripe from "stripe";
 import { headers } from "next/headers";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-12-18.acacia",
+  apiVersion: "2025-10-29.clover",
 });
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
     if (userId) {
       // Update user profile to premium
       const supabase = await createClient();
-      
+
       // We need to use service role client for admin operations
       // For now, we'll use a direct database update via RPC
       const { error } = await supabase
@@ -87,4 +87,3 @@ export async function POST(request: Request) {
 
   return NextResponse.json({ received: true });
 }
-
