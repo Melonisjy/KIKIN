@@ -69,9 +69,9 @@ export default function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="text-xl font-bold text-foreground">
-              FutsalMate
+          <Link href="/" className="flex items-center space-x-2 group">
+            <span className="text-xl font-bold text-foreground bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-clip-text text-transparent group-hover:from-[#764ba2] group-hover:to-[#667eea] transition-all duration-300">
+              킥-인
             </span>
           </Link>
 
@@ -88,7 +88,7 @@ export default function Navbar() {
                 <div className="flex items-center gap-3 pl-4 border-l">
                   {userEmail && (
                     <div className="flex items-center gap-2">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-medium">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white text-xs font-medium shadow-sm">
                         {getInitials(userEmail)}
                       </div>
                       <span className="text-sm text-muted-foreground max-w-[150px] truncate">
@@ -116,7 +116,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 rounded-md text-foreground hover:bg-muted transition-colors"
+            className="md:hidden p-2 rounded-md text-foreground hover:bg-muted transition-colors cursor-pointer"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -143,7 +143,7 @@ export default function Navbar() {
                   </Link>
                   {userEmail && (
                     <div className="flex items-center gap-2 px-3 py-2">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-medium">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white text-xs font-medium shadow-sm">
                         {getInitials(userEmail)}
                       </div>
                       <span className="text-sm text-muted-foreground truncate flex-1">
@@ -156,7 +156,7 @@ export default function Navbar() {
                       handleLogout();
                       setIsMenuOpen(false);
                     }}
-                    className="flex w-full items-center gap-2 px-3 py-2 text-base font-medium text-foreground hover:bg-muted rounded-md transition-colors"
+                    className="flex w-full items-center gap-2 px-3 py-2 text-base font-medium text-foreground hover:bg-muted rounded-md transition-colors cursor-pointer"
                   >
                     <LogOut className="h-4 w-4" />
                     로그아웃

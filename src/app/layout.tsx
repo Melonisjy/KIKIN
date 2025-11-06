@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FutsalMate",
+  title: "킥-인",
   description: "풋살 팀 경기 일정 관리 플랫폼",
 };
 
