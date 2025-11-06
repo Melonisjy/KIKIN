@@ -34,26 +34,34 @@ export function MatchCard({ match, showTeam, teamName }: MatchCardProps) {
   return (
     <Link
       href={`/match/${match.id}`}
-      className={`${styles.matchCard} group`}
+      className={`${styles.matchCard} group ${isPast ? styles.pastMatch : ""}`}
     >
       <div className={styles.matchCardContent}>
         <div className={styles.matchCardHeader}>
-          {showTeam && teamName && (
-            <span className={styles.teamBadge}>{teamName}</span>
+          <div className="flex items-center gap-2 flex-wrap">
+            {showTeam && teamName && (
+              <span className={styles.teamBadge}>{teamName}</span>
+            )}
+          </div>
+          {isPast ? (
+            <span className={`${styles.statusBadge} bg-[#27272A] text-[#A1A1AA]`}>
+              종료
+            </span>
+          ) : (
+            <span
+              className={`${styles.statusBadge} ${
+                statusColors[match.status]
+              }`}
+            >
+              {statusLabels[match.status]}
+            </span>
           )}
-          <span
-            className={`${styles.statusBadge} ${
-              statusColors[match.status]
-            } ${isPast ? "opacity-50" : ""}`}
-          >
-            {statusLabels[match.status]}
-          </span>
         </div>
 
         <div className={styles.matchCardBody}>
           <div className={styles.matchInfo}>
             <Calendar className={styles.icon} />
-            <span className={styles.matchDate}>
+            <span className={`${styles.matchDate} ${isPast ? styles.pastText : ""}`}>
               {matchDate.toLocaleDateString("ko-KR", {
                 year: "numeric",
                 month: "long",
@@ -66,11 +74,15 @@ export function MatchCard({ match, showTeam, teamName }: MatchCardProps) {
 
           <div className={styles.matchInfo}>
             <MapPin className={styles.icon} />
-            <span className={styles.matchLocation}>{match.location}</span>
+            <span className={`${styles.matchLocation} ${isPast ? styles.pastText : ""}`}>
+              {match.location}
+            </span>
           </div>
 
           {match.note && (
-            <p className={styles.matchNote}>{match.note}</p>
+            <p className={`${styles.matchNote} ${isPast ? styles.pastText : ""}`}>
+              {match.note}
+            </p>
           )}
         </div>
       </div>

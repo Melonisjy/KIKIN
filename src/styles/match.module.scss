@@ -11,6 +11,11 @@
     border-color: #27272a;
     transform: scale(0.98);
   }
+
+  &.pastMatch {
+    opacity: 0.6;
+    border-color: #27272a;
+  }
 }
 
 .matchCardContent {
@@ -82,4 +87,9 @@
   padding-top: 0.75rem;
   border-top: 1px solid #27272a;
   line-height: 1.5;
+}
+
+.pastText {
+  opacity: 0.7;
+  color: #a1a1aa;
 }

@@ -85,27 +85,27 @@ export function MatchParticipantButtons({
       label: "참석",
       icon: CheckCircle,
       className:
-        "bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-200",
+        "border border-[#27272A] bg-[#181A1F] text-[#F4F4F5] hover:bg-[#27272A] hover:border-[#00C16A]",
       activeClassName:
-        "bg-green-600 text-white hover:bg-green-700 dark:bg-green-700",
+        "bg-[#00C16A] text-[#0F1115] border-[#00C16A] hover:bg-[#00A85B]",
     },
     {
       status: "not_going" as const,
       label: "불참",
       icon: XCircle,
       className:
-        "bg-red-100 text-red-800 hover:bg-red-200 dark:bg-red-900 dark:text-red-200",
+        "border border-[#27272A] bg-[#181A1F] text-[#F4F4F5] hover:bg-[#27272A] hover:border-red-400",
       activeClassName:
-        "bg-red-600 text-white hover:bg-red-700 dark:bg-red-700",
+        "bg-red-500/20 text-red-400 border-red-400 hover:bg-red-500/30",
     },
     {
       status: "maybe" as const,
       label: "미정",
       icon: HelpCircle,
       className:
-        "bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-900 dark:text-yellow-200",
+        "border border-[#27272A] bg-[#181A1F] text-[#F4F4F5] hover:bg-[#27272A] hover:border-yellow-400",
       activeClassName:
-        "bg-yellow-600 text-white hover:bg-yellow-700 dark:bg-yellow-700",
+        "bg-yellow-500/20 text-yellow-400 border-yellow-400 hover:bg-yellow-500/30",
     },
   ];
 

@@ -9,6 +9,7 @@ import Link from "next/link";
 import { LockerRoomActions } from "./locker-room-actions";
 import { SetNameModal } from "@/components/SetNameModal";
 import { ProfileCard } from "@/components/ProfileCard";
+import { MatchCard } from "@/components/MatchCard";
 
 export default async function LockerRoomPage() {
   const supabase = await createClient();
@@ -78,6 +79,35 @@ export default async function LockerRoomPage() {
       const currentCount = memberCountMap.get(member.team_id) || 0;
       memberCountMap.set(member.team_id, currentCount + 1);
     });
+  }
+
+  // 사용자가 가입한 모든 팀의 최근 경기 가져오기 (과거 경기 포함)
+  let recentMatches: any[] = [];
+  let matchesError = null;
+  let teamNameMap = new Map<string, string>();
+
+  if (teamIds.length > 0) {
+    // 팀 이름 맵 생성
+    teams?.forEach((member: any) => {
+      if (member.teams?.id) {
+        teamNameMap.set(member.teams.id, member.teams.name);
+      }
+    });
+
+    // 모든 경기 가져오기 (과거 경기 포함, 취소된 경기도 포함)
+    const { data: matches, error: matchesErr } = await supabase
+      .from("matches")
+      .select("*")
+      .in("team_id", teamIds)
+      .order("date", { ascending: false }) // 최근 경기 먼저
+      .order("time", { ascending: false })
+      .limit(10); // 최대 10개까지만 표시
+
+    if (matchesErr) {
+      matchesError = matchesErr;
+    } else {
+      recentMatches = matches || [];
+    }
   }
 
   return (
@@ -186,16 +216,51 @@ export default async function LockerRoomPage() {
             )}
           </section>
 
-          {/* 최근 경기 섹션 (추후 구현) */}
+          {/* 최근 경기 섹션 */}
           <section>
             <h2 className="mb-4 text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
               <Calendar className="h-6 w-6" />
               최근 경기
+              {recentMatches.length > 0 && (
+                <span className="text-lg font-medium text-[#A1A1AA] ml-2">
+                  ({recentMatches.length})
+                </span>
+              )}
             </h2>
-            <div className="rounded-lg border border-dashed bg-muted/50 p-12 text-center">
-              <Calendar className="mx-auto h-12 w-12 text-[#A1A1AA] mb-4" />
-              <p className="text-[#A1A1AA]">예정된 경기가 없습니다.</p>
-            </div>
+
+            {matchesError ? (
+              <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-destructive">
+                <p>경기 정보를 불러오는 중 오류가 발생했습니다.</p>
+                <p className="mt-2 text-sm">{matchesError.message}</p>
+              </div>
+            ) : recentMatches.length > 0 ? (
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {recentMatches.map((match: any) => {
+                  const teamName =
+                    teamNameMap.get(match.team_id) || "알 수 없는 팀";
+                  return (
+                    <MatchCard
+                      key={match.id}
+                      match={{
+                        id: match.id,
+                        date: match.date,
+                        time: match.time,
+                        location: match.location,
+                        note: match.note,
+                        status: match.status,
+                      }}
+                      showTeam={true}
+                      teamName={teamName}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="rounded-lg border border-dashed border-[#27272A] bg-[#27272A]/50 p-12 text-center">
+                <Calendar className="mx-auto h-12 w-12 text-[#A1A1AA] mb-4" />
+                <p className="text-[#A1A1AA]">경기가 없습니다.</p>
+              </div>
+            )}
           </section>
         </div>
       </div>

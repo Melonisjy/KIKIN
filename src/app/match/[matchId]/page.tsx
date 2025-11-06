@@ -90,10 +90,9 @@ export default async function MatchDetailPage({ params }: PageProps) {
   const isPast = matchDate < new Date();
 
   const statusColors = {
-    upcoming: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
-    confirmed:
-      "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
-    cancelled: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
+    upcoming: "bg-blue-500/10 text-blue-400",
+    confirmed: "bg-[#00C16A]/10 text-[#00C16A]",
+    cancelled: "bg-red-500/10 text-red-400",
   };
 
   // 참여자 통계
@@ -153,11 +152,15 @@ export default async function MatchDetailPage({ params }: PageProps) {
           </div>
           <span
             className={`rounded-full px-3 py-1 text-sm font-medium ${
-              statusColors[match.status as keyof typeof statusColors] ||
-              statusColors.upcoming
-            } ${isPast ? "opacity-50" : ""}`}
+              isPast
+                ? "bg-[#27272A] text-[#A1A1AA]"
+                : statusColors[match.status as keyof typeof statusColors] ||
+                  statusColors.upcoming
+            }`}
           >
-            {match.status === "upcoming"
+            {isPast
+              ? "종료"
+              : match.status === "upcoming"
               ? "예정"
               : match.status === "confirmed"
               ? "확정"
@@ -187,15 +190,15 @@ export default async function MatchDetailPage({ params }: PageProps) {
           </h2>
           <div className="flex gap-4 text-sm text-[#A1A1AA]">
             <span className="flex items-center gap-1">
-              <CheckCircle className="h-4 w-4 text-green-600" />
+              <CheckCircle className="h-4 w-4 text-[#00C16A]" />
               참석: {goingCount}
             </span>
             <span className="flex items-center gap-1">
-              <XCircle className="h-4 w-4 text-red-600" />
+              <XCircle className="h-4 w-4 text-red-400" />
               불참: {notGoingCount}
             </span>
             <span className="flex items-center gap-1">
-              <HelpCircle className="h-4 w-4 text-yellow-600" />
+              <HelpCircle className="h-4 w-4 text-yellow-400" />
               미정: {maybeCount}
             </span>
           </div>
@@ -210,9 +213,9 @@ export default async function MatchDetailPage({ params }: PageProps) {
           <div className="space-y-2">
             {participants.map((participant: any) => {
               const statusIcons = {
-                going: <CheckCircle className="h-4 w-4 text-green-600" />,
-                not_going: <XCircle className="h-4 w-4 text-red-600" />,
-                maybe: <HelpCircle className="h-4 w-4 text-yellow-600" />,
+                going: <CheckCircle className="h-4 w-4 text-[#00C16A]" />,
+                not_going: <XCircle className="h-4 w-4 text-red-400" />,
+                maybe: <HelpCircle className="h-4 w-4 text-yellow-400" />,
               };
               const statusLabels = {
                 going: "참석",
