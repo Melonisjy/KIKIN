@@ -329,7 +329,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
           <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6">
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {teamMembers.map((memberItem: any) => {
-                const memberName = memberProfileMap.get(memberItem.user_id);
+                const memberName = memberProfileMap.get(memberItem.user_id) || null;
                 const isMemberLeader = memberItem.role === "leader";
                 const isCurrentUser = memberItem.user_id === user.id;
 
