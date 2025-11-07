@@ -247,9 +247,13 @@ export default async function TeamDetailPage({ params }: PageProps) {
                         <span className="text-sm font-medium text-[#F4F4F5] truncate">
                           {memberName || "이름 없음"}
                         </span>
-                        {isMemberLeader && (
+                        {isMemberLeader ? (
                           <span className="rounded-full bg-[#00C16A]/10 text-[#00C16A] px-2 py-0.5 text-xs font-medium">
                             팀장
+                          </span>
+                        ) : (
+                          <span className="rounded-full bg-[#27272A] text-[#A1A1AA] px-2 py-0.5 text-xs font-medium">
+                            멤버
                           </span>
                         )}
                         {isCurrentUser && (
