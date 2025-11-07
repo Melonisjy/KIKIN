@@ -6,6 +6,7 @@ import { Menu, X, LogOut, User } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { NotificationBell } from "@/components/NotificationBell";
 
 export default function Navbar() {
   const router = useRouter();
@@ -172,6 +173,7 @@ export default function Navbar() {
                 >
                   라커룸
                 </Link>
+                <NotificationBell />
                 <div className="flex items-center gap-3 pl-4 border-l">
                   {displayText && (
                     <div className="flex items-center gap-2">
@@ -204,9 +206,11 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 rounded-md text-[#F4F4F5] hover:bg-[#181A1F] transition-colors cursor-pointer"
+            className="md:hidden min-w-[44px] min-h-[44px] p-2 rounded-md text-[#F4F4F5] hover:bg-[#181A1F] transition-colors cursor-pointer touch-manipulation"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label="메뉴 토글"
+            aria-expanded={isMenuOpen}
+            type="button"
           >
             {isMenuOpen ? (
               <X className="h-6 w-6" />
@@ -218,7 +222,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t">
+          <div className="md:hidden border-t" role="menu" aria-label="메인 메뉴">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {isLoggedIn ? (
                 <>

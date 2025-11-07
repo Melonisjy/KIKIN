@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
+import { notifyMatchCreatedServer } from "@/lib/notifications-server";
 
 interface PageProps {
   searchParams: Promise<{ teamId?: string }>;
@@ -87,9 +88,31 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
         throw new Error(`경기 생성 실패: ${error.message}`);
       }
 
+      // 팀원들에게 알림 생성
+      const { data: members } = await supabase
+        .from("members")
+        .select("user_id")
+        .eq("team_id", teamId);
+
+      const { data: team } = await supabase
+        .from("teams")
+        .select("name")
+        .eq("id", teamId)
+        .single();
+
+      if (members && team) {
+        const memberIds = members.map((m: any) => m.user_id);
+        // 비동기로 알림 생성 (실패해도 경기 생성은 성공)
+        notifyMatchCreatedServer(memberIds, date, team.name, match.id).catch(
+          () => {
+            // 알림 생성 실패는 무시
+          }
+        );
+      }
+
       redirect(`/match/${match.id}`);
     } catch (error) {
-      console.error("Error creating match:", error);
+      // 에러는 상위로 전파
       throw error;
     }
   }

@@ -36,7 +36,7 @@ export default async function LockerRoomPage() {
       .insert({ id: user.id });
 
     if (insertError) {
-      console.error("Error creating user profile:", insertError);
+      // 프로필 생성 실패는 무시 (다음 요청에서 재시도)
     }
   }
 
@@ -208,7 +208,7 @@ export default async function LockerRoomPage() {
               </div>
             ) : teams && teams.length > 0 ? (
               <Suspense fallback={<TeamListSkeleton />}>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                   {teams.map((member: any) => {
                     const team = member.teams;
                     if (!team) return null;
@@ -265,7 +265,7 @@ export default async function LockerRoomPage() {
                 <p className="mt-2 text-sm">{matchesError.message}</p>
               </div>
             ) : recentMatches.length > 0 ? (
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 {recentMatches.map((match: any) => {
                   const teamName =
                     teamNameMap.get(match.team_id) || "알 수 없는 팀";

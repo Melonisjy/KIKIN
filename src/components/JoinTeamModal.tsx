@@ -6,6 +6,9 @@ import { useRouter } from "next/navigation";
 import { Modal } from "./Modal";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { toast } from "@/components/Toast";
+import { getUserFriendlyMessage, normalizeError } from "@/lib/api-client";
+import { notifyTeamRequest } from "@/lib/notifications";
 
 interface JoinTeamModalProps {
   isOpen: boolean;
@@ -86,13 +89,46 @@ export function JoinTeamModal({ isOpen, onClose }: JoinTeamModalProps) {
         });
 
       if (requestError) {
-        throw new Error(`가입 요청 실패: ${requestError.message}`);
+        throw new Error(
+          getUserFriendlyMessage(normalizeError(requestError)) ||
+            "가입 요청에 실패했습니다."
+        );
+      }
+
+      // 팀장 정보 가져오기
+      const { data: leader } = await supabase
+        .from("members")
+        .select("user_id")
+        .eq("team_id", team.id)
+        .eq("role", "leader")
+        .single();
+
+      // 사용자 이름 가져오기 (없으면 이메일 사용)
+      const { data: profile } = await supabase
+        .from("user_profiles")
+        .select("name")
+        .eq("id", user.id)
+        .single();
+
+      const requesterName = profile?.name || user.email?.split("@")[0] || "사용자";
+
+      // 알림 생성 (팀장에게)
+      if (leader) {
+        const result = await notifyTeamRequest(
+          leader.user_id,
+          requesterName,
+          team.id
+        );
+        if (!result.success && process.env.NODE_ENV === "development") {
+          // 알림 생성 실패해도 가입 요청은 성공이므로 개발 환경에서만 로그
+          console.error("알림 생성 실패:", result.error);
+        }
       }
 
       // 성공
       setTeamCode("");
       onClose();
-      alert("가입 요청이 전송되었습니다. 팀장의 승인을 기다려주세요.");
+      toast.success("가입 요청이 전송되었습니다. 팀장의 승인을 기다려주세요.");
       router.refresh();
     } catch (err: any) {
       setError(err.message || "팀 가입 중 오류가 발생했습니다.");

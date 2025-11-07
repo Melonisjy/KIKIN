@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Calendar, MapPin, CheckCircle, XCircle, HelpCircle } from "lucide-react";
+import { memo, useMemo } from "react";
 import styles from "@/styles/match.module.scss";
 
 interface MatchCardProps {
@@ -20,9 +21,18 @@ interface MatchCardProps {
   };
 }
 
-export function MatchCard({ match, showTeam, teamName, participantStats }: MatchCardProps) {
-  const matchDate = new Date(`${match.date}T${match.time}`);
-  const isPast = matchDate < new Date();
+function MatchCardComponent({ match, showTeam, teamName, participantStats }: MatchCardProps) {
+  const { matchDate, isPast, formattedDate } = useMemo(() => {
+    const date = new Date(`${match.date}T${match.time}`);
+    const past = date < new Date();
+    const formatted = date.toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      weekday: "short",
+    });
+    return { matchDate: date, isPast: past, formattedDate: formatted };
+  }, [match.date, match.time]);
 
   const statusColors = {
     upcoming: "bg-blue-500/10 text-blue-400",
@@ -50,13 +60,7 @@ export function MatchCard({ match, showTeam, teamName, participantStats }: Match
             <div className="flex items-center gap-2 min-w-0">
               <Calendar className={styles.icon} />
               <span className={`${styles.matchDate} ${isPast ? styles.pastText : ""}`}>
-                {matchDate.toLocaleDateString("ko-KR", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                  weekday: "short",
-                })}{" "}
-                {match.time.slice(0, 5)}
+                {formattedDate} {match.time.slice(0, 5)}
               </span>
             </div>
           </div>
@@ -111,3 +115,4 @@ export function MatchCard({ match, showTeam, teamName, participantStats }: Match
   );
 }
 
+export const MatchCard = memo(MatchCardComponent);

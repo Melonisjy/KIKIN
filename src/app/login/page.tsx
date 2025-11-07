@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
+import { toast } from "@/components/Toast";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -33,12 +34,11 @@ export default function LoginPage() {
       });
 
       if (error) {
-        console.error("Error signing in:", error);
-        alert("로그인 중 오류가 발생했습니다: " + error.message);
+        toast.error("로그인 중 오류가 발생했습니다: " + error.message);
         setIsLoading(false);
       }
     } catch (error) {
-      console.error("Unexpected error:", error);
+      toast.error("예상치 못한 오류가 발생했습니다.");
       setIsLoading(false);
     }
   };
