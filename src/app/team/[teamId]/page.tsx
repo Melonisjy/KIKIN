@@ -9,6 +9,7 @@ import { Suspense } from "react";
 import { DeleteTeam } from "./delete-team";
 import { TeamCode } from "./team-code";
 import { NoticesSection } from "./notices-section";
+import { RemoveMember } from "./remove-member";
 
 interface PageProps {
   params: Promise<{ teamId: string }>;
@@ -264,6 +265,14 @@ export default async function TeamDetailPage({ params }: PageProps) {
                         가입일: {new Date(memberItem.joined_at).toLocaleDateString("ko-KR")}
                       </p>
                     </div>
+                    {isLeader && !isCurrentUser && (
+                      <RemoveMember
+                        teamId={teamId}
+                        memberId={memberItem.user_id}
+                        memberName={memberName}
+                        isLeader={isLeader}
+                      />
+                    )}
                   </div>
                 );
               })}
