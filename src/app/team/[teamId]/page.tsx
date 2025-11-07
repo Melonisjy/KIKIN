@@ -166,10 +166,14 @@ export default async function TeamDetailPage({ params }: PageProps) {
     // 가입 요청한 사용자들의 프로필 정보 가져오기
     if (teamRequests.length > 0) {
       const requestUserIds = teamRequests.map((r: any) => r.user_id);
-      const { data: requestProfiles } = await supabase
+      const { data: requestProfiles, error: profileError } = await supabase
         .from("user_profiles")
         .select("id, name")
         .in("id", requestUserIds);
+
+      if (profileError) {
+        console.error("프로필 조회 오류:", profileError);
+      }
 
       requestProfileMap = new Map(
         requestProfiles?.map((p: any) => [p.id, p.name]) || []
