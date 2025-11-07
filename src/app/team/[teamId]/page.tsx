@@ -60,6 +60,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
   // 팀원들의 프로필 정보 가져오기
   const memberUserIds = teamMembers?.map((m: any) => m.user_id) || [];
   let memberProfileMap = new Map<string, string | null>();
+  let leaderName: string | null = null;
 
   if (memberUserIds.length > 0) {
     const { data: profiles } = await supabase
@@ -68,6 +69,12 @@ export default async function TeamDetailPage({ params }: PageProps) {
       .in("id", memberUserIds);
 
     memberProfileMap = new Map(profiles?.map((p: any) => [p.id, p.name]) || []);
+
+    // 팀장 이름 찾기
+    const leader = teamMembers?.find((m: any) => m.role === "leader");
+    if (leader) {
+      leaderName = memberProfileMap.get(leader.user_id) || null;
+    }
   }
 
   // 팀의 경기 목록 가져오기 (날짜순 정렬)
@@ -145,10 +152,15 @@ export default async function TeamDetailPage({ params }: PageProps) {
       <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6 mb-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex-1">
-            <div className="flex items-center flex-wrap gap-2 mb-2">
+            <div className="flex items-baseline flex-wrap gap-3 mb-2">
               <h1 className="text-3xl font-bold text-[#F4F4F5]">
                 {team.name}
               </h1>
+              {leaderName && (
+                <span className="text-sm text-[#A1A1AA] leading-none">
+                  팀장: {leaderName}
+                </span>
+              )}
               <TeamCode teamId={teamId} />
             </div>
             {team.description && (

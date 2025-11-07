@@ -65,6 +65,7 @@ export default async function LockerRoomPage() {
   const teamIds =
     teams?.map((member: any) => member.teams?.id).filter(Boolean) || [];
   let memberCountMap = new Map<string, number>();
+  let leaderNameMap = new Map<string, string | null>();
 
   if (teamIds.length > 0) {
     // 각 팀의 멤버 수를 가져오기
@@ -78,6 +79,27 @@ export default async function LockerRoomPage() {
       const currentCount = memberCountMap.get(member.team_id) || 0;
       memberCountMap.set(member.team_id, currentCount + 1);
     });
+
+    // 각 팀의 팀장 정보 가져오기
+    const { data: leaders } = await supabase
+      .from("members")
+      .select("team_id, user_id")
+      .in("team_id", teamIds)
+      .eq("role", "leader");
+
+    if (leaders && leaders.length > 0) {
+      const leaderUserIds = leaders.map((l: any) => l.user_id);
+      const { data: leaderProfiles } = await supabase
+        .from("user_profiles")
+        .select("id, name")
+        .in("id", leaderUserIds);
+
+      // 팀장 이름 맵 생성
+      leaders.forEach((leader: any) => {
+        const profile = leaderProfiles?.find((p: any) => p.id === leader.user_id);
+        leaderNameMap.set(leader.team_id, profile?.name || null);
+      });
+    }
   }
 
   // 사용자가 가입한 모든 팀의 최근 경기 가져오기 (과거 경기 포함)
@@ -192,6 +214,7 @@ export default async function LockerRoomPage() {
                     if (!team) return null;
 
                     const memberCount = memberCountMap.get(team.id) || 0;
+                    const leaderName = leaderNameMap.get(team.id) || null;
 
                     return (
                       <TeamCard
@@ -200,6 +223,7 @@ export default async function LockerRoomPage() {
                         role={member.role}
                         joinedAt={member.joined_at}
                         memberCount={memberCount}
+                        leaderName={leaderName}
                       />
                     );
                   })}
