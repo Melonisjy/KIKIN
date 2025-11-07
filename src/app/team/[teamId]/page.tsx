@@ -50,12 +50,19 @@ export default async function TeamDetailPage({ params }: PageProps) {
   }
 
   // 팀원 목록 가져오기
-  const { data: teamMembers, error: membersError } = await supabase
+  const { data: teamMembersRaw, error: membersError } = await supabase
     .from("members")
     .select("user_id, role, joined_at")
     .eq("team_id", teamId)
-    .order("role", { ascending: false }) // leader 먼저
-    .order("joined_at", { ascending: true });
+    .order("joined_at", { ascending: true }); // 가입 순서대로
+
+  // 팀장을 맨 앞으로, 나머지는 가입 순서대로 정렬
+  const teamMembers = teamMembersRaw
+    ? [
+        ...teamMembersRaw.filter((m: any) => m.role === "leader"),
+        ...teamMembersRaw.filter((m: any) => m.role !== "leader"),
+      ]
+    : null;
 
   // 팀원들의 프로필 정보 가져오기
   const memberUserIds = teamMembers?.map((m: any) => m.user_id) || [];
