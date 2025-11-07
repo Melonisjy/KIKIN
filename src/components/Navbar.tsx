@@ -204,20 +204,23 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden min-w-[44px] min-h-[44px] p-2 rounded-md text-[#F4F4F5] hover:bg-[#181A1F] transition-colors cursor-pointer touch-manipulation"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="메뉴 토글"
-            aria-expanded={isMenuOpen}
-            type="button"
-          >
-            {isMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
+          {/* Mobile Menu Button and Notification */}
+          <div className="md:hidden flex items-center gap-2">
+            {isLoggedIn && <NotificationBell />}
+            <button
+              className="min-w-[44px] min-h-[44px] p-2 rounded-md text-[#F4F4F5] hover:bg-[#181A1F] transition-colors cursor-pointer touch-manipulation"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="메뉴 토글"
+              aria-expanded={isMenuOpen}
+              type="button"
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
