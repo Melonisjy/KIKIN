@@ -60,21 +60,39 @@ export function JoinTeamModal({ isOpen, onClose }: JoinTeamModalProps) {
         throw new Error("이미 가입한 팀입니다.");
       }
 
-      // 멤버로 추가
-      const { error: memberError } = await supabase.from("members").insert({
-        user_id: user.id,
-        team_id: team.id,
-        role: "member",
-      });
+      // 이미 가입 요청이 있는지 확인
+      const { data: existingRequest } = await supabase
+        .from("team_requests")
+        .select("id, status")
+        .eq("team_id", team.id)
+        .eq("user_id", user.id)
+        .single();
 
-      if (memberError) {
-        throw new Error(`가입 실패: ${memberError.message}`);
+      if (existingRequest) {
+        if (existingRequest.status === "pending") {
+          throw new Error("이미 가입 요청이 대기 중입니다.");
+        } else if (existingRequest.status === "approved") {
+          throw new Error("이미 가입한 팀입니다.");
+        }
+      }
+
+      // 가입 요청 생성
+      const { error: requestError } = await supabase
+        .from("team_requests")
+        .insert({
+          user_id: user.id,
+          team_id: team.id,
+          status: "pending",
+        });
+
+      if (requestError) {
+        throw new Error(`가입 요청 실패: ${requestError.message}`);
       }
 
       // 성공
       setTeamCode("");
       onClose();
-      router.push(`/team/${team.id}`);
+      alert("가입 요청이 전송되었습니다. 팀장의 승인을 기다려주세요.");
       router.refresh();
     } catch (err: any) {
       setError(err.message || "팀 가입 중 오류가 발생했습니다.");

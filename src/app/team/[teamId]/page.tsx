@@ -10,6 +10,7 @@ import { DeleteTeam } from "./delete-team";
 import { TeamCode } from "./team-code";
 import { NoticesSection } from "./notices-section";
 import { RemoveMember } from "./remove-member";
+import { ApproveRequest } from "./approve-request";
 
 interface PageProps {
   params: Promise<{ teamId: string }>;
@@ -146,6 +147,36 @@ export default async function TeamDetailPage({ params }: PageProps) {
 
   const isLeader = member.role === "leader";
 
+  // 가입 요청 가져오기 (팀장만)
+  let teamRequests: any[] = [];
+  let requestsError = null;
+  let requestProfileMap = new Map<string, string | null>();
+
+  if (isLeader) {
+    const { data: requests, error: reqError } = await supabase
+      .from("team_requests")
+      .select("id, user_id, created_at")
+      .eq("team_id", teamId)
+      .eq("status", "pending")
+      .order("created_at", { ascending: true });
+
+    requestsError = reqError;
+    teamRequests = requests || [];
+
+    // 가입 요청한 사용자들의 프로필 정보 가져오기
+    if (teamRequests.length > 0) {
+      const requestUserIds = teamRequests.map((r: any) => r.user_id);
+      const { data: requestProfiles } = await supabase
+        .from("user_profiles")
+        .select("id, name")
+        .in("id", requestUserIds);
+
+      requestProfileMap = new Map(
+        requestProfiles?.map((p: any) => [p.id, p.name]) || []
+      );
+    }
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <Link
@@ -209,6 +240,71 @@ export default async function TeamDetailPage({ params }: PageProps) {
         noticeAuthorMap={noticeAuthorMap}
         totalCount={noticesCount || 0}
       />
+
+      {/* 가입 요청 섹션 (팀장만) */}
+      {isLeader && (
+        <div className="mb-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Users className="h-6 w-6 text-[#F4F4F5]" />
+            <h2 className="text-2xl font-semibold text-[#F4F4F5]">가입 요청</h2>
+            {teamRequests.length > 0 && (
+              <span className="text-sm text-[#A1A1AA]">
+                ({teamRequests.length}건)
+              </span>
+            )}
+          </div>
+
+          {requestsError ? (
+            <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-destructive">
+              <p>가입 요청 정보를 불러오는 중 오류가 발생했습니다.</p>
+              <p className="mt-2 text-sm">{requestsError.message}</p>
+            </div>
+          ) : teamRequests.length > 0 ? (
+            <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6">
+              <div className="space-y-3">
+                {teamRequests.map((request: any) => {
+                  const requestName = requestProfileMap.get(request.user_id);
+
+                  return (
+                    <div
+                      key={request.id}
+                      className="flex items-center justify-between gap-3 p-3 rounded-lg bg-[#27272A]/50 border border-[#27272A]"
+                    >
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#00C16A] text-[#0F1115] text-sm font-semibold">
+                          {requestName
+                            ? requestName.charAt(0).toUpperCase()
+                            : request.user_id.slice(0, 1).toUpperCase()}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium text-[#F4F4F5] truncate">
+                              {requestName || "이름 없음"}
+                            </span>
+                          </div>
+                          <p className="text-xs text-[#A1A1AA]">
+                            요청일: {new Date(request.created_at).toLocaleDateString("ko-KR")}
+                          </p>
+                        </div>
+                      </div>
+                      <ApproveRequest
+                        requestId={request.id}
+                        userId={request.user_id}
+                        teamId={teamId}
+                        isLeader={isLeader}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-lg border border-dashed border-[#27272A] bg-[#27272A]/50 p-8 text-center">
+              <p className="text-[#A1A1AA]">대기 중인 가입 요청이 없습니다.</p>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* 팀원 목록 */}
       <div className="mb-6">
