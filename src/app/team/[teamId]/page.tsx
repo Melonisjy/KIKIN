@@ -95,7 +95,10 @@ export default async function TeamDetailPage({ params }: PageProps) {
     .order("time", { ascending: true });
 
   // 각 경기의 참여자 통계 가져오기
-  const matchParticipantStats: Record<string, { going: number; notGoing: number; maybe: number }> = {};
+  const matchParticipantStats: Record<
+    string,
+    { going: number; notGoing: number; maybe: number }
+  > = {};
   if (matches && matches.length > 0) {
     const matchIds = matches.map((m: any) => m.id);
     const { data: participants } = await supabase
@@ -105,11 +108,15 @@ export default async function TeamDetailPage({ params }: PageProps) {
 
     // 각 경기별로 통계 계산
     matchIds.forEach((matchId: string) => {
-      const matchParticipants = participants?.filter((p: any) => p.match_id === matchId) || [];
+      const matchParticipants =
+        participants?.filter((p: any) => p.match_id === matchId) || [];
       matchParticipantStats[matchId] = {
-        going: matchParticipants.filter((p: any) => p.status === "going").length,
-        notGoing: matchParticipants.filter((p: any) => p.status === "not_going").length,
-        maybe: matchParticipants.filter((p: any) => p.status === "maybe").length,
+        going: matchParticipants.filter((p: any) => p.status === "going")
+          .length,
+        notGoing: matchParticipants.filter((p: any) => p.status === "not_going")
+          .length,
+        maybe: matchParticipants.filter((p: any) => p.status === "maybe")
+          .length,
       };
     });
   }
@@ -132,7 +139,9 @@ export default async function TeamDetailPage({ params }: PageProps) {
   // 공지 작성자 이름 맵 생성 (객체로 변환)
   const noticeAuthorMap: Record<string, string | null> = {};
   if (notices && notices.length > 0) {
-    const authorIds = [...new Set(notices.map((notice: any) => notice.created_by))];
+    const authorIds = [
+      ...new Set(notices.map((notice: any) => notice.created_by)),
+    ];
     if (authorIds.length > 0) {
       const { data: profiles } = await supabase
         .from("user_profiles")
@@ -196,9 +205,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex-1">
             <div className="flex items-baseline flex-wrap gap-3 mb-2">
-              <h1 className="text-3xl font-bold text-[#F4F4F5]">
-                {team.name}
-              </h1>
+              <h1 className="text-3xl font-bold text-[#F4F4F5]">{team.name}</h1>
               {leaderName && (
                 <span className="text-sm text-[#A1A1AA] leading-none">
                   팀장: {leaderName}
@@ -212,7 +219,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
             <div className="text-sm text-[#A1A1AA]">
               생성일: {new Date(team.created_at).toLocaleDateString("ko-KR")}
             </div>
-            
+
             {isLeader && (
               <div className="mt-4">
                 <DeleteTeam
@@ -287,7 +294,10 @@ export default async function TeamDetailPage({ params }: PageProps) {
                             </span>
                           </div>
                           <p className="text-xs text-[#A1A1AA]">
-                            요청일: {new Date(request.created_at).toLocaleDateString("ko-KR")}
+                            요청일:{" "}
+                            {new Date(request.created_at).toLocaleDateString(
+                              "ko-KR"
+                            )}
                           </p>
                         </div>
                       </div>
@@ -327,9 +337,10 @@ export default async function TeamDetailPage({ params }: PageProps) {
           </div>
         ) : teamMembers && teamMembers.length > 0 ? (
           <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6">
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {teamMembers.map((memberItem: any) => {
-                const memberName = memberProfileMap.get(memberItem.user_id) || null;
+                const memberName =
+                  memberProfileMap.get(memberItem.user_id) || null;
                 const isMemberLeader = memberItem.role === "leader";
                 const isCurrentUser = memberItem.user_id === user.id;
 
@@ -362,7 +373,10 @@ export default async function TeamDetailPage({ params }: PageProps) {
                         )}
                       </div>
                       <p className="text-xs text-[#A1A1AA]">
-                        가입일: {new Date(memberItem.joined_at).toLocaleDateString("ko-KR")}
+                        가입일:{" "}
+                        {new Date(memberItem.joined_at).toLocaleDateString(
+                          "ko-KR"
+                        )}
                       </p>
                     </div>
                     {isLeader && !isCurrentUser && (
@@ -394,8 +408,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
         {isLeader && (
           <Link href={`/match/new?teamId=${teamId}`}>
             <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              새 경기 만들기
+              <Plus className="mr-2 h-4 w-4" />새 경기 만들기
             </Button>
           </Link>
         )}
@@ -421,14 +434,11 @@ export default async function TeamDetailPage({ params }: PageProps) {
         </Suspense>
       ) : (
         <div className="rounded-lg border border-dashed border-[#27272A] bg-[#27272A]/50 p-12 text-center">
-          <p className="text-[#A1A1AA] mb-4">
-            아직 예정된 경기가 없습니다.
-          </p>
+          <p className="text-[#A1A1AA] mb-4">아직 예정된 경기가 없습니다.</p>
           {isLeader && (
             <Link href={`/match/new?teamId=${teamId}`}>
               <Button>
-                <Plus className="mr-2 h-4 w-4" />
-                첫 경기 만들기
+                <Plus className="mr-2 h-4 w-4" />첫 경기 만들기
               </Button>
             </Link>
           )}
@@ -437,4 +447,3 @@ export default async function TeamDetailPage({ params }: PageProps) {
     </div>
   );
 }
-

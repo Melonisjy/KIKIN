@@ -94,13 +94,16 @@ export function Modal({
     <div
       className={`${styles.modalOverlay} ${isAnimating ? styles.isOpen : ""}`}
       onClick={handleBackdropClick}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
     >
       <div
         className={`${styles.modalContent} ${isAnimating ? styles.isOpen : ""}`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className={styles.modalHeader}>
-          <h2 className={styles.modalTitle}>{title}</h2>
+          <h2 id="modal-title" className={styles.modalTitle}>{title}</h2>
           <button
             onClick={onClose}
             className={styles.modalClose}

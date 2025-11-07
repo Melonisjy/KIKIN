@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.scss";
 import Navbar from "@/components/Navbar";
 import { SplashScreen } from "@/components/SplashScreen";
+import { ToastContainer } from "@/components/Toast";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,9 +31,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0F1115]`}
       >
-        <SplashScreen />
-        <Navbar />
-        {children}
+        <ErrorBoundary>
+          <SplashScreen />
+          <Navbar />
+          {children}
+          <ToastContainer />
+        </ErrorBoundary>
       </body>
     </html>
   );

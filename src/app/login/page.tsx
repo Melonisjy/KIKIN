@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
+import { toast } from "@/components/Toast";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -40,12 +41,11 @@ export default function LoginPage() {
       });
 
       if (error) {
-        console.error("Error signing in:", error);
-        alert("로그인 중 오류가 발생했습니다: " + error.message);
+        toast.error("로그인 중 오류가 발생했습니다: " + error.message);
         setIsLoading(false);
       }
     } catch (error) {
-      console.error("Unexpected error:", error);
+      toast.error("예상치 못한 오류가 발생했습니다.");
       setIsLoading(false);
     }
   };
@@ -69,7 +69,7 @@ export default function LoginPage() {
         });
 
         if (error) {
-          alert("회원가입 중 오류가 발생했습니다: " + error.message);
+          toast.error("회원가입 중 오류가 발생했습니다: " + error.message);
           setIsLoading(false);
           return;
         }
@@ -82,7 +82,7 @@ export default function LoginPage() {
             router.push("/locker-room");
           } else {
             // 세션이 없으면 (이메일 확인 필요) 수동 로그인 안내
-            alert("회원가입이 완료되었습니다! 로그인해주세요.");
+            toast.success("회원가입이 완료되었습니다! 로그인해주세요.");
             setIsSignUp(false);
             setIsLoading(false);
           }
@@ -95,7 +95,7 @@ export default function LoginPage() {
         });
 
         if (error) {
-          alert("로그인 중 오류가 발생했습니다: " + error.message);
+          toast.error("로그인 중 오류가 발생했습니다: " + error.message);
           setIsLoading(false);
           return;
         }
@@ -104,7 +104,7 @@ export default function LoginPage() {
       }
     } catch (error) {
       console.error("Unexpected error:", error);
-      alert("예상치 못한 오류가 발생했습니다.");
+      toast.error("예상치 못한 오류가 발생했습니다.");
       setIsLoading(false);
     }
   };

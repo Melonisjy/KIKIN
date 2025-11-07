@@ -5,6 +5,10 @@ import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  notifyRequestApproved,
+  notifyRequestRejected,
+} from "@/lib/notifications";
 
 interface ApproveRequestProps {
   requestId: string;
@@ -71,8 +75,20 @@ export function ApproveRequest({
         .eq("id", requestId);
 
       if (deleteError) {
-        console.error("Request deletion error:", deleteError);
         // 멤버는 추가되었으므로 계속 진행
+        // 에러는 무시 (이미 멤버 추가는 성공)
+      }
+
+      // 팀 이름 가져오기
+      const { data: team } = await supabase
+        .from("teams")
+        .select("name")
+        .eq("id", teamId)
+        .single();
+
+      // 알림 생성
+      if (team) {
+        await notifyRequestApproved(userId, team.name, teamId);
       }
 
       router.refresh();
@@ -117,6 +133,18 @@ export function ApproveRequest({
         throw new Error(`거절 실패: ${deleteError.message}`);
       }
 
+      // 팀 이름 가져오기
+      const { data: team } = await supabase
+        .from("teams")
+        .select("name")
+        .eq("id", teamId)
+        .single();
+
+      // 알림 생성
+      if (team) {
+        await notifyRequestRejected(userId, team.name, teamId);
+      }
+
       router.refresh();
     } catch (err: any) {
       setError(err.message || "거절 중 오류가 발생했습니다.");
@@ -132,21 +160,23 @@ export function ApproveRequest({
       <Button
         onClick={handleApprove}
         disabled={isLoading}
-        size="sm"
-        className="h-7 px-2"
+        size="icon-sm"
+        className="min-w-[44px] min-h-[44px]"
         type="button"
+        aria-label="승인"
       >
-        <Check className="h-3.5 w-3.5" />
+        <Check className="h-4 w-4" />
       </Button>
       <Button
         onClick={handleReject}
         disabled={isLoading}
-        size="sm"
+        size="icon-sm"
         variant="outline"
-        className="h-7 px-2"
+        className="min-w-[44px] min-h-[44px]"
         type="button"
+        aria-label="거절"
       >
-        <X className="h-3.5 w-3.5" />
+        <X className="h-4 w-4" />
       </Button>
     </div>
   );

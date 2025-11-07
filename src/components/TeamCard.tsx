@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Users } from "lucide-react";
+import { memo } from "react";
 import styles from "@/styles/team.module.scss";
 
 interface TeamCardProps {
@@ -15,7 +16,7 @@ interface TeamCardProps {
   leaderName?: string | null;
 }
 
-export function TeamCard({ team, role, joinedAt, memberCount, leaderName }: TeamCardProps) {
+function TeamCardComponent({ team, role, joinedAt, memberCount, leaderName }: TeamCardProps) {
   return (
     <Link href={`/team/${team.id}`} className={`${styles.teamCard} group`}>
       <div className={styles.teamCardContent}>
@@ -62,3 +63,4 @@ export function TeamCard({ team, role, joinedAt, memberCount, leaderName }: Team
   );
 }
 
+export const TeamCard = memo(TeamCardComponent);
