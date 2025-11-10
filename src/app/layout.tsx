@@ -5,6 +5,9 @@ import Navbar from "@/components/Navbar";
 import { SplashScreen } from "@/components/SplashScreen";
 import { ToastContainer } from "@/components/Toast";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { AppLoading } from "@/components/AppLoading";
+import { RouteProgressOverlay } from "@/components/RouteProgressOverlay";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,9 +35,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0F1115]`}
       >
         <ErrorBoundary>
+          <RouteProgressOverlay />
           <SplashScreen />
           <Navbar />
-          {children}
+          <Suspense fallback={<AppLoading />}>{children}</Suspense>
           <ToastContainer />
         </ErrorBoundary>
       </body>

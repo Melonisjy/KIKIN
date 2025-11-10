@@ -1,0 +1,344 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, rgba(0, 193, 106, 0.1), transparent 55%) rgba(8, 11, 18, 0.95);
+  color: #f4f4f5;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.overlay::before {
+  content: "";
+  position: absolute;
+  inset: -45%;
+  background: conic-gradient(from 90deg, rgba(0, 193, 106, 0.16), rgba(59, 130, 246, 0.14), rgba(255, 255, 255, 0.08), rgba(0, 193, 106, 0.16));
+  opacity: 0.35;
+  filter: blur(32px);
+  animation: rotateField 22s linear infinite;
+  pointer-events: none;
+}
+
+.overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 0,
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px,
+      transparent 34px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.03) 0,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 34px
+    );
+  mix-blend-mode: soft-light;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 25% 25%, rgba(0, 193, 106, 0.35), transparent 55%);
+  opacity: 0.25;
+  filter: blur(80px);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 4vw, 2rem);
+  padding: clamp(2.4rem, 5vw, 3.2rem) clamp(2.7rem, 6vw, 3.7rem);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(12, 15, 22, 0.76);
+  backdrop-filter: blur(26px);
+  box-shadow:
+    0 34px 68px rgba(5, 7, 12, 0.48),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  min-width: min(92vw, 360px);
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: calc(1.5rem - 1px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(0, 193, 106, 0.16);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 193, 106, 0.22),
+    0 8px 16px rgba(0, 193, 106, 0.15);
+  color: #0ae58d;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: none;
+}
+
+.status {
+  font-weight: 600;
+  color: #70737b;
+}
+
+.pitch {
+  position: relative;
+  width: min(72vw, 280px);
+  aspect-ratio: 1;
+  border-radius: 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(circle at 15% 20%, rgba(0, 193, 106, 0.12), transparent 55%),
+    radial-gradient(circle at 80% 85%, rgba(59, 130, 246, 0.12), transparent 60%),
+    rgba(10, 14, 22, 0.86);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 22px 38px rgba(4, 5, 10, 0.58);
+  overflow: hidden;
+}
+
+.pitchShading {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 45%);
+  pointer-events: none;
+}
+
+.pitchBorder {
+  position: absolute;
+  inset: 14px;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  opacity: 0.5;
+}
+
+.pitchMidline {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  right: 14px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-0.5px);
+}
+
+.pitchCircle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  box-shadow:
+    inset 0 0 12px rgba(0, 193, 106, 0.18),
+    0 0 18px rgba(0, 193, 106, 0.22);
+}
+
+.pitchArcTop,
+.pitchArcBottom {
+  position: absolute;
+  left: 50%;
+  width: 150px;
+  height: 80px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: none;
+  border-right: none;
+  border-radius: 120px / 50px;
+  transform: translateX(-50%);
+  opacity: 0.5;
+}
+
+.pitchArcTop {
+  top: 18px;
+  clip-path: inset(0 0 50% 0);
+}
+
+.pitchArcBottom {
+  bottom: 18px;
+  clip-path: inset(50% 0 0 0);
+}
+
+.pitchGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(0, 193, 106, 0.18), transparent 65%);
+  opacity: 0.45;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 112px;
+  height: 112px;
+  margin: -56px;
+  border-radius: 50%;
+  border: 1px dashed rgba(0, 193, 106, 0.28);
+  animation: orbitPulse 3.4s ease-in-out infinite;
+}
+
+.orbit::before {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  border-radius: 50%;
+  border: 1px solid rgba(59, 130, 246, 0.16);
+  opacity: 0.35;
+}
+
+.ball {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin: -6px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #00c16a, #1deea0);
+  box-shadow:
+    0 0 12px rgba(0, 193, 106, 0.75),
+    0 0 26px rgba(0, 193, 106, 0.4);
+  transform-origin: center 56px;
+  animation: ballOrbit 1.95s linear infinite;
+}
+
+.ball::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  opacity: 0.55;
+  filter: blur(6px);
+  transform: scale(2.2);
+}
+
+.message {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.title {
+  font-size: clamp(1rem, 2.4vw, 1.15rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #f6f7fb;
+}
+
+.subtitle {
+  font-size: clamp(0.8rem, 1.5vw, 0.92rem);
+  color: #a1a1aa;
+  letter-spacing: 0.04em;
+}
+
+.progress {
+  position: relative;
+  width: min(82%, 260px);
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.progressIndicator {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 193, 106, 0.85), rgba(59, 130, 246, 0.65), rgba(0, 193, 106, 0.85));
+  transform: translateX(-100%);
+  animation: shimmer 2.4s ease-in-out infinite;
+}
+
+@keyframes rotateField {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbitPulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes ballOrbit {
+  0% {
+    transform: rotate(0deg) translateY(-56px);
+  }
+  50% {
+    transform: rotate(180deg) translateY(-56px);
+  }
+  100% {
+    transform: rotate(360deg) translateY(-56px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 2.1rem 2.4rem;
+    gap: 1.4rem;
+  }
+
+  .pitch {
+    width: min(68vw, 240px);
+  }
+
+  .header {
+    letter-spacing: 0.16em;
+  }
+}
+
+
