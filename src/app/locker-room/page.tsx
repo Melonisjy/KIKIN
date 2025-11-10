@@ -10,6 +10,7 @@ import { LockerRoomActions } from "./locker-room-actions";
 import { SetNameModal } from "@/components/SetNameModal";
 import { ProfileCard } from "@/components/ProfileCard";
 import { MatchCard } from "@/components/MatchCard";
+import { OnboardingGuide } from "@/components/OnboardingGuide";
 
 export default async function LockerRoomPage() {
   const supabase = await createClient();
@@ -162,6 +163,38 @@ export default async function LockerRoomPage() {
   return (
     <>
       {needsName && <SetNameModal isOpen={true} currentName={userName} />}
+      <OnboardingGuide
+        storageKey="locker-room"
+        title="라커룸 첫 걸음"
+        subtitle="팀을 만들고 경기 일정을 관리하는 핵심 흐름을 체크해 보세요."
+        accentLabel="라커룸 온보딩"
+        steps={[
+          {
+            id: "profile-name",
+            title: "프로필 이름 설정하기",
+            description:
+              "프로필 카드에서 이름을 등록하면 팀원들이 누구인지 빠르게 알아볼 수 있어요.",
+          },
+          {
+            id: "create-team",
+            title: "첫 팀 개설 또는 합류",
+            description:
+              "우측 상단의 팀 생성·참여 버튼을 눌러 나만의 팀을 만들거나 팀 코드로 합류하세요.",
+          },
+          {
+            id: "invite-members",
+            title: "팀원 초대하기",
+            description:
+              "생성한 팀 상세 페이지에서 팀 코드를 복사해 팀원들에게 공유하면 바로 초대할 수 있어요.",
+          },
+          {
+            id: "review-matches",
+            title: "최근 경기 일정 확인",
+            description:
+              "아래 ‘최근 경기’ 리스트에서 곧 열릴 경기와 투표 현황을 한눈에 파악하세요.",
+          },
+        ]}
+      />
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-[#F4F4F5]">라커룸</h1>

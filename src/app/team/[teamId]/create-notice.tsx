@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,7 @@ export function CreateNoticeModal({
   const [isPinned, setIsPinned] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const supabase = createClient();
 
@@ -77,10 +78,12 @@ export function CreateNoticeModal({
       setIsPinned(false);
       setError(null);
       onClose();
-      router.refresh();
+      startTransition(() => {
+        router.refresh();
+      });
+      setIsLoading(false);
     } catch (err: any) {
       setError(err.message || "공지 작성 중 오류가 발생했습니다.");
-    } finally {
       setIsLoading(false);
     }
   };
@@ -212,12 +215,15 @@ export function CreateNoticeModal({
               variant="outline"
               onClick={onClose}
               type="button"
-              disabled={isLoading}
+              disabled={isLoading || isPending}
             >
               취소
             </Button>
-            <Button type="submit" disabled={isLoading || !content.trim()}>
-              {isLoading ? (
+            <Button
+              type="submit"
+              disabled={isLoading || isPending || !content.trim()}
+            >
+              {isLoading || isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   작성 중...

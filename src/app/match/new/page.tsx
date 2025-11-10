@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { notifyMatchCreatedServer } from "@/lib/notifications-server";
+import { OnboardingGuide } from "@/components/OnboardingGuide";
 
 interface PageProps {
   searchParams: Promise<{ teamId?: string }>;
@@ -122,8 +123,43 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
   // 현재 시간을 기본값으로 설정 (HH:MM 형식)
   const now = new Date().toTimeString().slice(0, 5);
 
+  const onboardingSteps = [
+    {
+      id: "set-date-time",
+      title: "경기 날짜·시간 정하기",
+      description:
+        "팀원들이 미리 준비할 수 있도록 가능한 빠르게 날짜와 시간을 지정하세요.",
+    },
+    {
+      id: "confirm-location",
+      title: "장소를 정확히 입력",
+      description:
+        "풋살장 이름이나 주소를 명확히 적으면 팀원들이 헷갈리지 않아요.",
+    },
+    {
+      id: "share-note",
+      title: "메모로 특이사항 전달",
+      description:
+        "복장, 준비물, 비용 등 안내가 있다면 메모에 적어 팀원들과 공유하세요.",
+    },
+    {
+      id: "send-notification",
+      title: "생성 후 알림 확인",
+      description:
+        "경기 생성이 완료되면 팀원들에게 알림이 전달돼 투표 요청이 자동으로 시작됩니다.",
+    },
+  ];
+
   return (
-    <div className="container mx-auto px-4 py-8 max-w-2xl">
+    <>
+      <OnboardingGuide
+        storageKey={`match-new-${teamId}`}
+        title="경기 생성 체크리스트"
+        subtitle="필수 정보를 빠르게 채우고 팀원에게 확실하게 공유하세요."
+        accentLabel="경기 생성 온보딩"
+        steps={onboardingSteps}
+      />
+      <div className="container mx-auto px-4 py-8 max-w-2xl">
       <Link
         href={`/team/${teamId}`}
         className="inline-flex items-center gap-2 text-sm text-[#A1A1AA] hover:text-[#F4F4F5] mb-6"
@@ -221,6 +257,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
         </form>
       </div>
     </div>
+    </>
   );
 }
 

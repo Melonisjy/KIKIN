@@ -73,18 +73,18 @@ export function NoticesSection({
             return (
               <div
                 key={notice.id}
-                className="rounded-lg border border-[#27272A] bg-[#181A1F] p-5"
+                className="group rounded-lg border border-[#27272A] bg-[#181A1F] p-5 transition-all duration-200 hover:border-[#3B3D48] hover:bg-[#1D2029] hover:-translate-y-0.5"
               >
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex items-center gap-2">
                     {notice.is_pinned && (
-                      <Pin className="h-4 w-4 text-[#00C16A] flex-shrink-0" />
+                      <Pin className="h-4 w-4 text-[#00C16A] flex-shrink-0 transition-transform duration-200 group-hover:-translate-y-0.5" />
                     )}
-                    <span className="text-xs text-[#A1A1AA]">
+                    <span className="text-xs text-[#A1A1AA] transition-colors duration-200 group-hover:text-[#F4F4F5]">
                       {authorName}
                     </span>
                     <span className="text-xs text-[#27272A]">•</span>
-                    <span className="text-xs text-[#A1A1AA]">
+                    <span className="text-xs text-[#A1A1AA] transition-colors duration-200 group-hover:text-[#D4D4D8]">
                       {new Date(notice.created_at).toLocaleDateString("ko-KR", {
                         year: "numeric",
                         month: "long",
@@ -100,7 +100,7 @@ export function NoticesSection({
                     />
                   )}
                 </div>
-                <p className="text-[#F4F4F5] whitespace-pre-wrap leading-relaxed">
+                <p className="text-[#F4F4F5] whitespace-pre-wrap leading-relaxed transition-colors duration-200 group-hover:text-white">
                   {notice.content}
                 </p>
               </div>
@@ -167,7 +167,7 @@ export function NoticesSection({
           )}
         </>
       ) : (
-        <div className="rounded-lg border border-dashed border-[#27272A] bg-[#27272A]/50 p-8 text-center">
+        <div className="rounded-lg border border-dashed border-[#27272A] bg-[#27272A]/50 p-8 text-center transition-all duration-200 hover:border-[#3B3D48] hover:bg-[#2B2D33]">
           <Megaphone className="mx-auto h-12 w-12 text-[#A1A1AA] mb-4" />
           <p className="text-[#A1A1AA]">등록된 공지가 없습니다.</p>
         </div>

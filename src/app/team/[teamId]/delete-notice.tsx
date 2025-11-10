@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ export function DeleteNotice({
 }: DeleteNoticeProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const supabase = createClient();
 
@@ -69,7 +70,10 @@ export function DeleteNotice({
       }
 
       // 성공
-      router.refresh();
+      startTransition(() => {
+        router.refresh();
+      });
+      setIsLoading(false);
     } catch (err: any) {
       setError(err.message || "공지 삭제 중 오류가 발생했습니다.");
       setIsLoading(false);
@@ -82,10 +86,10 @@ export function DeleteNotice({
         variant="ghost"
         size="sm"
         onClick={handleDelete}
-        disabled={isLoading}
-        className="text-[#A1A1AA] hover:text-destructive"
+        disabled={isLoading || isPending}
+        className="text-[#A1A1AA] hover:text-destructive transition-colors duration-200"
       >
-        {isLoading ? (
+        {isLoading || isPending ? (
           <Loader2 className="h-4 w-4 animate-spin" />
         ) : (
           <Trash2 className="h-4 w-4" />
