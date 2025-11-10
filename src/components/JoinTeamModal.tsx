@@ -110,7 +110,8 @@ export function JoinTeamModal({ isOpen, onClose }: JoinTeamModalProps) {
         .eq("id", user.id)
         .single();
 
-      const requesterName = profile?.name || user.email?.split("@")[0] || "사용자";
+      const requesterName =
+        profile?.name || user.email?.split("@")[0] || "사용자";
 
       // 알림 생성 (팀장에게)
       if (leader) {
@@ -144,7 +145,7 @@ export function JoinTeamModal({ isOpen, onClose }: JoinTeamModalProps) {
       title="팀 코드로 가입하기"
       onConfirm={handleJoin}
       onCancel={onClose}
-      confirmText={isLoading ? "가입 중..." : "가입하기"}
+      confirmText={isLoading ? "가입 중..." : "요청하기"}
       cancelText="취소"
     >
       <div className="space-y-4">
@@ -189,4 +190,3 @@ export function JoinTeamModal({ isOpen, onClose }: JoinTeamModalProps) {
     </Modal>
   );
 }
-

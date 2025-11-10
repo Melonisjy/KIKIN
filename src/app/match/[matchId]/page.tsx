@@ -8,6 +8,7 @@ import {
   CheckCircle,
   XCircle,
   HelpCircle,
+  MinusCircle,
 } from "lucide-react";
 import { MatchParticipantButtons } from "./participant-buttons";
 import { DeleteMatch } from "./delete-match";
@@ -62,6 +63,13 @@ export default async function MatchDetailPage({ params }: PageProps) {
     redirect("/locker-room");
   }
 
+  // 팀 멤버 목록 가져오기
+  const { data: teamMembers, error: teamMembersError } = await supabase
+    .from("members")
+    .select("user_id, role, joined_at")
+    .eq("team_id", team.id)
+    .order("joined_at", { ascending: true });
+
   // 투표자 목록 가져오기
   const { data: participants, error: participantsError } = await supabase
     .from("match_participants")
@@ -71,13 +79,17 @@ export default async function MatchDetailPage({ params }: PageProps) {
 
   // 투표자들의 프로필 정보 가져오기
   const participantUserIds = participants?.map((p: any) => p.user_id) || [];
+  const teamMemberUserIds = teamMembers?.map((m: any) => m.user_id) || [];
+  const allUserIds = Array.from(
+    new Set([...participantUserIds, ...teamMemberUserIds])
+  );
   let profileMap = new Map<string, string | null>();
 
-  if (participantUserIds.length > 0) {
+  if (allUserIds.length > 0) {
     const { data: profiles } = await supabase
       .from("user_profiles")
       .select("id, name")
-      .in("id", participantUserIds);
+      .in("id", allUserIds);
 
     // 프로필 맵 생성 (user_id -> name)
     profileMap = new Map(profiles?.map((p: any) => [p.id, p.name]) || []);
@@ -102,6 +114,13 @@ export default async function MatchDetailPage({ params }: PageProps) {
     participants?.filter((p: any) => p.status === "not_going").length || 0;
   const maybeCount =
     participants?.filter((p: any) => p.status === "maybe").length || 0;
+  const totalMembers = teamMembers?.length || 0;
+  const participantsByUserId = new Map(
+    participants?.map((p: any) => [p.user_id, p]) || []
+  );
+  const notVotedCount =
+    teamMembers?.filter((m: any) => !participantsByUserId.has(m.user_id))
+      .length || 0;
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -184,7 +203,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
       <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-[#F4F4F5]">
-            투표자 ({participants?.length || 0}명)
+            투표 현황 ({totalMembers}명)
           </h2>
           <div className="flex gap-4 text-sm text-[#A1A1AA]">
             <span className="flex items-center gap-1">
@@ -199,44 +218,64 @@ export default async function MatchDetailPage({ params }: PageProps) {
               <HelpCircle className="h-4 w-4 text-yellow-400" />
               미정: {maybeCount}
             </span>
+            <span className="flex items-center gap-1">
+              <MinusCircle className="h-4 w-4 text-[#71717A]" />
+              미투표: {notVotedCount}
+            </span>
           </div>
         </div>
 
-        {participantsError ? (
+        {teamMembersError || participantsError ? (
           <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-destructive">
             <p>투표자 정보를 불러오는 중 오류가 발생했습니다.</p>
-            <p className="mt-2 text-sm">{participantsError.message}</p>
+            <p className="mt-2 text-sm">
+              {teamMembersError?.message || participantsError?.message}
+            </p>
           </div>
-        ) : participants && participants.length > 0 ? (
+        ) : teamMembers && teamMembers.length > 0 ? (
           <div className="space-y-2">
-            {participants.map((participant: any) => {
+            {teamMembers
+              .slice()
+              .sort((a: any, b: any) => {
+                const aHasVoted = participantsByUserId.has(a.user_id);
+                const bHasVoted = participantsByUserId.has(b.user_id);
+                if (aHasVoted === bHasVoted) {
+                  return 0;
+                }
+                return aHasVoted ? 1 : -1;
+              })
+              .map((teamMember: any) => {
+              const participant = participantsByUserId.get(teamMember.user_id);
+              const statusKey = participant?.status || "not_voted";
               const statusIcons = {
                 going: <CheckCircle className="h-4 w-4 text-[#00C16A]" />,
                 not_going: <XCircle className="h-4 w-4 text-red-400" />,
                 maybe: <HelpCircle className="h-4 w-4 text-yellow-400" />,
+                not_voted: <MinusCircle className="h-4 w-4 text-[#71717A]" />,
               };
               const statusLabels = {
                 going: "참석",
                 not_going: "불참",
                 maybe: "미정",
+                not_voted: "미투표",
               };
 
               // 프로필에서 이름 가져오기, 없으면 이메일 또는 기본값 사용
-              const participantName = profileMap.get(participant.user_id);
+              const participantName = profileMap.get(teamMember.user_id);
               const displayName =
-                participant.user_id === user.id
+                teamMember.user_id === user.id
                   ? participantName || user.email?.split("@")[0] || "나"
                   : participantName || "이름 없음";
 
               return (
                 <div
-                  key={participant.id}
+                  key={teamMember.user_id}
                   className="flex items-center justify-between p-3 rounded-lg bg-[#27272A]/50"
                 >
                   <div className="flex items-center gap-3">
                     {
                       statusIcons[
-                        participant.status as keyof typeof statusIcons
+                        statusKey as keyof typeof statusIcons
                       ]
                     }
                     <span className="text-[#F4F4F5]">{displayName}</span>
@@ -244,7 +283,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
                   <span className="text-sm text-[#A1A1AA]">
                     {
                       statusLabels[
-                        participant.status as keyof typeof statusLabels
+                        statusKey as keyof typeof statusLabels
                       ]
                     }
                   </span>
