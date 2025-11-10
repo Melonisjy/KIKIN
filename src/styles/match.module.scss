@@ -44,88 +44,254 @@
   }
 }
 
-.matchCardContent {
+.matchCardShell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
   padding: 1.5rem;
+  border-radius: 0.75rem;
 }
 
-.matchCardHeader {
+.matchMeta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  min-height: 1.75rem;
+  gap: 1rem;
+  background: linear-gradient(90deg, rgba(0, 193, 106, 0.1), rgba(0, 193, 106, 0));
+  border: 1px solid rgba(0, 193, 106, 0.2);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
 }
 
-.teamBadge {
-  border-radius: 9999px;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 500;
-  background-color: #27272a;
-  color: #a1a1aa;
-}
-
-.statusBadge {
-  border-radius: 9999px;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-.matchCardBody {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.matchInfo {
+.metaLeft {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  min-width: 0;
 }
 
-.icon {
+.metaIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 0.75rem;
+  background: rgba(0, 193, 106, 0.18);
+  color: #00c16a;
+  flex-shrink: 0;
+}
+
+.metaIconSvg {
   height: 1.25rem;
   width: 1.25rem;
-  color: #a1a1aa;
-  flex-shrink: 0;
-
-  .matchCard:hover & {
-    color: #d4d4d8;
-  }
 }
 
-.matchDate {
+.metaText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.metaLabel {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: rgba(244, 244, 245, 0.6);
+}
+
+.metaValue {
+  font-size: 0.95rem;
   font-weight: 600;
   color: #f4f4f5;
   white-space: nowrap;
 }
 
-.matchLocation {
+.statusBadge {
+  border-radius: 9999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.statusPast {
+  background: #27272a;
   color: #a1a1aa;
-  transition: color 180ms ease;
+}
+
+.matchBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.teamBadge {
+  align-self: flex-start;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: rgba(244, 244, 245, 0.08);
+  color: #e4e4e7;
+  border: 1px solid rgba(244, 244, 245, 0.1);
+}
+
+.detailRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: rgba(39, 39, 42, 0.6);
+  border: 1px solid rgba(39, 39, 42, 0.8);
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease;
 
   .matchCard:hover & {
-    color: #e4e4e7;
+    border-color: rgba(0, 193, 106, 0.35);
+    background: rgba(0, 193, 106, 0.08);
   }
 }
 
-.matchNote {
-  font-size: 0.875rem;
-  color: #a1a1aa;
-  margin-top: 0.5rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid #27272a;
-  line-height: 1.5;
-  transition: color 180ms ease;
+.detailIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 0.6rem;
+  background: rgba(244, 244, 245, 0.05);
+  color: #9ca3af;
+  flex-shrink: 0;
 
   .matchCard:hover & {
     color: #f4f4f5;
   }
 }
 
-.pastText {
-  opacity: 0.7;
+.detailIconSvg {
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
+.detailText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.detailLabel {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: rgba(244, 244, 245, 0.45);
+}
+
+.detailValue {
+  font-size: 0.95rem;
+  color: #f4f4f5;
+  word-break: keep-all;
+}
+
+.noteBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(39, 39, 42, 0.8);
+  background: rgba(24, 26, 31, 0.85);
+  padding: 1rem;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease;
+
+  .matchCard:hover & {
+    border-color: rgba(0, 193, 106, 0.25);
+    background: rgba(0, 193, 106, 0.06);
+  }
+}
+
+.noteText {
+  font-size: 0.95rem;
+  color: #d4d4d8;
+  line-height: 1.6;
+}
+
+.matchFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(39, 39, 42, 0.9);
+}
+
+.footerStats {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.statItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 500;
   color: #a1a1aa;
 }
+
+.statIconGoing {
+  height: 0.9rem;
+  width: 0.9rem;
+  color: #00c16a;
+}
+
+.statIconNot {
+  height: 0.9rem;
+  width: 0.9rem;
+  color: #f87171;
+}
+
+.statIconMaybe {
+  height: 0.9rem;
+  width: 0.9rem;
+  color: #facc15;
+}
+
+.footerAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: rgba(244, 244, 245, 0.5);
+  transition: color 180ms ease;
+
+  .matchCard:hover & {
+    color: #00c16a;
+  }
+}
+
+.footerIcon {
+  height: 0.9rem;
+  width: 0.9rem;
+}
+
+.pastText {
+  opacity: 0.65;
+  color: #a1a1aa;
+}
+

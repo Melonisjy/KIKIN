@@ -73,24 +73,37 @@ export function NoticesSection({
             return (
               <div
                 key={notice.id}
-                className="group rounded-lg border border-[#27272A] bg-[#181A1F] p-5 transition-all duration-200 hover:border-[#3B3D48] hover:bg-[#1D2029] hover:-translate-y-0.5"
+                className="group rounded-xl border border-[#2A2C34] bg-[#191C23] p-5 transition-all duration-200 hover:border-[#00C16A]/40 hover:bg-[#1E222B] hover:-translate-y-0.5"
               >
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    {notice.is_pinned && (
-                      <Pin className="h-4 w-4 text-[#00C16A] flex-shrink-0 transition-transform duration-200 group-hover:-translate-y-0.5" />
-                    )}
-                    <span className="text-xs text-[#A1A1AA] transition-colors duration-200 group-hover:text-[#F4F4F5]">
-                      {authorName}
-                    </span>
-                    <span className="text-xs text-[#27272A]">•</span>
-                    <span className="text-xs text-[#A1A1AA] transition-colors duration-200 group-hover:text-[#D4D4D8]">
-                      {new Date(notice.created_at).toLocaleDateString("ko-KR", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </span>
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#00C16A]/10 text-[#00C16A]">
+                      <Megaphone className="h-4 w-4" />
+                    </div>
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-[#6F7280]">
+                        <span>공지</span>
+                        {notice.is_pinned && (
+                          <span className="inline-flex items-center gap-1 rounded-full border border-[#00C16A]/40 bg-[#00C16A]/10 px-2 py-0.5 text-[10px] font-semibold text-[#00C16A]">
+                            <Pin className="h-3 w-3" />
+                            고정
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2 text-xs text-[#A1A1AA]">
+                        <span className="font-semibold text-[#F4F4F5] transition-colors duration-200 group-hover:text-white">
+                          {authorName}
+                        </span>
+                        <span className="text-[#31333D]">•</span>
+                        <span className="transition-colors duration-200 group-hover:text-[#D4D4D8]">
+                          {new Date(notice.created_at).toLocaleDateString("ko-KR", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                   {isLeader && (
                     <DeleteNotice
@@ -100,9 +113,11 @@ export function NoticesSection({
                     />
                   )}
                 </div>
-                <p className="text-[#F4F4F5] whitespace-pre-wrap leading-relaxed transition-colors duration-200 group-hover:text-white">
-                  {notice.content}
-                </p>
+                <div className="mt-4 border-t border-[#27272A]/80 pt-4">
+                  <p className="text-sm text-[#D4D4D8] whitespace-pre-wrap leading-relaxed transition-colors duration-200 group-hover:text-[#F4F4F5]">
+                    {notice.content}
+                  </p>
+                </div>
               </div>
             );
           })}
