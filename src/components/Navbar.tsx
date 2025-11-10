@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Menu, X, LogOut, User } from "lucide-react";
+import { Menu, X, LogOut, User, Sparkles, MessageSquare } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { NotificationBell } from "@/components/NotificationBell";
+import { FeedbackModal } from "@/components/FeedbackModal";
 
 export default function Navbar() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function Navbar() {
   const [userName, setUserName] = useState<string | null>(null);
   const [hasError, setHasError] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 
   // 프로필 정보 가져오기 함수 (API 라우트 사용)
   const fetchUserProfile = async () => {
@@ -153,7 +155,8 @@ export default function Navbar() {
   const displayText = userName ? userName : userEmail || "";
 
   return (
-    <nav className="w-full border-b border-[#27272A] bg-[#0F1115]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0F1115]/60">
+    <>
+      <nav className="w-full border-b border-[#27272A] bg-[#0F1115]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0F1115]/60">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
@@ -174,6 +177,15 @@ export default function Navbar() {
                   라커룸
                 </Link>
                 <NotificationBell />
+                <button
+                  type="button"
+                  onClick={() => setIsFeedbackOpen(true)}
+                  className="relative inline-flex items-center gap-2 rounded-full border border-[#27272A] bg-[#181A1F] px-4 py-2 text-sm font-medium text-[#F4F4F5] shadow-sm transition hover:border-[#00C16A] hover:text-[#00C16A]"
+                >
+                  <Sparkles className="h-4 w-4 text-[#00C16A]" />
+                  피드백
+                  <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-[#00C16A] animate-ping" />
+                </button>
                 <div className="flex items-center gap-3 pl-4 border-l">
                   {displayText && (
                     <div className="flex items-center gap-2">
@@ -257,6 +269,17 @@ export default function Navbar() {
                     <LogOut className="h-4 w-4" />
                     {isLoggingOut ? "로그아웃 중..." : "로그아웃"}
                   </button>
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      setIsFeedbackOpen(true);
+                    }}
+                    className="flex w-full items-center gap-2 px-3 py-2 text-base font-medium text-[#F4F4F5] hover:bg-[#181A1F] rounded-md transition-colors"
+                    type="button"
+                  >
+                    <MessageSquare className="h-4 w-4 text-[#00C16A]" />
+                    피드백 보내기
+                  </button>
                 </>
               ) : (
                 <Link
@@ -272,5 +295,25 @@ export default function Navbar() {
         )}
       </div>
     </nav>
+      {isLoggedIn && (
+        <>
+          <button
+            type="button"
+            onClick={() => setIsFeedbackOpen(true)}
+            className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 rounded-full bg-[#00C16A] px-5 py-3 text-sm font-semibold text-[#0F1115] shadow-lg shadow-[#00C16A]/40 transition hover:bg-[#00E693] focus:outline-none focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2 focus:ring-offset-[#0F1115]"
+            aria-label="피드백 보내기"
+          >
+            <MessageSquare className="h-4 w-4" />
+            <span className="hidden sm:inline">피드백</span>
+          </button>
+          <FeedbackModal
+            isOpen={isFeedbackOpen}
+            onClose={() => setIsFeedbackOpen(false)}
+            userName={userName}
+            userEmail={userEmail}
+          />
+        </>
+      )}
+    </>
   );
 }
