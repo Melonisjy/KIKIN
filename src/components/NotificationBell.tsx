@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Bell, Check, Trash2 } from "lucide-react";
+import { Bell, Check, Trash2, Loader2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/Toast";
@@ -165,10 +165,6 @@ export function NotificationBell() {
 
   const unreadCount = notifications.filter((n) => !n.is_read).length;
 
-  if (isLoading) {
-    return null;
-  }
-
   return (
     <div className="relative" ref={dropdownRef}>
       <Button
@@ -180,10 +176,14 @@ export function NotificationBell() {
         type="button"
       >
         <Bell className="h-5 w-5" />
-        {unreadCount > 0 && (
+        {isLoading ? (
+          <Loader2 className="absolute top-1 right-1 h-4 w-4 animate-spin text-[#A1A1AA]" />
+        ) : (
+          unreadCount > 0 && (
           <span className="absolute top-1 right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
             {unreadCount > 9 ? "9+" : unreadCount}
           </span>
+          )
         )}
       </Button>
 
@@ -199,7 +199,12 @@ export function NotificationBell() {
           </div>
 
           <div className="overflow-y-auto flex-1">
-            {error ? (
+            {isLoading ? (
+              <div className="flex items-center justify-center p-6 text-sm text-[#A1A1AA]">
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                알림을 불러오는 중입니다...
+              </div>
+            ) : error ? (
               <div className="p-4 text-center text-sm text-[#A1A1AA]">
                 알림을 불러올 수 없습니다.
               </div>
