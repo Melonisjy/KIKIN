@@ -132,7 +132,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
         {team.name}으로 돌아가기
       </Link>
 
-      {/* 경기 정보 */}
+      {/* 매치 브리핑 */}
       <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6 mb-6">
         <div className="flex items-start justify-between mb-4">
           <div className="flex-1">
@@ -191,7 +191,9 @@ export default async function MatchDetailPage({ params }: PageProps) {
       {/* 투표 버튼 */}
       {!isPast && match.status !== "cancelled" && (
         <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6 mb-6">
-          <h2 className="text-lg font-semibold text-[#F4F4F5] mb-4">투표</h2>
+          <h2 className="text-lg font-semibold text-[#F4F4F5] mb-4">
+            출석 투표
+          </h2>
           <MatchParticipantButtons
             matchId={matchId}
             currentStatus={userParticipant?.status || null}
@@ -203,7 +205,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
       <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-[#F4F4F5]">
-            투표 현황 ({totalMembers}명)
+            출석 현황 ({totalMembers}명)
           </h2>
           <div className="flex gap-4 text-sm text-[#A1A1AA]">
             <span className="flex items-center gap-1">
@@ -227,7 +229,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
 
         {teamMembersError || participantsError ? (
           <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-destructive">
-            <p>투표자 정보를 불러오는 중 오류가 발생했습니다.</p>
+            <p>출석 정보를 불러오는 중 오류가 발생했습니다.</p>
             <p className="mt-2 text-sm">
               {teamMembersError?.message || participantsError?.message}
             </p>
@@ -245,51 +247,45 @@ export default async function MatchDetailPage({ params }: PageProps) {
                 return aHasVoted ? 1 : -1;
               })
               .map((teamMember: any) => {
-              const participant = participantsByUserId.get(teamMember.user_id);
-              const statusKey = participant?.status || "not_voted";
-              const statusIcons = {
-                going: <CheckCircle className="h-4 w-4 text-[#00C16A]" />,
-                not_going: <XCircle className="h-4 w-4 text-red-400" />,
-                maybe: <HelpCircle className="h-4 w-4 text-yellow-400" />,
-                not_voted: <MinusCircle className="h-4 w-4 text-[#71717A]" />,
-              };
-              const statusLabels = {
-                going: "참석",
-                not_going: "불참",
-                maybe: "미정",
-                not_voted: "미투표",
-              };
+                const participant = participantsByUserId.get(
+                  teamMember.user_id
+                );
+                const statusKey = participant?.status || "not_voted";
+                const statusIcons = {
+                  going: <CheckCircle className="h-4 w-4 text-[#00C16A]" />,
+                  not_going: <XCircle className="h-4 w-4 text-red-400" />,
+                  maybe: <HelpCircle className="h-4 w-4 text-yellow-400" />,
+                  not_voted: <MinusCircle className="h-4 w-4 text-[#71717A]" />,
+                };
+                const statusLabels = {
+                  going: "참석",
+                  not_going: "불참",
+                  maybe: "미정",
+                  not_voted: "미투표",
+                };
 
-              // 프로필에서 이름 가져오기, 없으면 이메일 또는 기본값 사용
-              const participantName = profileMap.get(teamMember.user_id);
-              const displayName =
-                teamMember.user_id === user.id
-                  ? participantName || user.email?.split("@")[0] || "나"
-                  : participantName || "이름 없음";
+                // 프로필에서 이름 가져오기, 없으면 이메일 또는 기본값 사용
+                const participantName = profileMap.get(teamMember.user_id);
+                const displayName =
+                  teamMember.user_id === user.id
+                    ? participantName || user.email?.split("@")[0] || "나"
+                    : participantName || "이름 없음";
 
-              return (
-                <div
-                  key={teamMember.user_id}
-                  className="flex items-center justify-between p-3 rounded-lg bg-[#27272A]/50"
-                >
-                  <div className="flex items-center gap-3">
-                    {
-                      statusIcons[
-                        statusKey as keyof typeof statusIcons
-                      ]
-                    }
-                    <span className="text-[#F4F4F5]">{displayName}</span>
+                return (
+                  <div
+                    key={teamMember.user_id}
+                    className="flex items-center justify-between p-3 rounded-lg bg-[#27272A]/50"
+                  >
+                    <div className="flex items-center gap-3">
+                      {statusIcons[statusKey as keyof typeof statusIcons]}
+                      <span className="text-[#F4F4F5]">{displayName}</span>
+                    </div>
+                    <span className="text-sm text-[#A1A1AA]">
+                      {statusLabels[statusKey as keyof typeof statusLabels]}
+                    </span>
                   </div>
-                  <span className="text-sm text-[#A1A1AA]">
-                    {
-                      statusLabels[
-                        statusKey as keyof typeof statusLabels
-                      ]
-                    }
-                  </span>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         ) : (
           <div className="text-center py-8 text-[#A1A1AA]">

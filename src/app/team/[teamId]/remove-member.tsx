@@ -97,8 +97,8 @@ export function RemoveMember({
         onClick={() => setIsOpen(true)}
         className="min-w-[44px] min-h-[44px] p-2 rounded hover:bg-[#27272A] text-[#A1A1AA] hover:text-[#F4F4F5] transition-colors touch-manipulation active:scale-[0.95] flex items-center justify-center"
         type="button"
-        title="팀원 방출"
-        aria-label="팀원 방출"
+        title="라인업 조정"
+        aria-label="라인업 조정"
       >
         <X className="h-4 w-4" />
       </button>
@@ -109,7 +109,7 @@ export function RemoveMember({
           setIsOpen(false);
           setError(null);
         }}
-        title="팀원 방출"
+        title="선수 방출"
         onConfirm={handleRemove}
         onCancel={() => {
           setIsOpen(false);
@@ -121,12 +121,11 @@ export function RemoveMember({
       >
         <div className="space-y-4">
           <p className="text-[#F4F4F5]">
-            <span className="font-medium">{memberName || "이 팀원"}</span>을(를)
-            팀에서 방출하시겠습니까?
+            <span className="font-medium">{memberName || "이 선수"}</span>을(를)
+            라인업에서 제외하시겠습니까?
           </p>
           <p className="text-sm text-[#A1A1AA]">
-            이 작업은 되돌릴 수 없습니다. 방출된 팀원은 다시 팀 코드로 가입할 수
-            있습니다.
+            이 작업은 되돌릴 수 없습니다. 제외된 선수는 다시 팀 코드로 요청해야 합류할 수 있습니다.
           </p>
 
           {error && (

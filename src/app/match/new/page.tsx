@@ -126,27 +126,27 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
   const onboardingSteps = [
     {
       id: "set-date-time",
-      title: "경기 날짜·시간 정하기",
+      title: "킥오프 시간 확정",
       description:
-        "팀원들이 미리 준비할 수 있도록 가능한 빠르게 날짜와 시간을 지정하세요.",
+        "날짜와 시간을 먼저 확정하면 팀원들이 준비 시간과 이동을 미리 조율할 수 있어요.",
     },
     {
       id: "confirm-location",
-      title: "장소를 정확히 입력",
+      title: "구장 체크",
       description:
-        "풋살장 이름이나 주소를 명확히 적으면 팀원들이 헷갈리지 않아요.",
+        "풋살장 이름이나 주소를 정확히 입력해 팀원들이 헤매지 않도록 안내하세요.",
     },
     {
       id: "share-note",
-      title: "메모로 특이사항 전달",
+      title: "브리핑 메모 작성",
       description:
-        "복장, 준비물, 비용 등 안내가 있다면 메모에 적어 팀원들과 공유하세요.",
+        "복장, 포메이션, 회비 등 꼭 전달할 정보를 메모에 남기면 라인업이 흔들리지 않아요.",
     },
     {
       id: "send-notification",
-      title: "생성 후 알림 확인",
+      title: "알림으로 라인업 호출",
       description:
-        "경기 생성이 완료되면 팀원들에게 알림이 전달돼 투표 요청이 자동으로 시작됩니다.",
+        "매치를 편성하면 팀원에게 알림이 즉시 전달되고, 출석 투표가 자동으로 시작됩니다.",
     },
   ];
 
@@ -154,9 +154,9 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
     <>
       <OnboardingGuide
         storageKey={`match-new-${teamId}`}
-        title="경기 생성 체크리스트"
-        subtitle="필수 정보를 빠르게 채우고 팀원에게 확실하게 공유하세요."
-        accentLabel="경기 생성 온보딩"
+        title="매치 편성 체크"
+        subtitle="필수 정보를 채우고 라커룸에 킥오프 신호를 보내세요."
+        accentLabel="경기 편성 온보딩"
         steps={onboardingSteps}
       />
       <div className="container mx-auto px-4 py-8 max-w-2xl">
@@ -170,7 +170,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
 
       <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6">
         <h1 className="text-2xl font-bold text-[#F4F4F5] mb-6">
-          새 경기 만들기
+          새 매치 편성
         </h1>
 
         <form action={createMatch} className="space-y-6">
@@ -223,7 +223,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
               id="location"
               name="location"
               required
-              placeholder="예: 서울 풋살장"
+              placeholder="예: 킥-인 아레나"
               className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A]"
             />
           </div>
@@ -239,18 +239,18 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
               id="note"
               name="note"
               rows={4}
-              placeholder="추가 정보나 안내사항을 입력하세요"
+              placeholder="복장, 전술 노트, 회비 등 브리핑이 있다면 적어주세요"
               className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] resize-none"
             />
           </div>
 
           <div className="flex gap-3">
             <Button type="submit" className="flex-1">
-              경기 생성
+              매치 편성
             </Button>
             <Link href={`/team/${teamId}`} className="flex-1">
               <Button type="button" variant="outline" className="w-full">
-                취소
+                라인업으로
               </Button>
             </Link>
           </div>

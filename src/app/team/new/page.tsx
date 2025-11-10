@@ -80,7 +80,7 @@ export default function NewTeamPage() {
       }
 
       // 성공
-      toast.success("팀이 생성되었습니다!");
+      toast.success("팀 킥오프가 완료되었습니다!");
       router.push(`/team/${team.id}`);
       router.refresh();
     } catch (err: any) {
@@ -101,7 +101,7 @@ export default function NewTeamPage() {
 
       <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6">
         <h1 className="text-2xl font-bold text-[#F4F4F5] mb-6">
-          새 팀 만들기
+          새 팀 킥오프
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -117,7 +117,7 @@ export default function NewTeamPage() {
               id="name"
               name="name"
               required
-              placeholder="예: 우리팀"
+              placeholder="예: 킥오프 FC"
               disabled={isLoading}
               className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] disabled:opacity-50"
             />
@@ -128,13 +128,13 @@ export default function NewTeamPage() {
               htmlFor="description"
               className="block text-sm font-medium text-[#F4F4F5] mb-2"
             >
-              설명
+              팀 소개
             </label>
             <textarea
               id="description"
               name="description"
               rows={4}
-              placeholder="팀에 대한 간단한 설명을 입력하세요"
+              placeholder="팀 분위기나 전술 노트를 간단히 적어주세요"
               disabled={isLoading}
               aria-label="팀 설명"
               className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] resize-none disabled:opacity-50"
@@ -147,7 +147,7 @@ export default function NewTeamPage() {
               disabled={isLoading}
               className="flex-1"
             >
-              {isLoading ? "생성 중..." : "팀 생성"}
+              {isLoading ? "킥오프 준비 중..." : "팀 킥오프"}
             </Button>
             <Link href="/locker-room">
               <Button
@@ -156,7 +156,7 @@ export default function NewTeamPage() {
                 disabled={isLoading}
                 className="flex-1"
               >
-                취소
+                라커룸으로
               </Button>
             </Link>
           </div>

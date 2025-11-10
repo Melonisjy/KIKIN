@@ -165,33 +165,33 @@ export default async function LockerRoomPage() {
       {needsName && <SetNameModal isOpen={true} currentName={userName} />}
       <OnboardingGuide
         storageKey="locker-room"
-        title="라커룸 첫 걸음"
-        subtitle="팀을 만들고 경기 일정을 관리하는 핵심 흐름을 체크해 보세요."
+        title="라커룸 킥오프 체크"
+        subtitle="팀 라인업과 매치 준비를 위한 필수 흐름을 살펴보세요."
         accentLabel="라커룸 온보딩"
         steps={[
           {
             id: "profile-name",
-            title: "프로필 이름 설정하기",
+            title: "선수 카드 정비",
             description:
-              "프로필 카드에서 이름을 등록하면 팀원들이 누구인지 빠르게 알아볼 수 있어요.",
+              "선수 카드에 이름을 등록하면 팀원들이 라커룸에서 당신을 더 빠르게 찾을 수 있어요.",
           },
           {
             id: "create-team",
-            title: "첫 팀 개설 또는 합류",
+            title: "팀 킥오프 또는 합류",
             description:
-              "우측 상단의 팀 생성·참여 버튼을 눌러 나만의 팀을 만들거나 팀 코드로 합류하세요.",
+              "우측 상단 버튼으로 팀을 킥오프하거나, 팀 코드로 빠르게 합류하세요.",
           },
           {
             id: "invite-members",
-            title: "팀원 초대하기",
+            title: "라인업 초대",
             description:
-              "생성한 팀 상세 페이지에서 팀 코드를 복사해 팀원들에게 공유하면 바로 초대할 수 있어요.",
+              "팀 상세 페이지에서 팀 코드를 복사해 팀원들에게 전송하면 라인업을 빠르게 채울 수 있어요.",
           },
           {
             id: "review-matches",
-            title: "최근 경기 일정 확인",
+            title: "최근 경기 브리핑 확인",
             description:
-              "아래 ‘최근 경기’ 리스트에서 곧 열릴 경기와 투표 현황을 한눈에 파악하세요.",
+              "아래 ‘최근 경기 브리핑’에서 킥오프 예정 경기와 출석 현황을 한눈에 확인하세요.",
           },
         ]}
       />
@@ -199,7 +199,7 @@ export default async function LockerRoomPage() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-[#F4F4F5]">라커룸</h1>
           <p className="mt-2 text-[#A1A1AA]">
-            환영합니다, {userName || user.email}님!
+            {userName || user.email} 선수, 라인업 정비가 완료되면 곧 킥오프입니다.
           </p>
         </div>
 
@@ -208,7 +208,7 @@ export default async function LockerRoomPage() {
           <section>
             <h2 className="mb-4 text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
               <User className="h-6 w-6" />
-              프로필
+              선수 카드
             </h2>
             <ProfileCard userName={userName} userEmail={user.email || ""} />
           </section>
@@ -217,7 +217,8 @@ export default async function LockerRoomPage() {
           <section>
             <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <h2 className="text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
-                <Users className="h-6 w-6" />내 팀
+                <Users className="h-6 w-6" />
+                나의 라인업
                 {teams && teams.length > 0 && (
                   <span className="text-lg font-medium text-[#A1A1AA] ml-2">
                     ({teams.length})
@@ -228,7 +229,8 @@ export default async function LockerRoomPage() {
                 <LockerRoomActions />
                 <Link href="/team/new">
                   <Button className="w-full sm:w-auto">
-                    <Plus className="mr-2 h-4 w-4" />팀 생성
+                    <Plus className="mr-2 h-4 w-4" />
+                    팀 킥오프
                   </Button>
                 </Link>
               </div>
@@ -266,13 +268,14 @@ export default async function LockerRoomPage() {
               <div className="rounded-lg border border-dashed border-[#27272A] bg-[#27272A]/50 p-12 text-center">
                 <Users className="mx-auto h-12 w-12 text-[#A1A1AA] mb-4" />
                 <p className="text-[#A1A1AA] mb-4">
-                  아직 가입한 팀이 없습니다.
+                  아직 합류한 팀이 없어요. 첫 라인업을 꾸려볼까요?
                 </p>
                 <div className="flex flex-col gap-2 items-center sm:flex-row sm:justify-center">
                   <LockerRoomActions />
                   <Link href="/team/new">
                     <Button>
-                      <Plus className="mr-2 h-4 w-4" />첫 팀 만들기
+                      <Plus className="mr-2 h-4 w-4" />
+                      첫 팀 킥오프
                     </Button>
                   </Link>
                 </div>
@@ -284,7 +287,7 @@ export default async function LockerRoomPage() {
           <section>
             <h2 className="mb-4 text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
               <Calendar className="h-6 w-6" />
-              최근 경기
+              최근 경기 브리핑
               {recentMatches.length > 0 && (
                 <span className="text-lg font-medium text-[#A1A1AA] ml-2">
                   ({recentMatches.length})
@@ -323,7 +326,9 @@ export default async function LockerRoomPage() {
             ) : (
               <div className="rounded-lg border border-dashed border-[#27272A] bg-[#27272A]/50 p-12 text-center">
                 <Calendar className="mx-auto h-12 w-12 text-[#A1A1AA] mb-4" />
-                <p className="text-[#A1A1AA]">경기가 없습니다.</p>
+                <p className="text-[#A1A1AA]">
+                  예정된 경기가 없어요. 새로운 매치를 편성해 라커룸을 달궈보세요.
+                </p>
               </div>
             )}
           </section>

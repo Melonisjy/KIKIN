@@ -16,7 +16,7 @@ export function LockerRoomActions() {
         className="w-full sm:w-auto"
       >
         <UserPlus className="mr-2 h-4 w-4" />
-        팀 코드로 가입
+        팀 코드로 합류
       </Button>
       <JoinTeamModal
         isOpen={isJoinModalOpen}

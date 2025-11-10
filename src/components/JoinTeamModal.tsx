@@ -129,7 +129,7 @@ export function JoinTeamModal({ isOpen, onClose }: JoinTeamModalProps) {
       // 성공
       setTeamCode("");
       onClose();
-      toast.success("가입 요청이 전송되었습니다. 팀장의 승인을 기다려주세요.");
+      toast.success("합류 요청이 전송되었습니다. 감독의 승인을 기다려주세요.");
       router.refresh();
     } catch (err: any) {
       setError(err.message || "팀 가입 중 오류가 발생했습니다.");
@@ -142,10 +142,10 @@ export function JoinTeamModal({ isOpen, onClose }: JoinTeamModalProps) {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="팀 코드로 가입하기"
+      title="팀 코드로 합류하기"
       onConfirm={handleJoin}
       onCancel={onClose}
-      confirmText={isLoading ? "가입 중..." : "요청하기"}
+      confirmText={isLoading ? "요청 중..." : "합류 요청"}
       cancelText="취소"
     >
       <div className="space-y-4">
@@ -169,7 +169,7 @@ export function JoinTeamModal({ isOpen, onClose }: JoinTeamModalProps) {
                 handleJoin();
               }
             }}
-            placeholder="팀 코드를 입력하세요"
+            placeholder="팀 초대 코드를 입력하세요"
             className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] transition-colors"
             disabled={isLoading}
           />

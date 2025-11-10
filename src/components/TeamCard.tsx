@@ -26,12 +26,10 @@ function TeamCardComponent({ team, role, joinedAt, memberCount, leaderName }: Te
           </div>
           <span
             className={`${styles.roleBadge} ${
-              role === "leader"
-                ? styles.roleLeader
-                : styles.roleMember
+              role === "leader" ? styles.roleLeader : styles.roleMember
             }`}
           >
-            {role === "leader" ? "팀장" : "멤버"}
+            {role === "leader" ? "감독" : "선수"}
           </span>
         </div>
 
@@ -39,7 +37,7 @@ function TeamCardComponent({ team, role, joinedAt, memberCount, leaderName }: Te
           <h3 className={`${styles.teamName} mb-0`}>{team.name}</h3>
           {leaderName && (
             <span className="text-sm text-[#A1A1AA] leading-none">
-              팀장: {leaderName}
+              감독: {leaderName}
             </span>
           )}
         </div>
@@ -51,11 +49,11 @@ function TeamCardComponent({ team, role, joinedAt, memberCount, leaderName }: Te
         <div className={styles.teamFooter}>
           {memberCount !== undefined && (
             <span className={styles.teamMemberCount}>
-              팀원 {memberCount}명
+              라인업 {memberCount}명
             </span>
           )}
           <span className={styles.teamDate}>
-            가입일: {new Date(joinedAt).toLocaleDateString("ko-KR")}
+            합류일: {new Date(joinedAt).toLocaleDateString("ko-KR")}
           </span>
         </div>
       </div>
