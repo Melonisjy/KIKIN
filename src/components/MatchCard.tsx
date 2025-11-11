@@ -6,6 +6,7 @@ import {
   XCircle,
   HelpCircle,
   ArrowRight,
+  BellRing,
 } from "lucide-react";
 import { memo, useMemo } from "react";
 import styles from "@/styles/match.module.scss";
@@ -26,9 +27,18 @@ interface MatchCardProps {
     notGoing: number;
     maybe: number;
   };
+  voteReminder?: {
+    message: string;
+  } | null;
 }
 
-function MatchCardComponent({ match, showTeam, teamName, participantStats }: MatchCardProps) {
+function MatchCardComponent({
+  match,
+  showTeam,
+  teamName,
+  participantStats,
+  voteReminder,
+}: MatchCardProps) {
   const { matchDate, isPast, formattedDate } = useMemo(() => {
     const date = new Date(`${match.date}T${match.time}`);
     const past = date < new Date();
@@ -63,6 +73,12 @@ function MatchCardComponent({ match, showTeam, teamName, participantStats }: Mat
       className={`${styles.matchCard} group ${isPast ? styles.pastMatch : ""}`}
     >
       <div className={styles.matchCardShell}>
+        {voteReminder && !isPast && match.status !== "cancelled" && (
+          <div className={styles.reminderBadge}>
+            <BellRing className={styles.reminderIcon} />
+            <span>{voteReminder.message}</span>
+          </div>
+        )}
         <div className={styles.matchMeta}>
           <div className={styles.metaLeft}>
             <span className={styles.metaIcon}>

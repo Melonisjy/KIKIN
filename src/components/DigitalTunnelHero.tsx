@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { BellRing } from "lucide-react";
 import styles from "@/styles/digital-tunnel.module.scss";
 
 type HeroState = "idle" | "pre" | "live" | "post" | "scheduled";
@@ -27,16 +28,13 @@ interface DigitalTunnelHeroProps {
   } | null;
 }
 
-const accentMap: Record<
-  NonNullable<FocusAction["accent"]>,
-  string
-> = {
+const accentMap: Record<NonNullable<FocusAction["accent"]>, string> = {
   primary:
     "bg-[#00C16A]/18 text-[#9FF4D2] border border-[#00C16A]/35 hover:bg-[#00C16A]/28",
   secondary:
     "bg-[#222E45] text-[#A0AABE] border border-[#2C354B] hover:bg-[#1A2333]",
   emphasis:
-    "bg-[#ffe352]/15 text-[#FFE352] border border-[#FFE352]/30 hover:bg-[#ffe352]/25",
+    "bg-[#ffe352]/18 text-[#FFE352] border border-[#FFE352]/35 hover:bg-[#ffe352]/28 shadow-[0_12px_30px_rgba(60,45,0,0.45)]",
 };
 
 function renderStateBadge(state: HeroState) {
@@ -138,12 +136,19 @@ export function DigitalTunnelHero({
               const accentClass = action.accent
                 ? accentMap[action.accent]
                 : accentMap.secondary;
+              const isEmphasis = action.accent === "emphasis";
               return (
                 <Link
                   key={action.id}
                   href={action.href}
-                  className={`group flex flex-col gap-2 rounded-xl px-4 py-3 transition-all duration-200 ${accentClass}`}
+                  className={`group relative flex flex-col gap-2 rounded-xl px-4 py-3 transition-all duration-200 ${accentClass}`}
                 >
+                  {isEmphasis && (
+                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#FFE352]">
+                      <BellRing className="h-3.5 w-3.5 animate-pulse" />
+                      투표 리마인더
+                    </span>
+                  )}
                   <span className="text-sm font-semibold text-[#F8FAFC] group-hover:translate-x-1 transition-transform duration-200">
                     {action.title}
                   </span>

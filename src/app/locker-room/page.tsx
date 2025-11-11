@@ -107,10 +107,11 @@ export default async function LockerRoomPage() {
   let recentMatches: any[] = [];
   let matchesError = null;
   let teamNameMap = new Map<string, string>();
-  let matchParticipantStats: Record<
-    string,
-    { going: number; notGoing: number; maybe: number }
-  > = {};
+let matchParticipantStats: Record<
+  string,
+  { going: number; notGoing: number; maybe: number }
+> = {};
+const voteReminderMap: Record<string, { message: string }> = {};
 
   if (teamIds.length > 0) {
     // 팀 이름 맵 생성
@@ -139,8 +140,11 @@ export default async function LockerRoomPage() {
         const matchIds = recentMatches.map((m: any) => m.id);
         const { data: participants } = await supabase
           .from("match_participants")
-          .select("match_id, status")
+          .select("match_id, user_id, status")
           .in("match_id", matchIds);
+
+        const now = new Date();
+        const REMINDER_THRESHOLD_HOURS = 18;
 
         // 각 경기별로 통계 계산
         matchIds.forEach((matchId: string) => {
@@ -155,6 +159,40 @@ export default async function LockerRoomPage() {
             maybe: matchParticipants.filter((p: any) => p.status === "maybe")
               .length,
           };
+
+          const match = recentMatches.find((m: any) => m.id === matchId);
+          if (!match) return;
+
+          const userResponded = matchParticipants.some(
+            (participant: any) => participant.user_id === user.id
+          );
+
+          if (userResponded || match.status === "cancelled") {
+            return;
+          }
+
+          const matchDateTime = new Date(`${match.date}T${match.time || "00:00"}`);
+          if (Number.isNaN(matchDateTime.getTime())) {
+            return;
+          }
+
+          const diffMs = matchDateTime.getTime() - now.getTime();
+          if (diffMs <= 0) {
+            return;
+          }
+
+          const diffHours = diffMs / (1000 * 60 * 60);
+          if (diffHours > REMINDER_THRESHOLD_HOURS) {
+            return;
+          }
+
+          const roundedHours = Math.max(1, Math.round(diffHours));
+          const message =
+            roundedHours <= 1
+              ? "투표 마감 직전! 출석을 남겨주세요."
+              : `${roundedHours}시간 후 킥오프 · 투표 필요`;
+
+          voteReminderMap[matchId] = { message };
         });
       }
     }
@@ -319,6 +357,7 @@ export default async function LockerRoomPage() {
                       showTeam={true}
                       teamName={teamName}
                       participantStats={matchParticipantStats[match.id]}
+                      voteReminder={voteReminderMap[match.id] || null}
                     />
                   );
                 })}
