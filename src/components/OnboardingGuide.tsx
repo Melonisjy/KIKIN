@@ -52,12 +52,16 @@ export function OnboardingGuide({
         const parsed = JSON.parse(raw) as StoredState;
         setDismissed(parsed.dismissed);
         setCompletedSteps(parsed.completedSteps || []);
-        setIsOpen(!parsed.dismissed);
+        // localStorage에 값이 있으면 무조건 닫힘 상태로 시작
+        setIsOpen(false);
       } else {
-        setIsOpen(true);
+        // 기본값: 닫힘 상태
+        setIsOpen(false);
+        setDismissed(false);
       }
     } catch {
-      setIsOpen(true);
+      setIsOpen(false);
+      setDismissed(false);
     }
   }, [storageId]);
 
@@ -116,12 +120,13 @@ export function OnboardingGuide({
   const progress =
     steps.length > 0 ? Math.min((completedSteps.length / steps.length) * 100, 100) : 0;
 
-  if (!isOpen && dismissed) {
+  if (!isOpen) {
+    // 가이드가 닫혀있을 때만 다시보기 버튼 표시
     return (
       <button
         type="button"
         onClick={handleReopen}
-        className="fixed bottom-6 right-6 z-[1050] flex items-center gap-2 rounded-full border border-[#2C354B] bg-[#141824]/90 px-4 py-2 text-sm text-[#F4F4F5] shadow-lg shadow-black/40 backdrop-blur"
+        className="fixed bottom-6 left-6 z-[1050] flex items-center gap-2 rounded-full border border-[#2C354B] bg-[#141824]/90 px-4 py-2 text-sm text-[#F4F4F5] shadow-lg shadow-black/40 backdrop-blur transition hover:border-[#00C16A]/40 hover:text-[#00C16A]"
       >
         <Sparkles className="h-4 w-4 text-[#00C16A]" />
         가이드 다시 보기
@@ -129,12 +134,8 @@ export function OnboardingGuide({
     );
   }
 
-  if (!isOpen) {
-    return null;
-  }
-
   return (
-    <div className="fixed bottom-6 right-6 z-[1050] w-full max-w-xs sm:max-w-sm">
+    <div className="fixed bottom-6 left-6 z-[1050] w-full max-w-xs sm:max-w-sm">
       <div className="relative overflow-hidden rounded-2xl border border-[#2E3038] bg-[#13161D]/95 shadow-2xl shadow-black/60 backdrop-blur-lg">
         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#00C16A]/15 via-transparent to-transparent" />
 

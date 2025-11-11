@@ -9,6 +9,10 @@ import {
   Megaphone,
   Pin,
   UserPlus,
+  TrendingUp,
+  CheckCircle,
+  XCircle,
+  HelpCircle,
 } from "lucide-react";
 import { MatchCard } from "@/components/MatchCard";
 import { MatchListSkeleton } from "@/components/LoadingSkeleton";
@@ -21,6 +25,8 @@ import { NoticesSection } from "./notices-section";
 import { RemoveMember } from "./remove-member";
 import { ApproveRequest } from "./approve-request";
 import { TeamUpdateFeed, TeamUpdateItem } from "./team-update-feed";
+import { TeamStats } from "./team-stats";
+import { TeamTabs } from "./team-tabs";
 
 interface PageProps {
   params: Promise<{ teamId: string }>;
@@ -494,7 +500,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
         </Link>
 
         <div className="space-y-6">
-          <TeamUpdateFeed items={teamUpdates} />
+          {/* 팀 정보 및 스냅샷 */}
           <div className="grid gap-6 xl:grid-cols-12">
             <section className="xl:col-span-8">
               <div
@@ -590,9 +596,13 @@ export default async function TeamDetailPage({ params }: PageProps) {
             </aside>
           </div>
 
-          <div className="grid gap-6 xl:grid-cols-12">
-            <section className="space-y-6 xl:col-span-8">
-              <NoticesSection
+          {/* 탭 구조: 개요 / 통계 */}
+          <div className="surface-layer rounded-lg p-6">
+            <TeamTabs
+              overview={
+                <div className="grid gap-6 xl:grid-cols-12">
+                  <section className="space-y-6 xl:col-span-8">
+                    <NoticesSection
                 teamId={teamId}
                 notices={notices || []}
                 noticesError={noticesError}
@@ -603,68 +613,107 @@ export default async function TeamDetailPage({ params }: PageProps) {
                 ackStats={noticeAckStats}
               />
 
-              <div
-                className="surface-layer rounded-lg p-6 transition-all duration-200 hover:bg-[var(--surface-3)] hover:border-[var(--border-strong)] hover:-translate-y-0.5"
-                data-variant="elevated"
-              >
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="surface-layer rounded-lg p-4 border border-[var(--border-soft)]">
+                <div className="flex items-center justify-between gap-2 mb-3">
                   <div className="flex items-center gap-2">
-                    <Calendar className="h-6 w-6 text-[#F4F4F5]" />
-                    <h2 className="text-2xl font-semibold text-[#F4F4F5]">
+                    <Calendar className="h-4 w-4 text-[#A1A1AA]" />
+                    <h3 className="text-sm font-semibold text-[#F4F4F5]">
                       경기 일정
-                    </h2>
-                    <span className="text-sm text-[#A1A1AA]">
-                      ({totalMatches}경기)
+                    </h3>
+                    <span className="text-xs text-[#A1A1AA]">
+                      ({totalMatches})
                     </span>
                   </div>
                   {isLeader && (
                     <Link href={`/match/new?teamId=${teamId}`}>
-                      <Button>
-                        <Plus className="mr-2 h-4 w-4" />새 경기 만들기
+                      <Button size="sm" variant="ghost" className="h-7 px-2">
+                        <Plus className="h-3 w-3" />
                       </Button>
                     </Link>
                   )}
                 </div>
 
-                <div className="mt-4">
-                  {matchesError ? (
-                    <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-destructive transition-all duration-200">
-                      <p>경기 정보를 불러오는 중 오류가 발생했습니다.</p>
-                      <p className="mt-2 text-sm">{matchesError.message}</p>
-                    </div>
-                  ) : matches && matches.length > 0 ? (
-                    <Suspense fallback={<MatchListSkeleton />}>
-                      <div className="space-y-4">
-                        {matches.map((match) => (
-                          <MatchCard
-                            key={match.id}
-                            match={match}
-                            showTeam={false}
-                            participantStats={matchParticipantStats[match.id]}
-                          />
-                        ))}
-                      </div>
-                    </Suspense>
-                  ) : (
-                    <div className="rounded-lg border border-dashed border-[#2C354B] bg-[#1A2333]/55 p-10 text-center transition-all duration-200 hover:border-[#3F4A63] hover:bg-[#223149] hover:-translate-y-0.5">
-                      <p className="text-[#A1A1AA] mb-4">
-                        아직 예정된 경기가 없습니다.
-                      </p>
-                      {isLeader && (
-                        <Link href={`/match/new?teamId=${teamId}`}>
-                          <Button variant="secondary">
-                            <Plus className="mr-2 h-4 w-4" />첫 경기 만들기
-                          </Button>
-                        </Link>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </section>
+                {matchesError ? (
+                  <div className="text-xs text-red-400 py-2">
+                    경기 정보를 불러올 수 없습니다.
+                  </div>
+                ) : matches && matches.length > 0 ? (
+                  <div className="space-y-2">
+                    {matches.slice(0, 5).map((match) => {
+                      const matchDate = new Date(`${match.date}T${match.time}`);
+                      const isPast = matchDate < new Date();
+                      const formattedDate = matchDate.toLocaleDateString("ko-KR", {
+                        month: "short",
+                        day: "numeric",
+                        weekday: "short",
+                      });
+                      const stats = matchParticipantStats[match.id];
 
-            <aside className="space-y-6 xl:col-span-4">
-              {isLeader && (
+                      return (
+                        <Link
+                          key={match.id}
+                          href={`/match/${match.id}`}
+                          className="flex items-center gap-2 p-2 rounded border border-[var(--border-soft)] bg-[var(--surface-1)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-2)] transition-colors"
+                        >
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs font-medium text-[#F4F4F5] truncate">
+                                {formattedDate} {match.time.slice(0, 5)}
+                              </span>
+                              {isPast ? (
+                                <span className="text-xs px-1.5 py-0.5 rounded bg-[#27272A] text-[#A1A1AA]">
+                                  종료
+                                </span>
+                              ) : (
+                                <span className="text-xs px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400">
+                                  {match.status === "confirmed" ? "확정" : "예정"}
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-2 mt-1">
+                              <span className="text-xs text-[#A1A1AA] truncate">
+                                {match.location}
+                              </span>
+                              {stats && (
+                                <div className="flex items-center gap-1.5 text-xs text-[#71717A]">
+                                  <span className="flex items-center gap-0.5">
+                                    <CheckCircle className="h-3 w-3 text-[#00C16A]" />
+                                    {stats.going}
+                                  </span>
+                                  <span className="flex items-center gap-0.5">
+                                    <XCircle className="h-3 w-3 text-red-400" />
+                                    {stats.notGoing}
+                                  </span>
+                                  <span className="flex items-center gap-0.5">
+                                    <HelpCircle className="h-3 w-3 text-yellow-400" />
+                                    {stats.maybe}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                    {matches.length > 5 && (
+                      <div className="text-xs text-[#A1A1AA] text-center py-1">
+                        +{matches.length - 5}개 더
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-xs text-[#A1A1AA] py-2 text-center">
+                    예정된 경기가 없습니다.
+                  </div>
+                )}
+              </div>
+                  </section>
+
+                  <aside className="space-y-6 xl:col-span-4">
+                    {/* 업데이트 피드 (컴팩트 버전) */}
+                    <TeamUpdateFeed items={teamUpdates} />
+
+                    {isLeader && (
                 <div
                   className="surface-layer rounded-lg p-6 transition-all duration-200 hover:bg-[var(--surface-3)] hover:border-[var(--border-strong)] hover:-translate-y-0.5"
                   data-variant="elevated"
@@ -824,7 +873,15 @@ export default async function TeamDetailPage({ params }: PageProps) {
                   </div>
                 )}
               </div>
-            </aside>
+                  </aside>
+                </div>
+              }
+              analytics={
+                <div>
+                  <TeamStats teamId={teamId} />
+                </div>
+              }
+            />
           </div>
         </div>
       </div>

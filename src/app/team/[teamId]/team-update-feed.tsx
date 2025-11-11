@@ -89,79 +89,49 @@ function formatTimestampLabel(timestamp: string) {
 }
 
 export function TeamUpdateFeed({ items }: TeamUpdateFeedProps) {
+  const displayItems = items.slice(0, 3); // 최대 3개만 표시
+
   return (
-    <section
-      className="surface-layer rounded-2xl border border-[var(--border-soft)]"
-      data-variant="subtle"
-    >
-      <div className="flex items-center justify-between gap-3 border-b border-[var(--border-faint)] px-6 py-4">
-        <div>
-          <h2 className="text-lg font-semibold text-[#F4F4F5]">
-            팀 업데이트 피드
-          </h2>
-          <p className="text-xs text-[#96A3C4]">
-            공지, 매치, 투표 소식을 한 곳에서 확인하세요.
-          </p>
-        </div>
-        <span className="rounded-full bg-[#1A2333] px-3 py-1 text-xs font-semibold text-[#96A3C4]">
-          {items.length}
-        </span>
+    <div className="surface-layer rounded-lg p-4 border border-[var(--border-soft)]">
+      <div className="flex items-center justify-between gap-2 mb-3">
+        <h3 className="text-sm font-semibold text-[#F4F4F5]">최근 업데이트</h3>
+        {items.length > 3 && (
+          <span className="text-xs text-[#A1A1AA]">
+            +{items.length - 3}개 더
+          </span>
+        )}
       </div>
 
-      {items.length === 0 ? (
-        <div className="px-6 py-8 text-center text-sm text-[#96A3C4]">
-          아직 새로운 팀 업데이트가 없습니다.
+      {displayItems.length === 0 ? (
+        <div className="text-xs text-[#A1A1AA] py-2">
+          새로운 업데이트가 없습니다.
         </div>
       ) : (
-        <div className="flex flex-col gap-3 px-4 py-5">
-          {items.map((item) => {
+        <div className="space-y-2">
+          {displayItems.map((item) => {
             const Icon = iconMap[item.type];
             const config = typeConfig[item.type];
 
-            const iconClasses = [
-              "flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors duration-200",
-              config.iconBg,
-              config.iconColor,
-            ].join(" ");
-
             return (
-              <article
+              <div
                 key={item.id}
-                className="group flex items-start gap-4 rounded-xl border border-[var(--border-soft)] bg-[var(--surface-1)] px-4 py-3 transition-all duration-200 hover:border-[var(--border-strong)] hover:bg-[var(--surface-2)] hover:-translate-y-0.5"
+                className="flex items-center gap-2 text-xs text-[#A1A1AA] hover:text-[#F4F4F5] transition-colors"
               >
                 <div
-                  className={`${iconClasses} group-hover:bg-emerald-400/15 group-hover:text-emerald-300`}
+                  className={`flex h-6 w-6 shrink-0 items-center justify-center rounded ${config.iconBg} ${config.iconColor}`}
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-3 w-3" />
                 </div>
-
-                <div className="flex-1 min-w-0 space-y-1.5">
-                  <div className="flex flex-wrap items-center gap-2 text-xs text-[#96A3C4]">
-                    <span className="rounded-full bg-[#1F2536] px-2 py-0.5 font-semibold text-[#A0AABE]">
-                      {config.label}
-                    </span>
-                    <span>{formatTimestampLabel(item.timestamp)}</span>
-                  </div>
-                  <p className="text-sm font-semibold text-[#F4F4F5] leading-relaxed">
-                    {item.title}
-                  </p>
-                  {item.description ? (
-                    <p className="text-xs text-[#96A3C4] leading-relaxed line-clamp-2">
-                      {item.description}
-                    </p>
-                  ) : null}
-                  {item.meta ? (
-                    <p className="text-xs text-[#6F7280] leading-relaxed">
-                      {item.meta}
-                    </p>
-                  ) : null}
-                </div>
-              </article>
+                <span className="flex-1 truncate">{item.title}</span>
+                <span className="text-[#71717A] shrink-0">
+                  {formatTimestampLabel(item.timestamp).split("·")[0]?.trim()}
+                </span>
+              </div>
             );
           })}
         </div>
       )}
-    </section>
+    </div>
   );
 }
 
