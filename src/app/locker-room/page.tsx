@@ -11,6 +11,7 @@ import { SetNameModal } from "@/components/SetNameModal";
 import { ProfileCard } from "@/components/ProfileCard";
 import { MatchCard } from "@/components/MatchCard";
 import { OnboardingGuide } from "@/components/OnboardingGuide";
+import { PersonalGrowthDashboard } from "./personal-growth-dashboard";
 
 export default async function LockerRoomPage() {
   const supabase = await createClient();
@@ -248,7 +249,10 @@ const voteReminderMap: Record<string, { message: string }> = {};
               <User className="h-6 w-6" />
               선수 카드
             </h2>
-            <ProfileCard userName={userName} userEmail={user.email || ""} />
+            <div className="space-y-4">
+              <ProfileCard userName={userName} userEmail={user.email || ""} />
+              <PersonalGrowthDashboard userId={user.id} />
+            </div>
           </section>
 
           {/* 내 팀 섹션 */}
