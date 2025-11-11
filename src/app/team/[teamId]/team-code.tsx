@@ -25,9 +25,9 @@ export function TeamCode({ teamId }: TeamCodeProps) {
     : teamId;
 
   return (
-    <div className="inline-flex items-center gap-1.5">
-      <span className="text-xs text-[#71717A]">코드:</span>
-      <code className="text-xs font-mono text-[#A1A1AA] bg-[var(--surface-2)] px-1.5 py-0.5 rounded border border-[var(--border-soft)]">
+    <div className="inline-flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
+      <span className="text-[10px] sm:text-xs text-[#71717A]">코드:</span>
+      <code className="text-[10px] sm:text-xs font-mono text-[#A1A1AA] bg-[var(--surface-2)] px-1 sm:px-1.5 py-0.5 rounded border border-[var(--border-soft)] whitespace-nowrap">
         {displayCode}
       </code>
       <button

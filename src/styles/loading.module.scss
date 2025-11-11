@@ -57,6 +57,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: clamp(1.5rem, 4vw, 2rem);
   padding: clamp(2.4rem, 5vw, 3.2rem) clamp(2.7rem, 6vw, 3.7rem);
   border-radius: 1.5rem;
@@ -83,6 +84,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   font-size: 0.75rem;
@@ -114,6 +116,7 @@
   position: relative;
   width: min(72vw, 280px);
   aspect-ratio: 1;
+  margin: 0 auto;
   border-radius: 1.1rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background:

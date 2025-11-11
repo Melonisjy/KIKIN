@@ -45,31 +45,31 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4">
-      <div className="w-full max-w-md space-y-8 rounded-xl border border-[#2C354B] bg-[#141824] p-8">
+      <div className="w-full max-w-md space-y-6 sm:space-y-8 rounded-xl border border-[#2C354B] bg-[#141824] p-6 sm:p-8">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-[#00C16A]">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#00C16A]">
             킥-인
           </h1>
-          <p className="mt-2 text-[#A1A1AA]">
+          <p className="mt-2 text-xs sm:text-sm text-[#A1A1AA]">
             풋살 팀 경기 일정 관리 플랫폼
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           <button
             onClick={handleGoogleLogin}
             disabled={isLoading}
-            className="flex w-full items-center justify-center gap-3 rounded-lg border border-[#2C354B] bg-transparent px-4 py-3 font-medium text-[#F4F4F5] transition-all duration-200 hover:bg-[#141824] hover:border-[#2C354B] active:scale-[0.98] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex w-full items-center justify-center gap-2 sm:gap-3 rounded-lg border border-[#2C354B] bg-transparent px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base font-medium text-[#F4F4F5] transition-all duration-200 hover:bg-[#141824] hover:border-[#2C354B] active:scale-[0.98] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <>
-                <Loader2 className="h-5 w-5 animate-spin" />
+                <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
                 <span>로그인 중...</span>
               </>
             ) : (
               <>
                 <svg
-                  className="h-5 w-5"
+                  className="h-4 w-4 sm:h-5 sm:w-5"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -95,7 +95,7 @@ export default function LoginPage() {
             )}
           </button>
 
-          <p className="text-center text-sm text-[#A1A1AA]">
+          <p className="text-center text-xs sm:text-sm text-[#A1A1AA]">
             로그인하면 킥-인의{" "}
             <a href="#" className="underline">
               이용약관

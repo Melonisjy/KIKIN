@@ -64,7 +64,7 @@ function renderStateBadge(state: HeroState) {
   const config = copy[state];
   return (
     <span
-      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] ${config.tone}`}
+      className={`inline-flex items-center rounded-full px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.16em] sm:tracking-[0.24em] whitespace-nowrap ${config.tone}`}
     >
       {config.label}
     </span>

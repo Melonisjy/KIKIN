@@ -133,12 +133,12 @@ export default async function MatchDetailPage({ params }: PageProps) {
       </Link>
 
       {/* 매치 브리핑 */}
-      <div className="surface-layer rounded-lg p-6 mb-6">
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex-1">
-            <div className="flex items-center gap-3 mb-3">
-              <Calendar className="h-6 w-6 text-[#A1A1AA]" />
-              <span className="text-xl font-semibold text-[#F4F4F5]">
+      <div className="surface-layer rounded-lg p-4 sm:p-6 mb-6">
+        <div className="flex items-start justify-between gap-3 sm:gap-4 mb-4">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 sm:gap-3 mb-3 flex-wrap">
+              <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-[#A1A1AA] flex-shrink-0" />
+              <span className="text-base sm:text-xl font-semibold text-[#F4F4F5] whitespace-nowrap">
                 {matchDate.toLocaleDateString("ko-KR", {
                   year: "numeric",
                   month: "long",
@@ -146,13 +146,13 @@ export default async function MatchDetailPage({ params }: PageProps) {
                   weekday: "long",
                 })}
               </span>
-              <span className="text-lg text-[#A1A1AA]">
+              <span className="text-sm sm:text-lg text-[#A1A1AA] whitespace-nowrap">
                 {match.time.slice(0, 5)}
               </span>
             </div>
-            <div className="flex items-center gap-3 mb-4">
-              <MapPin className="h-5 w-5 text-[#A1A1AA]" />
-              <span className="text-[#A1A1AA]">{match.location}</span>
+            <div className="flex items-center gap-2 sm:gap-3 mb-4">
+              <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-[#A1A1AA] flex-shrink-0" />
+              <span className="text-sm sm:text-base text-[#A1A1AA] whitespace-nowrap">{match.location}</span>
             </div>
             {match.note && (
               <div className="mt-4 rounded-lg bg-[#1A2333]/70 p-4">
@@ -170,7 +170,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
             )}
           </div>
           <span
-          className={`rounded-full px-3 py-1 text-sm font-medium ${
+          className={`rounded-full px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm font-medium whitespace-nowrap flex-shrink-0 ${
             isPast
               ? "bg-[#202A3B] text-[#A0AABE]"
               : statusColors[match.status as keyof typeof statusColors] ||
@@ -190,8 +190,8 @@ export default async function MatchDetailPage({ params }: PageProps) {
 
       {/* 투표 버튼 */}
       {!isPast && match.status !== "cancelled" && (
-        <div className="surface-layer rounded-lg p-6 mb-6">
-          <h2 className="text-lg font-semibold text-[#F4F4F5] mb-4">
+        <div className="surface-layer rounded-lg p-4 sm:p-6 mb-6">
+          <h2 className="text-base sm:text-lg font-semibold text-[#F4F4F5] mb-4 whitespace-nowrap">
             출석 투표
           </h2>
           <MatchParticipantButtons
@@ -202,26 +202,26 @@ export default async function MatchDetailPage({ params }: PageProps) {
       )}
 
       {/* 투표자 목록 */}
-      <div className="surface-layer rounded-lg p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-[#F4F4F5]">
+      <div className="surface-layer rounded-lg p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4">
+          <h2 className="text-base sm:text-lg font-semibold text-[#F4F4F5] whitespace-nowrap">
             출석 현황 ({totalMembers}명)
           </h2>
-          <div className="flex gap-4 text-sm text-[#A1A1AA]">
-            <span className="flex items-center gap-1">
-              <CheckCircle className="h-4 w-4 text-[#00C16A]" />
+          <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-[#A1A1AA]">
+            <span className="flex items-center gap-1 whitespace-nowrap flex-shrink-0">
+              <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#00C16A]" />
               참석: {goingCount}
             </span>
-            <span className="flex items-center gap-1">
-              <XCircle className="h-4 w-4 text-red-400" />
+            <span className="flex items-center gap-1 whitespace-nowrap flex-shrink-0">
+              <XCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-400" />
               불참: {notGoingCount}
             </span>
-            <span className="flex items-center gap-1">
-              <HelpCircle className="h-4 w-4 text-yellow-400" />
+            <span className="flex items-center gap-1 whitespace-nowrap flex-shrink-0">
+              <HelpCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-yellow-400" />
               미정: {maybeCount}
             </span>
-            <span className="flex items-center gap-1">
-              <MinusCircle className="h-4 w-4 text-[#71717A]" />
+            <span className="flex items-center gap-1 whitespace-nowrap flex-shrink-0">
+              <MinusCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#71717A]" />
               미투표: {notVotedCount}
             </span>
           </div>
@@ -252,10 +252,10 @@ export default async function MatchDetailPage({ params }: PageProps) {
                 );
                 const statusKey = participant?.status || "not_voted";
                 const statusIcons = {
-                  going: <CheckCircle className="h-4 w-4 text-[#00C16A]" />,
-                  not_going: <XCircle className="h-4 w-4 text-red-400" />,
-                  maybe: <HelpCircle className="h-4 w-4 text-yellow-400" />,
-                  not_voted: <MinusCircle className="h-4 w-4 text-[#71717A]" />,
+                  going: <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#00C16A]" />,
+                  not_going: <XCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-400" />,
+                  maybe: <HelpCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-yellow-400" />,
+                  not_voted: <MinusCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#71717A]" />,
                 };
                 const statusLabels = {
                   going: "참석",
@@ -274,16 +274,18 @@ export default async function MatchDetailPage({ params }: PageProps) {
                 return (
                 <div
                   key={teamMember.user_id}
-                  className="flex items-center justify-between rounded-lg bg-[#192235]/70 p-3"
+                  className="flex items-center justify-between gap-2 sm:gap-3 rounded-lg bg-[#192235]/70 p-2.5 sm:p-3"
                 >
-                    <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                    <div className="flex-shrink-0">
                       {statusIcons[statusKey as keyof typeof statusIcons]}
-                      <span className="text-[#F4F4F5]">{displayName}</span>
                     </div>
-                    <span className="text-sm text-[#A1A1AA]">
-                      {statusLabels[statusKey as keyof typeof statusLabels]}
-                    </span>
+                    <span className="text-sm sm:text-base text-[#F4F4F5] truncate">{displayName}</span>
                   </div>
+                  <span className="text-xs sm:text-sm text-[#A1A1AA] whitespace-nowrap flex-shrink-0">
+                    {statusLabels[statusKey as keyof typeof statusLabels]}
+                  </span>
+                </div>
                 );
               })}
           </div>

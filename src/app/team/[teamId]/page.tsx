@@ -526,8 +526,8 @@ export default async function TeamDetailPage({ params }: PageProps) {
                   {team.description}
                 </p>
               )}
-              <div className="flex items-center gap-4 text-xs text-[#71717A]">
-                {leaderName && <span>팀장: {leaderName}</span>}
+              <div className="flex items-center gap-3 sm:gap-4 text-[10px] sm:text-xs text-[#71717A] flex-wrap">
+                {leaderName && <span className="whitespace-nowrap">팀장: {leaderName}</span>}
                 <TeamCode teamId={teamId} />
               </div>
             </div>
@@ -549,19 +549,19 @@ export default async function TeamDetailPage({ params }: PageProps) {
           </div>
 
           {/* 팀 스냅샷 - 인라인 스타일 */}
-          <div className="flex items-center gap-6 pb-6 border-b border-[var(--border-soft)]">
+          <div className="flex items-center gap-3 sm:gap-6 pb-4 sm:pb-6 border-b border-[var(--border-soft)] flex-wrap">
             {summaryStats.map((stat) => {
               const Icon = stat.icon;
               return (
-                <div key={stat.id} className="flex items-center gap-2">
+                <div key={stat.id} className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
                   <div
-                    className={`flex h-8 w-8 items-center justify-center rounded-md ${stat.accentBg} ${stat.accentColor}`}
+                    className={`flex h-6 w-6 sm:h-8 sm:w-8 items-center justify-center rounded-md ${stat.accentBg} ${stat.accentColor}`}
                   >
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-3 w-3 sm:h-4 sm:w-4" />
                   </div>
-                  <div>
-                    <p className="text-xs text-[#71717A]">{stat.label}</p>
-                    <p className="text-lg font-semibold text-[#F4F4F5]">
+                  <div className="min-w-0">
+                    <p className="text-[10px] sm:text-xs text-[#71717A] whitespace-nowrap">{stat.label}</p>
+                    <p className="text-sm sm:text-lg font-semibold text-[#F4F4F5] whitespace-nowrap">
                       {stat.value}
                     </p>
                   </div>
