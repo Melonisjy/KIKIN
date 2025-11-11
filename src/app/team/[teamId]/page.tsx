@@ -30,6 +30,7 @@ import { TeamTabs } from "./team-tabs";
 import { TeamMembersList } from "./team-members-list";
 import { JoinRequestsList } from "./join-requests-list";
 import { MatchesList } from "./matches-list";
+import { TeamChat } from "./team-chat";
 
 interface PageProps {
   params: Promise<{ teamId: string }>;
@@ -598,6 +599,11 @@ export default async function TeamDetailPage({ params }: PageProps) {
                   isLeader={isLeader}
                   teamId={teamId}
                 />
+
+                {/* 팀 채팅 */}
+                <section>
+                  <TeamChat teamId={teamId} currentUserId={user.id} />
+                </section>
               </div>
 
               {/* 사이드바 */}
