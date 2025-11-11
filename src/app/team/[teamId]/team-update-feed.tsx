@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { CalendarDays, CheckSquare, Megaphone } from "lucide-react";
 
 export type TeamUpdateItem = {
@@ -89,17 +90,15 @@ function formatTimestampLabel(timestamp: string) {
 }
 
 export function TeamUpdateFeed({ items }: TeamUpdateFeedProps) {
-  const displayItems = items.slice(0, 3); // 최대 3개만 표시
+  const [showAll, setShowAll] = useState(false);
+  const displayLimit = 3;
+  const displayItems = showAll ? items : items.slice(0, displayLimit);
+  const hasMore = items.length > displayLimit;
 
   return (
     <div className="surface-layer rounded-lg p-4 border border-[var(--border-soft)]">
       <div className="flex items-center justify-between gap-2 mb-3">
         <h3 className="text-sm font-semibold text-[#F4F4F5]">최근 업데이트</h3>
-        {items.length > 3 && (
-          <span className="text-xs text-[#A1A1AA]">
-            +{items.length - 3}개 더
-          </span>
-        )}
       </div>
 
       {displayItems.length === 0 ? (
@@ -129,6 +128,22 @@ export function TeamUpdateFeed({ items }: TeamUpdateFeedProps) {
               </div>
             );
           })}
+          {hasMore && !showAll && (
+            <button
+              onClick={() => setShowAll(true)}
+              className="w-full text-xs text-[#71717A] hover:text-[#A1A1AA] text-center py-1 transition-colors cursor-pointer"
+            >
+              +{items.length - displayLimit}개 더
+            </button>
+          )}
+          {showAll && hasMore && (
+            <button
+              onClick={() => setShowAll(false)}
+              className="w-full text-xs text-[#71717A] hover:text-[#A1A1AA] text-center py-1 transition-colors cursor-pointer"
+            >
+              접기
+            </button>
+          )}
         </div>
       )}
     </div>

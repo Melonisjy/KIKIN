@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import {
   TrendingUp,
@@ -329,9 +330,9 @@ export function TeamStats({ teamId }: TeamStatsProps) {
 
   if (isLoading) {
     return (
-      <div className="surface-layer rounded-lg p-6">
-        <div className="flex items-center justify-center py-12">
-          <div className="text-[#A1A1AA]">통계를 불러오는 중...</div>
+      <div className="rounded-lg p-4 border border-[var(--border-soft)] bg-[var(--surface-1)]">
+        <div className="flex items-center justify-center py-8">
+          <div className="text-sm text-[#A1A1AA]">통계를 불러오는 중...</div>
         </div>
       </div>
     );
@@ -339,8 +340,8 @@ export function TeamStats({ teamId }: TeamStatsProps) {
 
   if (error) {
     return (
-      <div className="surface-layer rounded-lg p-6">
-        <div className="text-red-400">{error}</div>
+      <div className="rounded-lg p-4 border border-[var(--border-soft)] bg-[var(--surface-1)]">
+        <div className="text-sm text-red-400">{error}</div>
       </div>
     );
   }
@@ -350,27 +351,22 @@ export function TeamStats({ teamId }: TeamStatsProps) {
   }
 
   return (
-    <div className="space-y-6">
-      {/* 예측 인사이트 */}
+    <div className="space-y-4">
+      {/* 예측 인사이트 - 컴팩트 */}
       {stats.prediction.nextMatchAttendanceRate !== null && (
-        <div className="surface-layer rounded-lg p-6 border-2 border-[#00C16A]/30 bg-gradient-to-br from-[#00C16A]/5 to-transparent">
-          <div className="flex items-start gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#00C16A]/20">
-              <Sparkles className="h-6 w-6 text-[#00C16A]" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold text-[#F4F4F5] mb-1">
-                예측 인사이트
-              </h3>
-              <p className="text-3xl font-bold text-[#00C16A] mb-2">
-                다음 경기 출석률 예상: {stats.prediction.nextMatchAttendanceRate}%
-              </p>
-              <p className="text-sm text-[#A1A1AA]">
-                {stats.prediction.message}
-              </p>
-              <div className="mt-2 flex items-center gap-2">
+        <div className="rounded-lg p-4 border border-[#00C16A]/30 bg-[#00C16A]/5">
+          <div className="flex items-center gap-3">
+            <Sparkles className="h-4 w-4 text-[#00C16A] shrink-0" />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-sm font-semibold text-[#F4F4F5]">
+                  다음 경기 출석률 예상
+                </span>
+                <span className="text-lg font-bold text-[#00C16A]">
+                  {stats.prediction.nextMatchAttendanceRate}%
+                </span>
                 <span
-                  className={`text-xs px-2 py-1 rounded ${
+                  className={`text-xs px-1.5 py-0.5 rounded ${
                     stats.prediction.confidence === "high"
                       ? "bg-green-500/20 text-green-400"
                       : stats.prediction.confidence === "medium"
@@ -378,7 +374,6 @@ export function TeamStats({ teamId }: TeamStatsProps) {
                       : "bg-gray-500/20 text-gray-400"
                   }`}
                 >
-                  신뢰도:{" "}
                   {stats.prediction.confidence === "high"
                     ? "높음"
                     : stats.prediction.confidence === "medium"
@@ -386,152 +381,115 @@ export function TeamStats({ teamId }: TeamStatsProps) {
                     : "낮음"}
                 </span>
               </div>
+              <p className="text-xs text-[#A1A1AA] line-clamp-1">
+                {stats.prediction.message}
+              </p>
             </div>
           </div>
         </div>
       )}
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-2">
         {/* 출석률 트렌드 - 요일별 */}
-        <div className="surface-layer rounded-lg p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <BarChart3 className="h-5 w-5 text-[#00C16A]" />
-            <h3 className="text-lg font-semibold text-[#F4F4F5]">
+        <div className="rounded-lg p-4 border border-[var(--border-soft)] bg-[var(--surface-1)]">
+          <div className="flex items-center gap-2 mb-3">
+            <BarChart3 className="h-4 w-4 text-[#00C16A]" />
+            <h3 className="text-sm font-semibold text-[#F4F4F5]">
               요일별 출석률
             </h3>
           </div>
           {stats.attendanceTrend.byDayOfWeek.length > 0 ? (
-            <div className="space-y-3">
+            <div className="space-y-2">
               {stats.attendanceTrend.byDayOfWeek.map((item) => (
                 <div key={item.day}>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm text-[#A1A1AA]">{item.day}</span>
-                    <span className="text-sm font-medium text-[#F4F4F5]">
+                    <span className="text-xs text-[#A1A1AA]">{item.day}</span>
+                    <span className="text-xs font-medium text-[#F4F4F5]">
                       {item.rate}%
                     </span>
                   </div>
-                  <div className="h-2 bg-[#1A2333] rounded-full overflow-hidden">
+                  <div className="h-1.5 bg-[#1A2333] rounded-full overflow-hidden">
                     <div
                       className="h-full bg-[#00C16A] transition-all duration-500"
                       style={{ width: `${item.rate}%` }}
                     />
                   </div>
-                  <p className="text-xs text-[#71717A] mt-1">
-                    {item.count}경기 기준
-                  </p>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-sm text-[#A1A1AA]">데이터가 부족합니다.</p>
+            <p className="text-xs text-[#71717A]">데이터가 부족합니다.</p>
           )}
         </div>
 
         {/* 출석률 트렌드 - 시간대별 */}
-        <div className="surface-layer rounded-lg p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Clock className="h-5 w-5 text-[#2563EB]" />
-            <h3 className="text-lg font-semibold text-[#F4F4F5]">
+        <div className="rounded-lg p-4 border border-[var(--border-soft)] bg-[var(--surface-1)]">
+          <div className="flex items-center gap-2 mb-3">
+            <Clock className="h-4 w-4 text-[#2563EB]" />
+            <h3 className="text-sm font-semibold text-[#F4F4F5]">
               시간대별 출석률
             </h3>
           </div>
           {stats.attendanceTrend.byTimeSlot.length > 0 ? (
-            <div className="space-y-3">
+            <div className="space-y-2">
               {stats.attendanceTrend.byTimeSlot.map((item) => (
                 <div key={item.slot}>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm text-[#A1A1AA]">{item.slot}</span>
-                    <span className="text-sm font-medium text-[#F4F4F5]">
+                    <span className="text-xs text-[#A1A1AA]">{item.slot}</span>
+                    <span className="text-xs font-medium text-[#F4F4F5]">
                       {item.rate}%
                     </span>
                   </div>
-                  <div className="h-2 bg-[#1A2333] rounded-full overflow-hidden">
+                  <div className="h-1.5 bg-[#1A2333] rounded-full overflow-hidden">
                     <div
                       className="h-full bg-[#2563EB] transition-all duration-500"
                       style={{ width: `${item.rate}%` }}
                     />
                   </div>
-                  <p className="text-xs text-[#71717A] mt-1">
-                    {item.count}경기 기준
-                  </p>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-sm text-[#A1A1AA]">데이터가 부족합니다.</p>
+            <p className="text-xs text-[#71717A]">데이터가 부족합니다.</p>
           )}
         </div>
 
         {/* 활성 멤버 랭킹 */}
-        <div className="surface-layer rounded-lg p-6 lg:col-span-2">
-          <div className="flex items-center gap-2 mb-4">
-            <Award className="h-5 w-5 text-[#F97316]" />
-            <h3 className="text-lg font-semibold text-[#F4F4F5]">
-              활성 멤버 랭킹
-            </h3>
+        <div className="rounded-lg p-4 border border-[var(--border-soft)] bg-[var(--surface-1)] lg:col-span-2">
+          <div className="flex items-center justify-between gap-2 mb-3">
+            <div className="flex items-center gap-2">
+              <Award className="h-4 w-4 text-[#F97316]" />
+              <h3 className="text-sm font-semibold text-[#F4F4F5]">
+                활성 멤버 랭킹
+              </h3>
+            </div>
           </div>
           {stats.memberRanking.length > 0 ? (
-            <div className="space-y-3">
-              {stats.memberRanking.map((member, index) => (
-                <div
-                  key={member.userId}
-                  className="flex items-center gap-4 p-3 rounded-lg border border-[#2A2C34] bg-[#182135] hover:border-[#3F4A63] transition-colors"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F97316]/20 text-[#F97316] font-bold">
-                    {index + 1}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-[#F4F4F5]">
-                        {member.name || "이름 없음"}
-                      </span>
-                      {index < 3 && (
-                        <span className="text-xs px-2 py-0.5 rounded bg-[#F97316]/20 text-[#F97316]">
-                          {index === 0
-                            ? "🥇"
-                            : index === 1
-                            ? "🥈"
-                            : "🥉"}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs text-[#A1A1AA]">
-                      출석 {member.goingCount}회 / {member.totalMatches}경기
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-lg font-bold text-[#F4F4F5]">
-                      {member.attendanceRate}%
-                    </p>
-                    <p className="text-xs text-[#71717A]">출석률</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <MemberRankingList members={stats.memberRanking} />
           ) : (
-            <p className="text-sm text-[#A1A1AA]">데이터가 부족합니다.</p>
+            <p className="text-xs text-[#71717A]">데이터가 부족합니다.</p>
           )}
         </div>
 
         {/* 경기 빈도 분석 */}
-        <div className="surface-layer rounded-lg p-6 lg:col-span-2">
-          <div className="flex items-center gap-2 mb-4">
-            <Calendar className="h-5 w-5 text-[#7C3AED]" />
-            <h3 className="text-lg font-semibold text-[#F4F4F5]">
+        <div className="rounded-lg p-4 border border-[var(--border-soft)] bg-[var(--surface-1)] lg:col-span-2">
+          <div className="flex items-center gap-2 mb-3">
+            <Calendar className="h-4 w-4 text-[#7C3AED]" />
+            <h3 className="text-sm font-semibold text-[#F4F4F5]">
               월별 경기 빈도
             </h3>
           </div>
           {stats.matchFrequency.monthly.length > 0 ? (
-            <div className="space-y-3">
-              {stats.matchFrequency.monthly.map((item) => (
+            <div className="space-y-2">
+              {stats.matchFrequency.monthly.slice(-6).map((item) => (
                 <div key={item.month}>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm text-[#A1A1AA]">{item.month}</span>
-                    <span className="text-sm font-medium text-[#F4F4F5]">
+                    <span className="text-xs text-[#A1A1AA]">{item.month}</span>
+                    <span className="text-xs font-medium text-[#F4F4F5]">
                       {item.count}경기
                     </span>
                   </div>
-                  <div className="h-2 bg-[#1A2333] rounded-full overflow-hidden">
+                  <div className="h-1.5 bg-[#1A2333] rounded-full overflow-hidden">
                     <div
                       className="h-full bg-[#7C3AED] transition-all duration-500"
                       style={{
@@ -549,10 +507,78 @@ export function TeamStats({ teamId }: TeamStatsProps) {
               ))}
             </div>
           ) : (
-            <p className="text-sm text-[#A1A1AA]">데이터가 부족합니다.</p>
+            <p className="text-xs text-[#71717A]">데이터가 부족합니다.</p>
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+function MemberRankingList({
+  members,
+}: {
+  members: {
+    userId: string;
+    name: string | null;
+    attendanceRate: number;
+    totalMatches: number;
+    goingCount: number;
+  }[];
+}) {
+  const [showAll, setShowAll] = useState(false);
+  const displayLimit = 5;
+  const displayMembers = showAll ? members : members.slice(0, displayLimit);
+  const hasMore = members.length > displayLimit;
+
+  return (
+    <div className="space-y-2">
+      {displayMembers.map((member, index) => (
+        <div
+          key={member.userId}
+          className="flex items-center gap-3 p-2 rounded-lg border border-[var(--border-soft)] bg-[var(--surface-2)] hover:border-[var(--border-strong)] transition-colors"
+        >
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#F97316]/20 text-[#F97316] text-xs font-bold shrink-0">
+            {index + 1}
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium text-[#F4F4F5] truncate">
+                {member.name || "이름 없음"}
+              </span>
+              {index < 3 && (
+                <span className="text-xs">
+                  {index === 0 ? "🥇" : index === 1 ? "🥈" : "🥉"}
+                </span>
+              )}
+            </div>
+            <p className="text-xs text-[#71717A]">
+              출석 {member.goingCount}회 / {member.totalMatches}경기
+            </p>
+          </div>
+          <div className="text-right shrink-0">
+            <p className="text-sm font-bold text-[#F4F4F5]">
+              {member.attendanceRate}%
+            </p>
+          </div>
+        </div>
+      ))}
+      {hasMore && !showAll && (
+        <button
+          onClick={() => setShowAll(true)}
+          className="w-full text-xs text-[#71717A] hover:text-[#A1A1AA] text-center py-1 transition-colors cursor-pointer"
+        >
+          +{members.length - displayLimit}명 더
+        </button>
+      )}
+      {showAll && hasMore && (
+        <button
+          onClick={() => setShowAll(false)}
+          className="w-full text-xs text-[#71717A] hover:text-[#A1A1AA] text-center py-1 transition-colors cursor-pointer"
+        >
+          접기
+        </button>
+      )}
     </div>
   );
 }

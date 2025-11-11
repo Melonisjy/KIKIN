@@ -27,6 +27,9 @@ import { ApproveRequest } from "./approve-request";
 import { TeamUpdateFeed, TeamUpdateItem } from "./team-update-feed";
 import { TeamStats } from "./team-stats";
 import { TeamTabs } from "./team-tabs";
+import { TeamMembersList } from "./team-members-list";
+import { JoinRequestsList } from "./join-requests-list";
+import { MatchesList } from "./matches-list";
 
 interface PageProps {
   params: Promise<{ teamId: string }>;
@@ -588,94 +591,13 @@ export default async function TeamDetailPage({ params }: PageProps) {
                 </section>
 
                 {/* 경기 일정 */}
-                <section>
-                  <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-semibold text-[#F4F4F5]">
-                      경기 일정
-                    </h2>
-                    {isLeader && (
-                      <Link href={`/match/new?teamId=${teamId}`}>
-                        <Button size="sm" variant="ghost" className="h-8">
-                          <Plus className="h-3.5 w-3.5 mr-1.5" />
-                          추가
-                        </Button>
-                      </Link>
-                    )}
-                  </div>
-
-                  {matchesError ? (
-                    <div className="text-sm text-red-400 py-4">
-                      경기 정보를 불러올 수 없습니다.
-                    </div>
-                  ) : matches && matches.length > 0 ? (
-                    <div className="space-y-1.5">
-                      {matches.slice(0, 6).map((match) => {
-                        const matchDate = new Date(`${match.date}T${match.time}`);
-                        const isPast = matchDate < new Date();
-                        const formattedDate = matchDate.toLocaleDateString("ko-KR", {
-                          month: "short",
-                          day: "numeric",
-                          weekday: "short",
-                        });
-                        const stats = matchParticipantStats[match.id];
-
-                        return (
-                          <Link
-                            key={match.id}
-                            href={`/match/${match.id}`}
-                            className="flex items-center justify-between gap-4 p-3 rounded-lg border border-[var(--border-soft)] bg-[var(--surface-1)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-2)] transition-all group"
-                          >
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-1">
-                                <span className="text-sm font-medium text-[#F4F4F5]">
-                                  {formattedDate} {match.time.slice(0, 5)}
-                                </span>
-                                {isPast ? (
-                                  <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--surface-2)] text-[#71717A]">
-                                    종료
-                                  </span>
-                                ) : (
-                                  <span className="text-xs px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400">
-                                    {match.status === "confirmed" ? "확정" : "예정"}
-                                  </span>
-                                )}
-                              </div>
-                              <div className="flex items-center gap-3 text-xs text-[#A1A1AA]">
-                                <span>{match.location}</span>
-                                {stats && (
-                                  <>
-                                    <span className="text-[#71717A]">·</span>
-                                    <span className="flex items-center gap-1.5">
-                                      <CheckCircle className="h-3 w-3 text-[#00C16A]" />
-                                      {stats.going}
-                                    </span>
-                                    <span className="flex items-center gap-1.5">
-                                      <XCircle className="h-3 w-3 text-red-400" />
-                                      {stats.notGoing}
-                                    </span>
-                                    <span className="flex items-center gap-1.5">
-                                      <HelpCircle className="h-3 w-3 text-yellow-400" />
-                                      {stats.maybe}
-                                    </span>
-                                  </>
-                                )}
-                              </div>
-                            </div>
-                          </Link>
-                        );
-                      })}
-                      {matches.length > 6 && (
-                        <div className="text-xs text-[#71717A] text-center py-2">
-                          +{matches.length - 6}개 더
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="text-sm text-[#A1A1AA] py-8 text-center border border-dashed border-[var(--border-soft)] rounded-lg">
-                      예정된 경기가 없습니다.
-                    </div>
-                  )}
-                </section>
+                <MatchesList
+                  matches={matches || []}
+                  matchesError={matchesError}
+                  matchParticipantStats={matchParticipantStats}
+                  isLeader={isLeader}
+                  teamId={teamId}
+                />
               </div>
 
               {/* 사이드바 */}
@@ -685,139 +607,26 @@ export default async function TeamDetailPage({ params }: PageProps) {
 
                 {/* 가입 요청 */}
                 {isLeader && (
-                  <section>
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-sm font-semibold text-[#F4F4F5]">
-                        가입 요청
-                      </h3>
-                      {pendingRequestsCount > 0 && (
-                        <span className="text-xs px-1.5 py-0.5 rounded-full bg-[#00C16A]/20 text-[#00C16A] font-medium">
-                          {pendingRequestsCount}
-                        </span>
-                      )}
-                    </div>
-                    {requestsError ? (
-                      <div className="text-xs text-red-400 py-2">
-                        가입 요청을 불러올 수 없습니다.
-                      </div>
-                    ) : teamRequests.length > 0 ? (
-                      <div className="space-y-2">
-                        {teamRequests.slice(0, 3).map((request: any) => {
-                          const requestName = requestProfileMap.get(
-                            request.user_id
-                          );
-                          return (
-                            <div
-                              key={request.id}
-                              className="flex items-center justify-between gap-2 p-2.5 rounded-lg border border-[var(--border-soft)] bg-[var(--surface-1)] hover:border-[var(--border-strong)] transition-colors"
-                            >
-                              <div className="flex items-center gap-2 flex-1 min-w-0">
-                                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#00C16A]/15 text-[#00E693] text-xs font-semibold shrink-0">
-                                  {requestName
-                                    ? requestName.charAt(0).toUpperCase()
-                                    : request.user_id.slice(0, 1).toUpperCase()}
-                                </div>
-                                <span className="text-xs font-medium text-[#F4F4F5] truncate">
-                                  {requestName || "이름 없음"}
-                                </span>
-                              </div>
-                              <ApproveRequest
-                                requestId={request.id}
-                                userId={request.user_id}
-                                teamId={teamId}
-                                isLeader={isLeader}
-                              />
-                            </div>
-                          );
-                        })}
-                        {teamRequests.length > 3 && (
-                          <div className="text-xs text-[#71717A] text-center py-1">
-                            +{teamRequests.length - 3}개 더
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="text-xs text-[#71717A] py-4 text-center border border-dashed border-[var(--border-soft)] rounded-lg">
-                        대기 중인 요청이 없습니다.
-                      </div>
-                    )}
-                  </section>
+                  <JoinRequestsList
+                    requests={teamRequests}
+                    requestProfileMap={requestProfileMap}
+                    isLeader={isLeader}
+                    teamId={teamId}
+                    requestsError={requestsError}
+                    pendingRequestsCount={pendingRequestsCount}
+                  />
                 )}
 
                 {/* 팀원 */}
-                <section>
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-sm font-semibold text-[#F4F4F5]">
-                      팀원
-                    </h3>
-                    <span className="text-xs text-[#71717A]">
-                      {totalMembers}명
-                    </span>
-                  </div>
-                  {membersError ? (
-                    <div className="text-xs text-red-400 py-2">
-                      팀원 정보를 불러올 수 없습니다.
-                    </div>
-                  ) : teamMembers && teamMembers.length > 0 ? (
-                    <div className="space-y-1.5">
-                      {teamMembers.slice(0, 6).map((memberItem: any) => {
-                        const memberName =
-                          memberProfileMap.get(memberItem.user_id) || null;
-                        const isMemberLeader = memberItem.role === "leader";
-                        const isCurrentUser = memberItem.user_id === user.id;
-
-                        return (
-                          <div
-                            key={memberItem.user_id}
-                            className="flex items-center justify-between gap-2 p-2 rounded-lg border border-[var(--border-soft)] bg-[var(--surface-1)] hover:border-[var(--border-strong)] transition-colors"
-                          >
-                            <div className="flex items-center gap-2 flex-1 min-w-0">
-                              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#00C16A]/15 text-[#00E693] text-xs font-semibold shrink-0">
-                                {memberName
-                                  ? memberName.charAt(0).toUpperCase()
-                                  : memberItem.user_id.slice(0, 1).toUpperCase()}
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-1.5">
-                                  <span className="text-xs font-medium text-[#F4F4F5] truncate">
-                                    {memberName || "이름 없음"}
-                                  </span>
-                                  {isMemberLeader && (
-                                    <span className="text-xs px-1 py-0.5 rounded bg-[#00C16A]/20 text-[#00C16A]">
-                                      팀장
-                                    </span>
-                                  )}
-                                  {isCurrentUser && (
-                                    <span className="text-xs text-[#71717A]">
-                                      (나)
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                            {isLeader && !isCurrentUser && (
-                              <RemoveMember
-                                teamId={teamId}
-                                memberId={memberItem.user_id}
-                                memberName={memberName}
-                                isLeader={isLeader}
-                              />
-                            )}
-                          </div>
-                        );
-                      })}
-                      {teamMembers.length > 6 && (
-                        <div className="text-xs text-[#71717A] text-center py-1">
-                          +{teamMembers.length - 6}명 더
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="text-xs text-[#71717A] py-4 text-center border border-dashed border-[var(--border-soft)] rounded-lg">
-                      팀원이 없습니다.
-                    </div>
-                  )}
-                </section>
+                <TeamMembersList
+                  members={teamMembers || []}
+                  memberProfileMap={memberProfileMap}
+                  currentUserId={user.id}
+                  isLeader={isLeader}
+                  totalMembers={totalMembers}
+                  membersError={membersError}
+                  teamId={teamId}
+                />
               </aside>
             </div>
           }

@@ -108,7 +108,10 @@ export function NoticesSection({
     }
   };
 
-  const displayNotices = notices.slice(0, 3); // 최대 3개만 표시
+  const [showAll, setShowAll] = useState(false);
+  const displayLimit = 3;
+  const displayNotices = showAll ? notices : notices.slice(0, displayLimit);
+  const hasMore = notices.length > displayLimit;
 
   return (
     <div className="surface-layer rounded-lg p-4 border border-[var(--border-soft)]">
@@ -211,10 +214,21 @@ export function NoticesSection({
               </div>
             );
           })}
-          {notices.length > 3 && (
-            <div className="text-xs text-[#A1A1AA] text-center py-1">
-              +{notices.length - 3}개 더
-            </div>
+          {hasMore && !showAll && (
+            <button
+              onClick={() => setShowAll(true)}
+              className="w-full text-xs text-[#71717A] hover:text-[#A1A1AA] text-center py-1 transition-colors cursor-pointer"
+            >
+              +{notices.length - displayLimit}개 더
+            </button>
+          )}
+          {showAll && hasMore && (
+            <button
+              onClick={() => setShowAll(false)}
+              className="w-full text-xs text-[#71717A] hover:text-[#A1A1AA] text-center py-1 transition-colors cursor-pointer"
+            >
+              접기
+            </button>
           )}
         </div>
       ) : (
