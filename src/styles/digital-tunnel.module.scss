@@ -1,0 +1,110 @@
+.tunnel {
+  position: relative;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: radial-gradient(
+      circle at 50% 20%,
+      rgba(0, 193, 106, 0.25),
+      transparent 55%
+    ),
+    radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.08), transparent 60%),
+    linear-gradient(140deg, #080a12 0%, #0e1320 45%, #141824 100%);
+  min-height: 360px;
+  box-shadow:
+    0 30px 80px rgba(5, 10, 28, 0.55),
+    inset 0 1px 0 rgba(148, 163, 209, 0.08);
+}
+
+.tunnelCore {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(15, 167, 110, 0.35), transparent 55%);
+  opacity: 0.5;
+  filter: blur(40px);
+  animation: corePulse 6s ease-in-out infinite;
+}
+
+.tunnelGrid {
+  position: absolute;
+  inset: -30%;
+  background-image:
+    linear-gradient(transparent 0%, rgba(19, 35, 63, 0.6) 100%),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 18px,
+      rgba(45, 68, 101, 0.2) 20px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 18px,
+      rgba(45, 68, 101, 0.2) 20px
+    );
+  transform: perspective(900px) rotateX(67deg);
+  transform-origin: center 80%;
+  opacity: 0.55;
+  animation: gridDrift 18s linear infinite;
+}
+
+.lightSweep {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 227, 82, 0.18),
+    transparent 45%
+  );
+  mix-blend-mode: screen;
+  opacity: 0.6;
+  animation: lightSweep 12s ease-in-out infinite;
+}
+
+.tunnelContent {
+  position: relative;
+  padding: 3rem 2rem 2.5rem;
+  backdrop-filter: blur(2px);
+}
+
+@media (min-width: 768px) {
+  .tunnelContent {
+    padding: 3.5rem 3rem 3rem;
+  }
+}
+
+@keyframes corePulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes gridDrift {
+  0% {
+    transform: perspective(900px) rotateX(67deg) translateY(0);
+  }
+  100% {
+    transform: perspective(900px) rotateX(67deg) translateY(120px);
+  }
+}
+
+@keyframes lightSweep {
+  0% {
+    transform: translateX(-15%) translateY(-5%);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateX(5%) translateY(10%);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateX(-15%) translateY(-5%);
+    opacity: 0.4;
+  }
+}
+
