@@ -20,6 +20,7 @@ import { TeamCode } from "./team-code";
 import { NoticesSection } from "./notices-section";
 import { RemoveMember } from "./remove-member";
 import { ApproveRequest } from "./approve-request";
+import { TeamUpdateFeed, TeamUpdateItem } from "./team-update-feed";
 
 interface PageProps {
   params: Promise<{ teamId: string }>;
@@ -108,23 +109,31 @@ export default async function TeamDetailPage({ params }: PageProps) {
     string,
     { going: number; notGoing: number; maybe: number }
   > = {};
+  let matchParticipants: Array<{
+    match_id: string;
+    user_id: string;
+    status: string;
+  }> = [];
   if (matches && matches.length > 0) {
     const matchIds = matches.map((m: any) => m.id);
     const { data: participants } = await supabase
       .from("match_participants")
-      .select("match_id, status")
+      .select("match_id, user_id, status")
       .in("match_id", matchIds);
+
+    matchParticipants = participants || [];
 
     // 각 경기별로 통계 계산
     matchIds.forEach((matchId: string) => {
-      const matchParticipants =
-        participants?.filter((p: any) => p.match_id === matchId) || [];
+      const participantsForMatch =
+        matchParticipants.filter((p: any) => p.match_id === matchId) || [];
       matchParticipantStats[matchId] = {
-        going: matchParticipants.filter((p: any) => p.status === "going")
+        going: participantsForMatch.filter((p: any) => p.status === "going")
           .length,
-        notGoing: matchParticipants.filter((p: any) => p.status === "not_going")
-          .length,
-        maybe: matchParticipants.filter((p: any) => p.status === "maybe")
+        notGoing: participantsForMatch.filter(
+          (p: any) => p.status === "not_going"
+        ).length,
+        maybe: participantsForMatch.filter((p: any) => p.status === "maybe")
           .length,
       };
     });
@@ -314,6 +323,122 @@ export default async function TeamDetailPage({ params }: PageProps) {
     });
   }
 
+  const combineDateTime = (date?: string | null, time?: string | null) => {
+    if (!date) return null;
+    const normalizedTime = time && time.length >= 4 ? time : "00:00";
+    return `${date}T${normalizedTime}`;
+  };
+
+  const formatMatchDateTime = (match: any) => {
+    const dateTimeString = combineDateTime(match?.date, match?.time);
+    if (!dateTimeString) return "일정 미정";
+    const date = new Date(dateTimeString);
+    if (Number.isNaN(date.getTime())) return "일정 미정";
+    return new Intl.DateTimeFormat("ko-KR", {
+      month: "long",
+      day: "numeric",
+      weekday: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    }).format(date);
+  };
+
+  const truncate = (value: string, limit = 100) => {
+    const trimmed = value.replace(/\s+/g, " ").trim();
+    if (trimmed.length <= limit) return trimmed;
+    return `${trimmed.slice(0, limit - 1)}…`;
+  };
+
+  const ensureTimestamp = (value?: string | null) =>
+    value ?? new Date().toISOString();
+
+  const noticeFeedItems: TeamUpdateItem[] = (notices ?? []).map(
+    (notice: any) => {
+      const authorName = noticeAuthorMap[notice.created_by] || null;
+      const content =
+        typeof notice.content === "string" ? truncate(notice.content, 120) : "";
+      return {
+        id: `notice-${notice.id}`,
+        type: "notice" as const,
+        title: authorName
+          ? `${authorName}님의 팀 공지`
+          : "새 팀 공지가 등록되었습니다",
+        description: content || null,
+        timestamp: ensureTimestamp(notice.updated_at || notice.created_at),
+        meta: authorName ? `작성자: ${authorName}` : null,
+      };
+    }
+  );
+
+  const matchFeedItems: TeamUpdateItem[] = (matches ?? []).map(
+    (match: any) => {
+      const scheduleLabel = formatMatchDateTime(match);
+      let titlePrefix = "새 매치 편성";
+
+      if (match.status === "cancelled") {
+        titlePrefix = "매치가 취소되었습니다";
+      } else if (match.status === "confirmed") {
+        titlePrefix = "매치 일정이 확정되었습니다";
+      }
+
+      return {
+        id: `match-${match.id}`,
+        type: "match" as const,
+        title: titlePrefix,
+        description: match.location || null,
+        timestamp: ensureTimestamp(
+          match.updated_at ||
+            match.created_at ||
+            combineDateTime(match.date, match.time)
+        ),
+        meta: scheduleLabel,
+      };
+    }
+  );
+
+  const pendingVoteMatches =
+    matches?.filter((match: any) => {
+      const scheduleString = combineDateTime(match?.date, match?.time);
+      if (!scheduleString) return false;
+      const matchDate = new Date(scheduleString);
+      if (Number.isNaN(matchDate.getTime())) return false;
+      if (matchDate.getTime() < Date.now()) return false;
+      if (match.status === "cancelled") return false;
+
+      const hasVoted = matchParticipants.some(
+        (participant) =>
+          participant.match_id === match.id && participant.user_id === user.id
+      );
+      return !hasVoted;
+    }) ?? [];
+
+  const voteFeedItems: TeamUpdateItem[] = pendingVoteMatches.map(
+    (match: any) => {
+      const scheduleLabel = formatMatchDateTime(match);
+      return {
+        id: `vote-${match.id}`,
+        type: "vote" as const,
+        title: "투표 요청이 도착했어요",
+        description: match.location || null,
+        timestamp: ensureTimestamp(
+          match.updated_at ||
+            match.created_at ||
+            combineDateTime(match.date, match.time)
+        ),
+        meta: scheduleLabel,
+      };
+    }
+  );
+
+  const teamUpdates: TeamUpdateItem[] = [...noticeFeedItems, ...matchFeedItems, ...voteFeedItems]
+    .filter((item) => item.timestamp)
+    .sort(
+      (a, b) =>
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    )
+    .slice(0, 10);
+
   return (
     <>
       <OnboardingGuide
@@ -337,6 +462,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
         </Link>
 
         <div className="space-y-6">
+          <TeamUpdateFeed items={teamUpdates} />
           <div className="grid gap-6 xl:grid-cols-12">
             <section className="xl:col-span-8">
               <div
