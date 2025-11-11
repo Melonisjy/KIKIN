@@ -8,6 +8,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AppLoading } from "@/components/AppLoading";
 import { RouteProgressOverlay } from "@/components/RouteProgressOverlay";
 import { QuickTour } from "@/components/QuickTour";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { Suspense } from "react";
 
 const geistSans = Geist({
@@ -40,6 +41,7 @@ export default function RootLayout({
           <SplashScreen />
           <Navbar />
           <Suspense fallback={<AppLoading />}>{children}</Suspense>
+          <MobileBottomNav />
           <QuickTour />
           <ToastContainer />
         </ErrorBoundary>

@@ -5,7 +5,6 @@ import { Users, Calendar, CheckCircle, Zap, ArrowRight } from "lucide-react";
 import { DigitalTunnelHero, FocusAction } from "@/components/DigitalTunnelHero";
 import { PreLoginOnboarding } from "@/components/PreLoginOnboarding";
 import { FeaturesSection } from "@/components/FeaturesSection";
-import { MobileFixedCTA } from "@/components/MobileFixedCTA";
 
 type HeroState = "idle" | "pre" | "live" | "post" | "scheduled";
 
@@ -338,13 +337,15 @@ export default async function HomePage() {
       <FeaturesSection />
 
       {/* CTA Section */}
-      <section className="container mx-auto px-4 py-16 pb-24 sm:pb-16">
+      <section className="container mx-auto px-4 py-16 pb-20 md:pb-16">
         <div className="surface-layer mx-auto max-w-2xl rounded-xl p-8 text-center transition-all duration-200 hover:border-[var(--border-strong)] hover:bg-[var(--surface-3)]">
           <h2 className="text-2xl font-bold text-[#00C16A] sm:text-3xl">
-            지금 바로 킥오프하세요
+            {user ? "더 많은 추억을 만들어가요" : "지금 바로 킥오프하세요"} ⚽
           </h2>
           <p className="mt-4 text-[#A1A1AA]">
-            킥-인 라커룸에서 팀 스케줄과 출석을 한 번에 정리해 보세요.
+            {user
+              ? "매주 토요일, 우리만의 시간을 킥-인과 함께 기록해요 💚"
+              : "킥-인 라커룸에서 팀 스케줄과 출석을 한 번에 정리해 보세요. 매 순간이 특별한 추억이 됩니다."}
           </p>
           <div className="mt-8 hidden sm:block">
             {!user ? (
@@ -365,9 +366,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* 모바일 고정 CTA */}
-      <MobileFixedCTA user={user} />
     </div>
   );
 }

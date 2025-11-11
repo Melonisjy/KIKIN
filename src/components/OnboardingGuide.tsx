@@ -126,10 +126,11 @@ export function OnboardingGuide({
       <button
         type="button"
         onClick={handleReopen}
-        className="fixed bottom-6 left-6 z-[1050] flex items-center gap-2 rounded-full border border-[#2C354B] bg-[#141824]/90 px-4 py-2 text-sm text-[#F4F4F5] shadow-lg shadow-black/40 backdrop-blur transition hover:border-[#00C16A]/40 hover:text-[#00C16A]"
+        className="fixed bottom-20 left-4 md:bottom-6 md:left-6 z-[1050] flex items-center gap-1.5 md:gap-2 rounded-full border border-[#2C354B] bg-[#141824]/90 px-2.5 py-1.5 md:px-4 md:py-2 text-xs md:text-sm text-[#F4F4F5] shadow-lg shadow-black/40 backdrop-blur transition hover:border-[#00C16A]/40 hover:text-[#00C16A]"
       >
-        <Sparkles className="h-4 w-4 text-[#00C16A]" />
-        가이드 다시 보기
+        <Sparkles className="h-3 w-3 md:h-4 md:w-4 text-[#00C16A]" />
+        <span className="hidden sm:inline">가이드 다시 보기</span>
+        <span className="sm:hidden">가이드</span>
       </button>
     );
   }
