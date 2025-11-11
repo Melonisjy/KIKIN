@@ -18,6 +18,8 @@ export default function Navbar() {
   const [hasError, setHasError] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
   // 프로필 정보 가져오기 함수 (API 라우트 사용)
   const fetchUserProfile = async () => {
@@ -123,6 +125,21 @@ export default function Navbar() {
     }
   }, [isLoggedIn]);
 
+  // 스크롤 이벤트 리스너
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
+      setIsScrolled(currentScrollY > 20);
+    };
+
+    // 초기 스크롤 위치 확인
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const handleLogout = async () => {
     if (isLoggingOut) return; // 중복 클릭 방지
 
@@ -154,14 +171,28 @@ export default function Navbar() {
   // 이름이 있으면 이름 우선, 없으면 이메일
   const displayText = userName ? userName : userEmail || "";
 
+  // 스크롤에 따른 헤더 스타일 계산
+  const headerHeight = isScrolled ? "h-14" : "h-16";
+  const headerOpacity = isScrolled ? "bg-[#0F1115]/98" : "bg-[#0F1115]/95";
+  const headerShadow = isScrolled
+    ? "shadow-[0_4px_24px_rgba(0,0,0,0.4)]"
+    : "";
+  const logoSize = isScrolled ? "text-lg" : "text-xl";
+  const borderOpacity = isScrolled ? "border-[#2C354B]/80" : "border-[#2C354B]";
+
   return (
     <>
-      <nav className="relative z-[250] w-full border-b border-[#2C354B] bg-[#0F1115]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0F1115]/60">
+      {/* 헤더 공간 확보 (스크롤 시 높이 조절) */}
+      <div className={`${isScrolled ? "h-14" : "h-16"} transition-all duration-300`} aria-hidden="true" />
+      
+      <nav
+        className={`fixed top-0 left-0 right-0 z-[250] w-full border-b ${borderOpacity} ${headerOpacity} backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md transition-all duration-300 ${headerShadow}`}
+      >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+        <div className={`flex ${headerHeight} items-center justify-between transition-all duration-300`}>
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <span className="text-xl font-bold text-[#00C16A] transition-colors group-hover:text-[#00A85B]">
+            <span className={`${logoSize} font-bold text-[#00C16A] transition-all duration-300 group-hover:text-[#00A85B]`}>
               킥-인
             </span>
           </Link>
@@ -237,7 +268,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t" role="menu" aria-label="메인 메뉴">
+          <div className={`md:hidden border-t ${isScrolled ? "border-[#2C354B]/80" : "border-[#2C354B]"}`} role="menu" aria-label="메인 메뉴">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {isLoggedIn ? (
                 <>
