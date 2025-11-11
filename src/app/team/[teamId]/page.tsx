@@ -339,7 +339,10 @@ export default async function TeamDetailPage({ params }: PageProps) {
         <div className="space-y-6">
           <div className="grid gap-6 xl:grid-cols-12">
             <section className="xl:col-span-8">
-              <div className="interactive-surface rounded-lg border border-[#27272A] bg-[#181A1F] p-6 h-full transition-all duration-200 hover:border-[#3B3D48] hover:bg-[#1D2029] hover:-translate-y-0.5">
+              <div
+                className="surface-layer rounded-lg p-6 h-full transition-all duration-200 hover:bg-[var(--surface-3)] hover:border-[var(--border-strong)] hover:-translate-y-0.5"
+                data-variant="elevated"
+              >
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="flex-1">
                     <div className="flex items-baseline flex-wrap gap-3 mb-2">
@@ -375,7 +378,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
                     className={`rounded-full px-4 py-1 text-sm font-medium uppercase tracking-[0.2em] ${
                       isLeader
                         ? "bg-primary/10 text-primary"
-                        : "bg-[#27272A] text-[#A1A1AA]"
+                        : "bg-[#202A3B] text-[#A0AABE]"
                     }`}
                   >
                     {isLeader ? "팀장" : "멤버"}
@@ -385,7 +388,10 @@ export default async function TeamDetailPage({ params }: PageProps) {
             </section>
 
             <aside className="xl:col-span-4">
-              <div className="interactive-surface rounded-lg border border-[#27272A] bg-[#181A1F] p-6 h-full transition-all duration-200 hover:border-[#3B3D48] hover:bg-[#1D2029] hover:-translate-y-0.5">
+              <div
+                className="surface-layer rounded-lg p-6 h-full transition-all duration-200 hover:bg-[var(--surface-3)] hover:border-[var(--border-strong)] hover:-translate-y-0.5"
+                data-variant="subtle"
+              >
                 <div className="flex items-center justify-between gap-3">
                   <h2 className="text-lg font-semibold text-[#F4F4F5]">
                     팀 스냅샷
@@ -400,7 +406,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
                     return (
                       <div
                         key={stat.id}
-                        className="flex items-center gap-3 rounded-xl border border-[#2A2C34] bg-[#1A1D25] px-4 py-3"
+                        className="flex items-center gap-3 rounded-xl border border-[#2A2C34] bg-[#182135] px-4 py-3"
                       >
                         <div
                           className={`flex h-10 w-10 items-center justify-center rounded-full ${stat.accentBg} ${stat.accentColor}`}
@@ -437,7 +443,10 @@ export default async function TeamDetailPage({ params }: PageProps) {
                 totalCount={noticesCount || 0}
               />
 
-              <div className="interactive-surface rounded-lg border border-[#27272A] bg-[#181A1F] p-6 transition-all duration-200 hover:border-[#3B3D48] hover:bg-[#1D2029] hover:-translate-y-0.5">
+              <div
+                className="surface-layer rounded-lg p-6 transition-all duration-200 hover:bg-[var(--surface-3)] hover:border-[var(--border-strong)] hover:-translate-y-0.5"
+                data-variant="elevated"
+              >
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-6 w-6 text-[#F4F4F5]" />
@@ -477,7 +486,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
                       </div>
                     </Suspense>
                   ) : (
-                    <div className="rounded-lg border border-dashed border-[#27272A] bg-[#27272A]/40 p-10 text-center transition-all duration-200 hover:border-[#3B3D48] hover:bg-[#2B2D33] hover:-translate-y-0.5">
+                    <div className="rounded-lg border border-dashed border-[#2C354B] bg-[#1A2333]/55 p-10 text-center transition-all duration-200 hover:border-[#3F4A63] hover:bg-[#223149] hover:-translate-y-0.5">
                       <p className="text-[#A1A1AA] mb-4">
                         아직 예정된 경기가 없습니다.
                       </p>
@@ -496,7 +505,10 @@ export default async function TeamDetailPage({ params }: PageProps) {
 
             <aside className="space-y-6 xl:col-span-4">
               {isLeader && (
-                <div className="interactive-surface rounded-lg border border-[#27272A] bg-[#181A1F] p-6 transition-all duration-200 hover:border-[#3B3D48] hover:bg-[#1D2029] hover:-translate-y-0.5">
+                <div
+                  className="surface-layer rounded-lg p-6 transition-all duration-200 hover:bg-[var(--surface-3)] hover:border-[var(--border-strong)] hover:-translate-y-0.5"
+                  data-variant="elevated"
+                >
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2">
                       <UserPlus className="h-5 w-5 text-[#00C16A]" />
@@ -526,7 +538,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
                         return (
                           <div
                             key={request.id}
-                            className="interactive-surface flex items-center justify-between gap-3 rounded-lg border border-[#2A2C34] bg-[#1A1D25] px-3 py-3 transition-all duration-200 hover:border-[#3B3D48] hover:bg-[#222530] hover:-translate-y-0.5"
+                            className="interactive-surface flex items-center justify-between gap-3 rounded-lg border border-[#2A2C34] bg-[#182135] px-3 py-3 transition-all duration-200 hover:border-[#3F4A63] hover:bg-[#202B3C] hover:-translate-y-0.5"
                           >
                             <div className="flex items-center gap-3 flex-1 min-w-0">
                               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#00C16A]/20 text-[#00E693] text-sm font-semibold">
@@ -558,7 +570,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
                         );
                       })
                     ) : (
-                      <div className="rounded-lg border border-dashed border-[#2A2C34] bg-[#1A1D25] p-6 text-center transition-all duration-200 hover:border-[#3B3D48] hover:bg-[#222530] hover:-translate-y-0.5">
+                      <div className="rounded-lg border border-dashed border-[#2A2C34] bg-[#182135] p-6 text-center transition-all duration-200 hover:border-[#3F4A63] hover:bg-[#202B3C] hover:-translate-y-0.5">
                         <p className="text-[#A1A1AA]">
                           대기 중인 가입 요청이 없습니다.
                         </p>
@@ -568,7 +580,10 @@ export default async function TeamDetailPage({ params }: PageProps) {
                 </div>
               )}
 
-              <div className="interactive-surface rounded-lg border border-[#27272A] bg-[#181A1F] p-6 transition-all duration-200 hover:border-[#3B3D48] hover:bg-[#1D2029] hover:-translate-y-0.5">
+              <div
+                className="surface-layer rounded-lg p-6 transition-all duration-200 hover:bg-[var(--surface-3)] hover:border-[var(--border-strong)] hover:-translate-y-0.5"
+                data-variant="elevated"
+              >
                 <div className="flex items-center justify-between gap-3 mb-4">
                   <div className="flex items-center gap-2">
                     <Users className="h-5 w-5 text-[#F4F4F5]" />
@@ -597,7 +612,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
                       return (
                         <div
                           key={memberItem.user_id}
-                          className="interactive-surface flex items-center gap-3 rounded-lg border border-[#2A2C34] bg-[#1A1D25] px-3 py-3 transition-all duration-200 hover:border-[#3B3D48] hover:bg-[#222530] hover:-translate-y-0.5"
+                          className="interactive-surface flex items-center gap-3 rounded-lg border border-[#2A2C34] bg-[#182135] px-3 py-3 transition-all duration-200 hover:border-[#3F4A63] hover:bg-[#202B3C] hover:-translate-y-0.5"
                         >
                           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#00C16A]/15 text-[#00E693] text-sm font-semibold">
                             {memberName
@@ -614,7 +629,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
                                   팀장
                                 </span>
                               ) : (
-                                <span className="rounded-full bg-[#27272A] text-[#A1A1AA] px-2 py-0.5 text-xs font-medium">
+                                <span className="rounded-full bg-[#202A3B] text-[#A0AABE] px-2 py-0.5 text-xs font-medium">
                                   멤버
                                 </span>
                               )}
@@ -644,7 +659,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
                     })}
                   </div>
                 ) : (
-                  <div className="rounded-lg border border-dashed border-[#2A2C34] bg-[#1A1D25] p-6 text-center transition-all duration-200 hover:border-[#3B3D48] hover:bg-[#222530] hover:-translate-y-0.5">
+                  <div className="rounded-lg border border-dashed border-[#2A2C34] bg-[#182135] p-6 text-center transition-all duration-200 hover:border-[#3F4A63] hover:bg-[#202B3C] hover:-translate-y-0.5">
                     <p className="text-[#A1A1AA]">팀원이 없습니다.</p>
                   </div>
                 )}

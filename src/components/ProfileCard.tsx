@@ -15,7 +15,7 @@ export function ProfileCard({ userName, userEmail }: ProfileCardProps) {
 
   return (
     <>
-      <div className="rounded-xl border border-[#27272A] bg-[#181A1F] p-6">
+      <div className="rounded-xl border border-[#2C354B] bg-[#141824] p-6">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#00C16A] text-[#0F1115] text-lg font-semibold">

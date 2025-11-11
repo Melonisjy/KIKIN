@@ -121,7 +121,7 @@ export function OnboardingGuide({
       <button
         type="button"
         onClick={handleReopen}
-        className="fixed bottom-6 right-6 z-[1050] flex items-center gap-2 rounded-full border border-[#27272A] bg-[#181A1F]/90 px-4 py-2 text-sm text-[#F4F4F5] shadow-lg shadow-black/40 backdrop-blur"
+        className="fixed bottom-6 right-6 z-[1050] flex items-center gap-2 rounded-full border border-[#2C354B] bg-[#141824]/90 px-4 py-2 text-sm text-[#F4F4F5] shadow-lg shadow-black/40 backdrop-blur"
       >
         <Sparkles className="h-4 w-4 text-[#00C16A]" />
         가이드 다시 보기
@@ -169,12 +169,12 @@ export function OnboardingGuide({
               return (
                 <div
                   key={step.id}
-                  className="group flex items-start gap-3 rounded-xl border border-transparent bg-[#1A1D25]/70 px-3 py-3 transition hover:border-[#2F313C] hover:bg-[#1E222B]/90"
+                  className="group flex items-start gap-3 rounded-xl border border-transparent bg-[#182135]/70 px-3 py-3 transition hover:border-[#2F313C] hover:bg-[#1E222B]/90"
                 >
                   <button
                     type="button"
                     onClick={() => handleToggleStep(step.id)}
-                    className="mt-0.5 rounded-full border border-[#2F313C] bg-[#14171E] p-1 transition hover:border-[#3B3D48] hover:bg-[#1B1F27]"
+                    className="mt-0.5 rounded-full border border-[#2F313C] bg-[#14171E] p-1 transition hover:border-[#3F4A63] hover:bg-[#1B1F27]"
                     aria-label={`${step.title} 단계 ${isDone ? "완료 취소" : "완료"}`}
                   >
                     {isDone ? (

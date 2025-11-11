@@ -265,7 +265,7 @@ export default async function LockerRoomPage() {
                 </div>
               </Suspense>
             ) : (
-              <div className="rounded-lg border border-dashed border-[#27272A] bg-[#27272A]/50 p-12 text-center">
+              <div className="rounded-lg border border-dashed border-[#2C354B] bg-[#1A2333]/65 p-12 text-center">
                 <Users className="mx-auto h-12 w-12 text-[#A1A1AA] mb-4" />
                 <p className="text-[#A1A1AA] mb-4">
                   아직 합류한 팀이 없어요. 첫 라인업을 꾸려볼까요?
@@ -324,7 +324,7 @@ export default async function LockerRoomPage() {
                 })}
               </div>
             ) : (
-              <div className="rounded-lg border border-dashed border-[#27272A] bg-[#27272A]/50 p-12 text-center">
+              <div className="rounded-lg border border-dashed border-[#2C354B] bg-[#1A2333]/65 p-12 text-center">
                 <Calendar className="mx-auto h-12 w-12 text-[#A1A1AA] mb-4" />
                 <p className="text-[#A1A1AA]">
                   예정된 경기가 없어요. 새로운 매치를 편성해 라커룸을 달궈보세요.

@@ -45,7 +45,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4">
-      <div className="w-full max-w-md space-y-8 rounded-xl border border-[#27272A] bg-[#181A1F] p-8">
+      <div className="w-full max-w-md space-y-8 rounded-xl border border-[#2C354B] bg-[#141824] p-8">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-[#00C16A]">
             킥-인
@@ -59,7 +59,7 @@ export default function LoginPage() {
           <button
             onClick={handleGoogleLogin}
             disabled={isLoading}
-            className="flex w-full items-center justify-center gap-3 rounded-lg border border-[#27272A] bg-transparent px-4 py-3 font-medium text-[#F4F4F5] transition-all duration-200 hover:bg-[#181A1F] hover:border-[#27272A] active:scale-[0.98] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex w-full items-center justify-center gap-3 rounded-lg border border-[#2C354B] bg-transparent px-4 py-3 font-medium text-[#F4F4F5] transition-all duration-200 hover:bg-[#141824] hover:border-[#2C354B] active:scale-[0.98] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <>

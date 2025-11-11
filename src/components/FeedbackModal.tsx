@@ -169,7 +169,7 @@ export function FeedbackModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="피드백 보내기">
       <form onSubmit={handleSubmit} className="space-y-5">
-        <div className="rounded-lg border border-[#27272A] bg-[#1A1D25] p-4">
+        <div className="rounded-lg border border-[#2C354B] bg-[#182135] p-4">
           <p className="text-sm text-[#A1A1AA] flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-[#00C16A]" />
             킥-인을 더 나은 서비스로 만들어주세요!
@@ -188,7 +188,7 @@ export function FeedbackModal({
               id="feedback-category"
               value={category}
               onChange={(event) => setCategory(event.target.value)}
-              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-sm text-[#F4F4F5] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A]"
+              className="w-full rounded-lg border border-[#2C354B] bg-[#141824] px-4 py-2 text-sm text-[#F4F4F5] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A]"
             >
               {categories.map((option) => (
                 <option key={option} value={option}>
@@ -211,7 +211,7 @@ export function FeedbackModal({
               onChange={(event) => setContent(event.target.value)}
               placeholder="어떤 점을 개선하면 좋을까요?"
               rows={5}
-              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-3 text-sm text-[#F4F4F5] placeholder:text-[#6F7280] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] resize-none"
+              className="w-full rounded-lg border border-[#2C354B] bg-[#141824] px-4 py-3 text-sm text-[#F4F4F5] placeholder:text-[#6F7280] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] resize-none"
               required
             />
           </div>
@@ -223,7 +223,7 @@ export function FeedbackModal({
             <div className="flex items-center gap-3">
               <label
                 htmlFor="feedback-screenshot"
-                className="inline-flex items-center gap-2 rounded-lg border border-dashed border-[#3B3D48] bg-[#181A1F] px-4 py-2 text-sm text-[#A1A1AA] cursor-pointer transition hover:border-[#00C16A] hover:text-[#00C16A]"
+                className="inline-flex items-center gap-2 rounded-lg border border-dashed border-[#3F4A63] bg-[#141824] px-4 py-2 text-sm text-[#A1A1AA] cursor-pointer transition hover:border-[#00C16A] hover:text-[#00C16A]"
               >
                 <UploadCloud className="h-4 w-4" />
                 {screenshotFile ? "다시 선택하기" : "이미지 첨부"}
@@ -232,7 +232,7 @@ export function FeedbackModal({
                 <button
                   type="button"
                   onClick={() => setScreenshotFile(null)}
-                  className="inline-flex items-center gap-2 rounded-lg border border-[#3B3D48] px-3 py-2 text-xs text-[#A1A1AA] transition hover:border-red-500/40 hover:text-red-400"
+                  className="inline-flex items-center gap-2 rounded-lg border border-[#3F4A63] px-3 py-2 text-xs text-[#A1A1AA] transition hover:border-red-500/40 hover:text-red-400"
                 >
                   <X className="h-4 w-4" />
                   제거
@@ -247,7 +247,7 @@ export function FeedbackModal({
               onChange={handleScreenshotChange}
             />
             {screenshotPreview && (
-              <div className="relative mt-2 overflow-hidden rounded-lg border border-[#27272A] bg-[#101217]">
+              <div className="relative mt-2 overflow-hidden rounded-lg border border-[#2C354B] bg-[#101217]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={screenshotPreview}
@@ -259,7 +259,7 @@ export function FeedbackModal({
           </div>
         </div>
 
-        <div className="flex items-center justify-between rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-3">
+        <div className="flex items-center justify-between rounded-lg border border-[#2C354B] bg-[#141824] px-4 py-3">
           <div>
             <p className="text-sm font-medium text-[#F4F4F5]">익명으로 보내기</p>
             <p className="text-xs text-[#6F7280]">
@@ -273,13 +273,13 @@ export function FeedbackModal({
               checked={isAnonymous}
               onChange={(event) => setIsAnonymous(event.target.checked)}
             />
-            <div className="h-5 w-11 rounded-full bg-[#27272A] transition peer-checked:bg-[#00C16A]" />
+            <div className="h-5 w-11 rounded-full bg-[#2C354B] transition peer-checked:bg-[#00C16A]" />
             <div className="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-[#F4F4F5] transition-transform peer-checked:translate-x-6" />
           </label>
         </div>
 
         {!isAnonymous && (
-          <div className="rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-3 text-xs text-[#6F7280]">
+          <div className="rounded-lg border border-[#2C354B] bg-[#141824] px-4 py-3 text-xs text-[#6F7280]">
             <p className="font-medium text-[#A1A1AA]">
               회신이 필요하면 아래 정보를 함께 전달할게요.
             </p>
@@ -290,13 +290,13 @@ export function FeedbackModal({
         )}
 
         {uploadMessage && (
-          <div className="rounded-lg border border-[#3B3D48] bg-[#181A1F] px-4 py-3 text-sm text-[#A1A1AA]">
+          <div className="rounded-lg border border-[#3F4A63] bg-[#141824] px-4 py-3 text-sm text-[#A1A1AA]">
             {uploadMessage}
           </div>
         )}
 
         {ticketInfo && (
-          <div className="space-y-3 rounded-lg border border-[#3B3D48] bg-[#101217] px-4 py-4">
+          <div className="space-y-3 rounded-lg border border-[#3F4A63] bg-[#101217] px-4 py-4">
             <div className="flex items-center gap-2 text-[#00C16A]">
               <MessageSquare className="h-4 w-4" />
               <p className="text-sm font-semibold">피드백 티켓이 생성되었습니다.</p>
@@ -305,7 +305,7 @@ export function FeedbackModal({
               아래 링크를 저장해두면 진행 상황을 언제든지 확인할 수 있어요.
             </p>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full border border-[#27272A] bg-[#181A1F] px-3 py-1 text-xs text-[#A1A1AA]">
+              <span className="rounded-full border border-[#2C354B] bg-[#141824] px-3 py-1 text-xs text-[#A1A1AA]">
                 티켓 코드: {ticketInfo.code}
               </span>
               <Button
@@ -321,7 +321,7 @@ export function FeedbackModal({
               <Link
                 href={ticketInfo.link}
                 target="_blank"
-                className="inline-flex items-center gap-2 rounded-lg border border-[#27272A] px-3 py-2 text-xs text-[#F4F4F5] transition hover:border-[#00C16A] hover:text-[#00C16A]"
+                className="inline-flex items-center gap-2 rounded-lg border border-[#2C354B] px-3 py-2 text-xs text-[#F4F4F5] transition hover:border-[#00C16A] hover:text-[#00C16A]"
               >
                 티켓 확인
               </Link>

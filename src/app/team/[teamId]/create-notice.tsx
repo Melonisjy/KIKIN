@@ -186,7 +186,7 @@ export function CreateNoticeModal({
                     id="notice-pinned"
                     checked={isPinned}
                     onChange={(e) => setIsPinned(e.target.checked)}
-                    className="h-4 w-4 rounded border-[#27272A] bg-[#181A1F] text-[#00C16A] focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2 disabled:opacity-50"
+                    className="h-4 w-4 rounded border-[#2C354B] bg-[#141824] text-[#00C16A] focus:ring-2 focus:ring-[#00C16A] focus:ring-offset-2 disabled:opacity-50"
                     disabled={isLoading}
                   />
                   <label
@@ -203,7 +203,7 @@ export function CreateNoticeModal({
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="공지 내용을 입력하세요"
                 rows={6}
-                className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] resize-none"
+                className="w-full rounded-lg border border-[#2C354B] bg-[#141824] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] resize-none"
                 disabled={isLoading}
                 required
               />

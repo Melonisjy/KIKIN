@@ -73,7 +73,7 @@ export function NoticesSection({
             return (
               <div
                 key={notice.id}
-                className="group rounded-xl border border-[#2A2C34] bg-[#191C23] p-5 transition-all duration-200 hover:border-[#00C16A]/40 hover:bg-[#1E222B] hover:-translate-y-0.5"
+                className="group rounded-xl border border-[#2A2C34] bg-[#182235] p-5 transition-all duration-200 hover:border-[#00C16A]/40 hover:bg-[#1E222B] hover:-translate-y-0.5"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
@@ -113,7 +113,7 @@ export function NoticesSection({
                     />
                   )}
                 </div>
-                <div className="mt-4 border-t border-[#27272A]/80 pt-4">
+                <div className="mt-4 border-t border-[#2C354B]/80 pt-4">
                   <p className="text-sm text-[#D4D4D8] whitespace-pre-wrap leading-relaxed transition-colors duration-200 group-hover:text-[#F4F4F5]">
                     {notice.content}
                   </p>
@@ -182,7 +182,7 @@ export function NoticesSection({
           )}
         </>
       ) : (
-        <div className="rounded-lg border border-dashed border-[#27272A] bg-[#27272A]/50 p-8 text-center transition-all duration-200 hover:border-[#3B3D48] hover:bg-[#2B2D33]">
+        <div className="rounded-lg border border-dashed border-[#2C354B] bg-[#2C354B]/50 p-8 text-center transition-all duration-200 hover:border-[#3F4A63] hover:bg-[#2B2D33]">
           <Megaphone className="mx-auto h-12 w-12 text-[#A1A1AA] mb-4" />
           <p className="text-[#A1A1AA]">등록된 공지가 없습니다.</p>
         </div>

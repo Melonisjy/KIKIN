@@ -43,7 +43,7 @@ export default async function FeedbackTicketPage({ params }: PageProps) {
         홈으로 돌아가기
       </Link>
 
-      <div className="mt-6 rounded-2xl border border-[#27272A] bg-[#181A1F] p-8 shadow-lg shadow-black/20">
+      <div className="mt-6 rounded-2xl border border-[#2C354B] bg-[#141824] p-8 shadow-lg shadow-black/20">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div>
             <div className="flex items-center gap-3 text-[#00C16A]">
@@ -56,19 +56,19 @@ export default async function FeedbackTicketPage({ params }: PageProps) {
               #{data.ticket_code}
             </h1>
           </div>
-          <div className="rounded-full border border-[#27272A] bg-[#101217] px-4 py-1.5 text-sm text-[#A1A1AA]">
+          <div className="rounded-full border border-[#2C354B] bg-[#101217] px-4 py-1.5 text-sm text-[#A1A1AA]">
             상태: {data.status}
           </div>
         </div>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          <div className="rounded-lg border border-[#27272A] bg-[#101217] px-4 py-3">
+          <div className="rounded-lg border border-[#2C354B] bg-[#101217] px-4 py-3">
             <p className="text-xs text-[#6F7280] uppercase tracking-[0.2em]">
               카테고리
             </p>
             <p className="mt-1 text-sm text-[#F4F4F5]">{data.category}</p>
           </div>
-          <div className="rounded-lg border border-[#27272A] bg-[#101217] px-4 py-3">
+          <div className="rounded-lg border border-[#2C354B] bg-[#101217] px-4 py-3">
             <p className="flex items-center gap-1 text-xs text-[#6F7280] uppercase tracking-[0.2em]">
               <Calendar className="h-4 w-4" />
               등록 일시
@@ -79,7 +79,7 @@ export default async function FeedbackTicketPage({ params }: PageProps) {
 
         <div className="mt-6">
           <p className="text-sm font-semibold text-[#F4F4F5] mb-2">내용</p>
-          <div className="rounded-lg border border-[#27272A] bg-[#101217] px-4 py-4 text-sm text-[#D4D4D8] whitespace-pre-wrap leading-relaxed">
+          <div className="rounded-lg border border-[#2C354B] bg-[#101217] px-4 py-4 text-sm text-[#D4D4D8] whitespace-pre-wrap leading-relaxed">
             {data.content}
           </div>
         </div>
@@ -90,7 +90,7 @@ export default async function FeedbackTicketPage({ params }: PageProps) {
               <Camera className="h-4 w-4" />
               첨부한 스크린샷
             </p>
-            <div className="overflow-hidden rounded-lg border border-[#27272A] bg-[#101217]">
+            <div className="overflow-hidden rounded-lg border border-[#2C354B] bg-[#101217]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={data.screenshot_url}
@@ -101,7 +101,7 @@ export default async function FeedbackTicketPage({ params }: PageProps) {
           </div>
         )}
 
-        <div className="mt-8 rounded-lg border border-[#27272A] bg-[#101217] px-4 py-4 text-xs text-[#6F7280] leading-relaxed">
+        <div className="mt-8 rounded-lg border border-[#2C354B] bg-[#101217] px-4 py-4 text-xs text-[#6F7280] leading-relaxed">
           <p>
             티켓 코드를 저장해두시면 진행 상황을 다시 확인하거나 운영진에게
             문의할 때 활용할 수 있어요.

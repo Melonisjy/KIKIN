@@ -1,8 +1,8 @@
 .teamCard {
   display: block;
   border-radius: 0.75rem;
-  border: 1px solid #27272a;
-  background-color: #181a1f;
+  border: 1px solid var(--border-soft);
+  background: var(--surface-2);
   text-decoration: none;
   color: inherit;
   transition:
@@ -12,12 +12,12 @@
     background-color 180ms ease;
 
   &:hover {
-    border-color: #3b3d48;
-    background-color: #1d2029;
+    border-color: var(--border-strong);
+    background: var(--surface-3);
     transform: translateY(-4px);
     box-shadow:
-      0 12px 28px rgba(4, 6, 12, 0.45),
-      0 0 0 1px rgba(59, 61, 72, 0.35);
+      var(--shadow-mid),
+      var(--shadow-glow);
   }
 
   &:focus-visible {
@@ -77,8 +77,8 @@
 }
 
 .roleMember {
-  background-color: #27272a;
-  color: #a1a1aa;
+  background: rgba(44, 67, 107, 0.32);
+  color: #94a3c6;
 }
 
 .teamName {
@@ -115,9 +115,9 @@
   align-items: center;
   gap: 1rem;
   font-size: 0.75rem;
-  color: #a1a1aa;
+  color: #95a0bb;
   padding-top: 1rem;
-  border-top: 1px solid #27272a;
+  border-top: 1px solid rgba(76, 99, 138, 0.22);
   flex-wrap: wrap;
 }
 
@@ -127,5 +127,5 @@
 }
 
 .teamDate {
-  color: #a1a1aa;
+  color: #8b96b2;
 }

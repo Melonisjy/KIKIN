@@ -188,8 +188,8 @@ export function NotificationBell() {
       </Button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-2rem)] rounded-lg border border-[#27272A] bg-[#181A1F] shadow-lg z-50 max-h-[500px] overflow-hidden flex flex-col">
-          <div className="flex items-center justify-between p-4 border-b border-[#27272A]">
+        <div className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-2rem)] rounded-lg border border-[#2C354B] bg-[#141824] shadow-lg z-50 max-h-[500px] overflow-hidden flex flex-col">
+          <div className="flex items-center justify-between p-4 border-b border-[#2C354B]">
             <h3 className="text-lg font-semibold text-[#F4F4F5]">알림</h3>
             {unreadCount > 0 && (
               <span className="rounded-full bg-red-500/10 text-red-400 px-2 py-1 text-xs font-medium">
@@ -214,11 +214,11 @@ export function NotificationBell() {
                 <p className="text-sm text-[#A1A1AA]">알림이 없습니다.</p>
               </div>
             ) : (
-              <div className="divide-y divide-[#27272A]">
+              <div className="divide-y divide-[#2C354B]">
                 {notifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className={`p-4 hover:bg-[#27272A]/50 transition-colors ${
+                    className={`p-4 hover:bg-[#2C354B]/50 transition-colors ${
                       !notification.is_read
                         ? "bg-[#00C16A]/5 border-l-2 border-l-[#00C16A]"
                         : ""

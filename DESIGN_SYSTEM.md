@@ -11,9 +11,9 @@
 
 ### 배경 컬러
 
-- **메인 배경**: `#0F1115` - 매트한 다크
-- **섹션/카드 배경**: `#181A1F` - 차분한 다크
-- **경계선**: `#27272A` - 살짝 구분감
+- **메인 배경**: `#080A12` - 딥 다크 베이스
+- **섹션/카드 배경**: `#141824` - 미드 레이어
+- **경계선**: `#2C354B` - 선명한 구분감
 
 ### 포인트 컬러
 
@@ -28,12 +28,12 @@
 ### CSS 변수
 
 ```css
---background: 15 17 21; /* #0F1115 */
---card: 24 26 31; /* #181A1F */
+--background: 8 10 18; /* #080A12 */
+--card: 20 24 36; /* #141824 */
 --primary: 0 193 106; /* #00C16A */
 --foreground: 244 244 245; /* #F4F4F5 */
---muted-foreground: 161 161 170; /* #A1A1AA */
---border: 39 39 42; /* #27272A */
+--muted-foreground: 160 170 190; /* #A0AABE */
+--border: 44 53 75; /* #2C354B */
 ```
 
 ## 🧱 타이포그래피
@@ -68,21 +68,21 @@ className =
 
 ```tsx
 className =
-  "border border-[#27272A] bg-transparent text-[#F4F4F5] hover:bg-[#181A1F] active:scale-[0.98]";
+  "border border-[#2C354B] bg-transparent text-[#F4F4F5] hover:bg-[#141B2A] hover:border-[#3F4A63] active:scale-[0.98]";
 ```
 
 ### Secondary Button
 
 ```tsx
 className =
-  "bg-[#181A1F] text-[#F4F4F5] hover:bg-[#27272A] active:scale-[0.98]";
+  "bg-[#141824] text-[#F4F4F5] hover:bg-[#1B2434] active:scale-[0.98]";
 ```
 
 ### Ghost Button
 
 ```tsx
 className =
-  "text-[#A1A1AA] hover:bg-[#181A1F] hover:text-[#F4F4F5] active:scale-[0.98]";
+  "text-[#A1A1AA] hover:bg-[#141B2A] hover:text-[#F4F4F5] active:scale-[0.98]";
 ```
 
 **공통 사항**:
@@ -94,7 +94,7 @@ className =
 ## 🎴 카드 스타일
 
 ```tsx
-className = "rounded-xl border border-[#27272A] bg-[#181A1F] p-6";
+className = "surface-layer rounded-xl p-6 hover:bg-[var(--surface-3)] hover:border-[var(--border-strong)] transition-all duration-200";
 ```
 
 **특징**:
@@ -172,8 +172,8 @@ className = "px-4 sm:px-6 lg:px-8";
 ### Feature Card
 
 ```tsx
-<div className="rounded-xl border border-[#27272A] bg-[#181A1F] p-6">
-  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#181A1F] border border-[#27272A]">
+<div className="surface-layer rounded-xl p-6">
+  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2C354B] bg-[#141824]">
     <Icon className="h-6 w-6 text-[#00C16A]" />
   </div>
   <h3 className="mt-4 text-xl font-semibold text-[#F4F4F5]">제목</h3>

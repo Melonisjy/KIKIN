@@ -95,7 +95,7 @@ export function RemoveMember({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="min-w-[44px] min-h-[44px] p-2 rounded hover:bg-[#27272A] text-[#A1A1AA] hover:text-[#F4F4F5] transition-colors touch-manipulation active:scale-[0.95] flex items-center justify-center"
+        className="min-w-[44px] min-h-[44px] p-2 rounded hover:bg-[#2C354B] text-[#A1A1AA] hover:text-[#F4F4F5] transition-colors touch-manipulation active:scale-[0.95] flex items-center justify-center"
         type="button"
         title="라인업 조정"
         aria-label="라인업 조정"

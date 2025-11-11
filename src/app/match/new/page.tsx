@@ -168,7 +168,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
         {team.name}으로 돌아가기
       </Link>
 
-      <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6">
+      <div className="surface-layer rounded-lg p-6">
         <h1 className="text-2xl font-bold text-[#F4F4F5] mb-6">
           새 매치 편성
         </h1>
@@ -190,7 +190,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
               required
               defaultValue={today}
               min={today}
-              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A]"
+              className="w-full rounded-lg border border-[#2C354B] bg-[#141824] px-4 py-2 text-[#F4F4F5] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A]"
             />
           </div>
 
@@ -207,7 +207,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
               name="time"
               required
               defaultValue={now}
-              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A]"
+              className="w-full rounded-lg border border-[#2C354B] bg-[#141824] px-4 py-2 text-[#F4F4F5] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A]"
             />
           </div>
 
@@ -224,7 +224,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
               name="location"
               required
               placeholder="예: 킥-인 아레나"
-              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A]"
+              className="w-full rounded-lg border border-[#2C354B] bg-[#141824] px-4 py-2 text-[#F4F4F5] placeholder:text-[#96A3C4] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A]"
             />
           </div>
 
@@ -240,7 +240,7 @@ async function NewMatchForm({ teamId }: { teamId: string }) {
               name="note"
               rows={4}
               placeholder="복장, 전술 노트, 회비 등 브리핑이 있다면 적어주세요"
-              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] resize-none"
+              className="w-full rounded-lg border border-[#2C354B] bg-[#141824] px-4 py-2 text-[#F4F4F5] placeholder:text-[#96A3C4] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] resize-none"
             />
           </div>
 

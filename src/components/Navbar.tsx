@@ -156,7 +156,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="w-full border-b border-[#27272A] bg-[#0F1115]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0F1115]/60">
+      <nav className="w-full border-b border-[#2C354B] bg-[#0F1115]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0F1115]/60">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
@@ -180,7 +180,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => setIsFeedbackOpen(true)}
-                  className="relative inline-flex items-center gap-2 rounded-full border border-[#27272A] bg-[#181A1F] px-4 py-2 text-sm font-medium text-[#F4F4F5] shadow-sm transition hover:border-[#00C16A] hover:text-[#00C16A]"
+                  className="relative inline-flex items-center gap-2 rounded-full border border-[#2C354B] bg-[#141824] px-4 py-2 text-sm font-medium text-[#F4F4F5] shadow-sm transition hover:border-[#00C16A] hover:text-[#00C16A]"
                 >
                   <Sparkles className="h-4 w-4 text-[#00C16A]" />
                   피드백
@@ -220,7 +220,7 @@ export default function Navbar() {
           <div className="md:hidden flex items-center gap-2">
             {isLoggedIn && <NotificationBell />}
             <button
-              className="min-w-[44px] min-h-[44px] p-2 rounded-md text-[#F4F4F5] hover:bg-[#181A1F] transition-colors cursor-pointer touch-manipulation"
+              className="min-w-[44px] min-h-[44px] p-2 rounded-md text-[#F4F4F5] hover:bg-[#141824] transition-colors cursor-pointer touch-manipulation"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="메뉴 토글"
               aria-expanded={isMenuOpen}
@@ -243,7 +243,7 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/locker-room"
-                    className="flex items-center gap-2 px-3 py-2 text-base font-medium text-[#F4F4F5] hover:bg-[#181A1F] rounded-md transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 text-base font-medium text-[#F4F4F5] hover:bg-[#141824] rounded-md transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     라커룸
@@ -264,7 +264,7 @@ export default function Navbar() {
                       setIsMenuOpen(false);
                     }}
                     disabled={isLoggingOut}
-                    className="flex w-full items-center gap-2 px-3 py-2 text-base font-medium text-[#F4F4F5] hover:bg-[#181A1F] rounded-md transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex w-full items-center gap-2 px-3 py-2 text-base font-medium text-[#F4F4F5] hover:bg-[#141824] rounded-md transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <LogOut className="h-4 w-4" />
                     {isLoggingOut ? "로그아웃 중..." : "로그아웃"}
@@ -274,7 +274,7 @@ export default function Navbar() {
                       setIsMenuOpen(false);
                       setIsFeedbackOpen(true);
                     }}
-                    className="flex w-full items-center gap-2 px-3 py-2 text-base font-medium text-[#F4F4F5] hover:bg-[#181A1F] rounded-md transition-colors"
+                    className="flex w-full items-center gap-2 px-3 py-2 text-base font-medium text-[#F4F4F5] hover:bg-[#141824] rounded-md transition-colors"
                     type="button"
                   >
                     <MessageSquare className="h-4 w-4 text-[#00C16A]" />
@@ -284,7 +284,7 @@ export default function Navbar() {
               ) : (
                 <Link
                   href="/login"
-                  className="block px-3 py-2 text-base font-medium text-[#F4F4F5] hover:bg-[#181A1F] rounded-md transition-colors"
+                  className="block px-3 py-2 text-base font-medium text-[#F4F4F5] hover:bg-[#141824] rounded-md transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Login

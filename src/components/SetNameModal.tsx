@@ -95,7 +95,7 @@ export function SetNameModal({
         onClose ? (e) => e.target === e.currentTarget && onClose() : undefined
       }
     >
-      <div className="w-full max-w-md rounded-xl border-2 border-[#00C16A]/20 bg-[#181A1F] p-8 shadow-xl mx-4">
+      <div className="w-full max-w-md rounded-xl border-2 border-[#00C16A]/20 bg-[#141824] p-8 shadow-xl mx-4">
         {onClose && (
           <button
             onClick={onClose}
@@ -132,7 +132,7 @@ export function SetNameModal({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="이름을 입력하세요"
-              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A]"
+              className="w-full rounded-lg border border-[#2C354B] bg-[#141824] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A]"
               maxLength={100}
               disabled={isLoading}
               autoFocus

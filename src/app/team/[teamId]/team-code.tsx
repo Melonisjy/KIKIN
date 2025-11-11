@@ -27,12 +27,12 @@ export function TeamCode({ teamId }: TeamCodeProps) {
   return (
     <div className="inline-flex items-center gap-2 ml-3">
       <span className="text-xs text-[#A1A1AA]">팀코드:</span>
-      <code className="text-xs font-mono text-[#A1A1AA] bg-[#27272A] px-2 py-1 rounded">
+      <code className="text-xs font-mono text-[#A1A1AA] bg-[#2C354B] px-2 py-1 rounded">
         {displayCode}
       </code>
       <button
         onClick={handleCopy}
-        className="p-1 hover:bg-[#27272A] rounded transition-colors"
+        className="p-1 hover:bg-[#2C354B] rounded transition-colors"
         type="button"
         title="팀 코드 복사"
       >

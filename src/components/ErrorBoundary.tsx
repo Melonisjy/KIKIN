@@ -53,7 +53,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
       return (
         <div className="min-h-screen flex items-center justify-center p-4 bg-[#0F1115]">
-          <div className="max-w-md w-full rounded-lg border border-[#27272A] bg-[#181A1F] p-6 text-center">
+          <div className="max-w-md w-full rounded-lg border border-[#2C354B] bg-[#141824] p-6 text-center">
             <div className="flex justify-center mb-4">
               <div className="rounded-full bg-red-500/10 p-3">
                 <AlertCircle className="h-8 w-8 text-red-400" />
@@ -71,7 +71,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 <summary className="cursor-pointer text-sm text-[#A1A1AA] mb-2">
                   에러 상세 정보 (개발 모드)
                 </summary>
-                <pre className="text-xs text-red-400 bg-[#27272A] p-3 rounded overflow-auto max-h-40">
+                <pre className="text-xs text-red-400 bg-[#2C354B] p-3 rounded overflow-auto max-h-40">
                   {this.state.error.toString()}
                   {this.state.error.stack}
                 </pre>

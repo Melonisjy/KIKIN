@@ -99,7 +99,7 @@ export default function NewTeamPage() {
         라커룸으로 돌아가기
       </Link>
 
-      <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6">
+      <div className="surface-layer rounded-lg p-6">
         <h1 className="text-2xl font-bold text-[#F4F4F5] mb-6">
           새 팀 킥오프
         </h1>
@@ -119,7 +119,7 @@ export default function NewTeamPage() {
               required
               placeholder="예: 킥오프 FC"
               disabled={isLoading}
-              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] disabled:opacity-50"
+              className="w-full rounded-lg border border-[#2C354B] bg-[#141824] px-4 py-2 text-[#F4F4F5] placeholder:text-[#96A3C4] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] disabled:opacity-50"
             />
           </div>
 
@@ -137,7 +137,7 @@ export default function NewTeamPage() {
               placeholder="팀 분위기나 전술 노트를 간단히 적어주세요"
               disabled={isLoading}
               aria-label="팀 설명"
-              className="w-full rounded-lg border border-[#27272A] bg-[#181A1F] px-4 py-2 text-[#F4F4F5] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] resize-none disabled:opacity-50"
+              className="w-full rounded-lg border border-[#2C354B] bg-[#141824] px-4 py-2 text-[#F4F4F5] placeholder:text-[#96A3C4] focus:outline-none focus:border-[#00C16A] focus:ring-1 focus:ring-[#00C16A] resize-none disabled:opacity-50"
             />
           </div>
 

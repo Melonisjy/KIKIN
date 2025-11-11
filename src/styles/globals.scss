@@ -44,44 +44,60 @@
 
 :root {
   --radius: 0.75rem;
-  
-  /* 미니멀 다크 모드 컬러 시스템 */
-  --background: 15 17 21; /* #0F1115 - 매트한 다크 배경 */
-  --foreground: 244 244 245; /* #F4F4F5 - 텍스트 기본 */
-  --card: 24 26 31; /* #181A1F - 섹션/카드 배경 */
-  --card-foreground: 244 244 245; /* #F4F4F5 */
-  --popover: 24 26 31; /* #181A1F */
-  --popover-foreground: 244 244 245; /* #F4F4F5 */
-  
-  /* 포인트 컬러: 밝은 그린 */
+
+  /* 미니멀 다크 모드 컬러 시스템 (레이어 분리 강화) */
+  --background: 8 10 18; /* #080A12 - 베이스 배경 */
+  --foreground: 244 244 245; /* #F4F4F5 - 기본 텍스트 */
+  --card: 20 24 36; /* #141824 - 카드/섹션 기본 */
+  --card-foreground: 244 244 245;
+  --popover: 23 30 44; /* #171E2C - 팝오버 */
+  --popover-foreground: 244 244 245;
+
+  /* 포인트 컬러 */
   --primary: 0 193 106; /* #00C16A */
-  --primary-foreground: 15 17 21; /* #0F1115 */
-  
+  --primary-foreground: 12 16 24; /* #0C1018 */
+
   /* 서브 컬러 */
-  --secondary: 39 39 42; /* #27272A */
-  --secondary-foreground: 244 244 245; /* #F4F4F5 */
-  
+  --secondary: 31 37 54; /* #1F2536 - 서브 카드 */
+  --secondary-foreground: 235 237 242; /* #EBEDF2 */
+
   /* 뮤트 컬러 */
-  --muted: 24 26 31; /* #181A1F */
-  --muted-foreground: 161 161 170; /* #A1A1AA - 서브 텍스트 */
-  
-  /* 액센트 */
-  --accent: 39 39 42; /* #27272A */
-  --accent-foreground: 244 244 245; /* #F4F4F5 */
-  
+  --muted: 25 31 45; /* #191F2D */
+  --muted-foreground: 160 170 190; /* #A0AABE */
+
+  /* 액센트 및 보더 */
+  --accent: 34 43 63; /* #222B3F */
+  --accent-foreground: 244 244 245;
+
   --destructive: 255 107 107;
-  --border: 39 39 42; /* #27272A - 경계선 */
-  --input: 39 39 42; /* #27272A */
-  --ring: 0 193 106; /* #00C16A */
-  
+  --border: 44 53 75; /* #2C354B - 기본 보더 */
+  --input: 34 43 63; /* #222B3F */
+  --ring: 0 193 106;
+
+  /* 레이어 컬러 변수 */
+  --surface-0: #080A12;
+  --surface-1: #101522;
+  --surface-2: #141A26;
+  --surface-3: #1A2333;
+  --surface-4: #222E45;
+  --surface-glass: rgba(29, 40, 60, 0.68);
+
+  --border-soft: rgba(104, 119, 149, 0.22);
+  --border-strong: rgba(120, 152, 198, 0.38);
+  --border-faint: rgba(66, 80, 110, 0.14);
+
+  --shadow-low: 0 18px 42px rgba(6, 10, 22, 0.45);
+  --shadow-mid: 0 26px 60px rgba(9, 16, 32, 0.52);
+  --shadow-glow: 0 0 0 1px rgba(0, 193, 106, 0.16);
+
   /* 브랜드 컬러 변수 */
-  --brand-bg: #0F1115;
-  --brand-card: #181A1F;
+  --brand-bg: #080A12;
+  --brand-card: #141824;
   --brand-primary: #00C16A;
   --brand-primary-hover: #00A85B;
   --brand-text: #F4F4F5;
-  --brand-text-sub: #A1A1AA;
-  --brand-border: #27272A;
+  --brand-text-sub: #A0AABE;
+  --brand-border: #2C354B;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -149,6 +165,26 @@
 
     @media (prefers-reduced-motion: reduce) {
       transition: none;
+    }
+  }
+
+  .interactive-surface {
+    background-color: var(--surface-2);
+    border-color: var(--border-soft);
+    box-shadow: var(--shadow-low);
+
+    &:hover {
+      background-color: var(--surface-3);
+      border-color: var(--border-strong);
+      box-shadow:
+        var(--shadow-mid),
+        var(--shadow-glow);
+    }
+
+    &:focus-visible {
+      box-shadow:
+        var(--shadow-mid),
+        var(--shadow-glow);
     }
   }
   
@@ -227,6 +263,57 @@
     &::-moz-calendar-picker-indicator {
       display: none;
     }
+  }
+}
+
+@layer components {
+  .surface-layer {
+    background-color: var(--surface-2);
+    border-color: var(--border-soft);
+    box-shadow: var(--shadow-low);
+  }
+
+  .surface-layer[data-variant="subtle"] {
+    background-color: var(--surface-1);
+    border-color: var(--border-faint);
+    box-shadow: none;
+  }
+
+  .surface-layer[data-variant="elevated"] {
+    background-color: var(--surface-3);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-mid);
+  }
+
+  .surface-layer[data-variant="accent"] {
+    background: linear-gradient(145deg, rgba(34, 43, 63, 0.95), rgba(20, 26, 38, 0.9));
+    border-color: rgba(96, 120, 168, 0.4);
+    box-shadow:
+      var(--shadow-mid),
+      var(--shadow-glow);
+  }
+
+  .surface-glass {
+    background: var(--surface-glass);
+    border-color: rgba(104, 119, 149, 0.18);
+    box-shadow: 0 18px 36px rgba(8, 12, 24, 0.45);
+    backdrop-filter: blur(18px);
+  }
+
+  .border-soft {
+    border-color: var(--border-soft);
+  }
+
+  .border-strong {
+    border-color: var(--border-strong);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-low);
+  }
+
+  .shadow-elevated {
+    box-shadow: var(--shadow-mid);
   }
 }
 

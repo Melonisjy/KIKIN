@@ -85,7 +85,7 @@ export function MatchParticipantButtons({
       label: "참석",
       icon: CheckCircle,
       className:
-        "border border-[#27272A] bg-[#181A1F] text-[#F4F4F5] hover:bg-[#27272A] hover:border-[#00C16A]",
+        "border border-[#2C354B] bg-[#141824] text-[#F4F4F5] hover:bg-[#2C354B] hover:border-[#00C16A]",
       activeClassName:
         "bg-[#00C16A] text-[#0F1115] border-[#00C16A] hover:bg-[#00A85B]",
     },
@@ -94,7 +94,7 @@ export function MatchParticipantButtons({
       label: "불참",
       icon: XCircle,
       className:
-        "border border-[#27272A] bg-[#181A1F] text-[#F4F4F5] hover:bg-[#27272A] hover:border-red-400",
+        "border border-[#2C354B] bg-[#141824] text-[#F4F4F5] hover:bg-[#2C354B] hover:border-red-400",
       activeClassName:
         "bg-red-500/20 text-red-400 border-red-400 hover:bg-red-500/30",
     },
@@ -103,7 +103,7 @@ export function MatchParticipantButtons({
       label: "미정",
       icon: HelpCircle,
       className:
-        "border border-[#27272A] bg-[#181A1F] text-[#F4F4F5] hover:bg-[#27272A] hover:border-yellow-400",
+        "border border-[#2C354B] bg-[#141824] text-[#F4F4F5] hover:bg-[#2C354B] hover:border-yellow-400",
       activeClassName:
         "bg-yellow-500/20 text-yellow-400 border-yellow-400 hover:bg-yellow-500/30",
     },

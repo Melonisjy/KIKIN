@@ -1,8 +1,8 @@
 .matchCard {
   display: block;
   border-radius: 0.75rem;
-  border: 1px solid #27272a;
-  background-color: #181a1f;
+  border: 1px solid var(--border-soft);
+  background: var(--surface-2);
   text-decoration: none;
   color: inherit;
   transition:
@@ -12,25 +12,25 @@
     background-color 180ms ease;
 
   &:hover {
-    border-color: #3b3d48;
-    background-color: #1d2029;
+    border-color: var(--border-strong);
+    background: var(--surface-3);
     transform: translateY(-4px);
     box-shadow:
-      0 12px 28px rgba(4, 6, 12, 0.45),
-      0 0 0 1px rgba(59, 61, 72, 0.32);
+      var(--shadow-mid),
+      var(--shadow-glow);
   }
 
   &.pastMatch {
     opacity: 0.6;
-    border-color: #27272a;
-    background-color: #181a1f;
+    border-color: rgba(71, 86, 118, 0.32);
+    background: var(--surface-1);
     box-shadow: none;
 
     &:hover {
       transform: translateY(-2px);
       box-shadow: none;
-      background-color: #181a1f;
-      border-color: #27272a;
+      background: var(--surface-1);
+      border-color: rgba(71, 86, 118, 0.32);
     }
   }
 
@@ -58,8 +58,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  background: linear-gradient(90deg, rgba(0, 193, 106, 0.1), rgba(0, 193, 106, 0));
-  border: 1px solid rgba(0, 193, 106, 0.2);
+  background: linear-gradient(120deg, rgba(0, 193, 106, 0.12), rgba(7, 24, 31, 0.35));
+  border: 1px solid rgba(0, 193, 106, 0.24);
   border-radius: 0.75rem;
   padding: 0.75rem 1rem;
 }
@@ -138,9 +138,9 @@
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  background: rgba(244, 244, 245, 0.08);
+  background: rgba(110, 136, 182, 0.16);
   color: #e4e4e7;
-  border: 1px solid rgba(244, 244, 245, 0.1);
+  border: 1px solid rgba(122, 154, 206, 0.32);
 }
 
 .detailRow {
@@ -149,15 +149,15 @@
   gap: 1rem;
   padding: 0.75rem 1rem;
   border-radius: 0.75rem;
-  background: rgba(39, 39, 42, 0.6);
-  border: 1px solid rgba(39, 39, 42, 0.8);
+  background: rgba(28, 36, 56, 0.65);
+  border: 1px solid rgba(56, 76, 112, 0.32);
   transition:
     border-color 180ms ease,
     background-color 180ms ease;
 
   .matchCard:hover & {
     border-color: rgba(0, 193, 106, 0.35);
-    background: rgba(0, 193, 106, 0.08);
+    background: rgba(0, 193, 106, 0.1);
   }
 }
 
@@ -168,8 +168,8 @@
   height: 2rem;
   width: 2rem;
   border-radius: 0.6rem;
-  background: rgba(244, 244, 245, 0.05);
-  color: #9ca3af;
+  background: rgba(122, 154, 206, 0.12);
+  color: #9fb4d9;
   flex-shrink: 0;
 
   .matchCard:hover & {
@@ -194,7 +194,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.22em;
-  color: rgba(244, 244, 245, 0.45);
+  color: rgba(180, 194, 220, 0.65);
 }
 
 .detailValue {
@@ -208,16 +208,16 @@
   flex-direction: column;
   gap: 0.5rem;
   border-radius: 0.75rem;
-  border: 1px solid rgba(39, 39, 42, 0.8);
-  background: rgba(24, 26, 31, 0.85);
+  border: 1px solid rgba(58, 78, 118, 0.36);
+  background: rgba(26, 33, 50, 0.85);
   padding: 1rem;
   transition:
     border-color 180ms ease,
     background-color 180ms ease;
 
   .matchCard:hover & {
-    border-color: rgba(0, 193, 106, 0.25);
-    background: rgba(0, 193, 106, 0.06);
+    border-color: rgba(0, 193, 106, 0.28);
+    background: rgba(0, 193, 106, 0.08);
   }
 }
 
@@ -233,7 +233,7 @@
   justify-content: space-between;
   gap: 1.5rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(39, 39, 42, 0.9);
+  border-top: 1px solid rgba(66, 90, 126, 0.3);
 }
 
 .footerStats {
@@ -248,7 +248,7 @@
   gap: 0.45rem;
   font-size: 0.75rem;
   font-weight: 500;
-  color: #a1a1aa;
+  color: #9aa6c8;
 }
 
 .statIconGoing {

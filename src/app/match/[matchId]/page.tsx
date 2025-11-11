@@ -133,7 +133,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
       </Link>
 
       {/* 매치 브리핑 */}
-      <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6 mb-6">
+      <div className="surface-layer rounded-lg p-6 mb-6">
         <div className="flex items-start justify-between mb-4">
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-3">
@@ -155,8 +155,8 @@ export default async function MatchDetailPage({ params }: PageProps) {
               <span className="text-[#A1A1AA]">{match.location}</span>
             </div>
             {match.note && (
-              <div className="mt-4 p-4 bg-[#27272A]/50 rounded-lg">
-                <p className="text-sm text-[#A1A1AA]">{match.note}</p>
+              <div className="mt-4 rounded-lg bg-[#1A2333]/70 p-4">
+                <p className="text-sm text-[#A0AABE]">{match.note}</p>
               </div>
             )}
             {member.role === "leader" && (
@@ -170,12 +170,12 @@ export default async function MatchDetailPage({ params }: PageProps) {
             )}
           </div>
           <span
-            className={`rounded-full px-3 py-1 text-sm font-medium ${
-              isPast
-                ? "bg-[#27272A] text-[#A1A1AA]"
-                : statusColors[match.status as keyof typeof statusColors] ||
-                  statusColors.upcoming
-            }`}
+          className={`rounded-full px-3 py-1 text-sm font-medium ${
+            isPast
+              ? "bg-[#202A3B] text-[#A0AABE]"
+              : statusColors[match.status as keyof typeof statusColors] ||
+                statusColors.upcoming
+          }`}
           >
             {isPast
               ? "종료"
@@ -190,7 +190,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
 
       {/* 투표 버튼 */}
       {!isPast && match.status !== "cancelled" && (
-        <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6 mb-6">
+        <div className="surface-layer rounded-lg p-6 mb-6">
           <h2 className="text-lg font-semibold text-[#F4F4F5] mb-4">
             출석 투표
           </h2>
@@ -202,7 +202,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
       )}
 
       {/* 투표자 목록 */}
-      <div className="rounded-lg border border-[#27272A] bg-[#181A1F] p-6">
+      <div className="surface-layer rounded-lg p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-[#F4F4F5]">
             출석 현황 ({totalMembers}명)
@@ -272,10 +272,10 @@ export default async function MatchDetailPage({ params }: PageProps) {
                     : participantName || "이름 없음";
 
                 return (
-                  <div
-                    key={teamMember.user_id}
-                    className="flex items-center justify-between p-3 rounded-lg bg-[#27272A]/50"
-                  >
+                <div
+                  key={teamMember.user_id}
+                  className="flex items-center justify-between rounded-lg bg-[#192235]/70 p-3"
+                >
                     <div className="flex items-center gap-3">
                       {statusIcons[statusKey as keyof typeof statusIcons]}
                       <span className="text-[#F4F4F5]">{displayName}</span>
