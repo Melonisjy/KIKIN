@@ -317,3 +317,15 @@
   }
 }
 
+// 버튼 리플 애니메이션
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+

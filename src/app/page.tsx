@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Users, Calendar, CheckCircle, Zap, ArrowRight } from "lucide-react";
 import { DigitalTunnelHero, FocusAction } from "@/components/DigitalTunnelHero";
 import { PreLoginOnboarding } from "@/components/PreLoginOnboarding";
+import { FeaturesSection } from "@/components/FeaturesSection";
 
 type HeroState = "idle" | "pre" | "live" | "post" | "scheduled";
 
@@ -333,100 +334,7 @@ export default async function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="border-t border-[#2C354B] bg-[#121929] py-16">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="text-center text-3xl font-bold tracking-tight text-[#F4F4F5] sm:text-4xl">
-              킥-인 라커룸 하이라이트
-            </h2>
-            <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {/* Feature 1 */}
-              <div className="surface-layer rounded-xl p-6 transition-all duration-200 hover:border-[var(--border-strong)] hover:bg-[var(--surface-3)]">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2C354B] bg-[#141824]">
-                  <Users className="h-6 w-6 text-[#00C16A]" />
-                </div>
-                <h3 className="mt-4 text-xl font-semibold text-[#F4F4F5]">
-                  라인업 구성
-                </h3>
-                <p className="mt-2 text-sm text-[#A1A1AA]">
-                  팀 코드를 공유해 팀원을 합류시키고, 라커룸에서 선수단 정보를
-                  정비하세요.
-                </p>
-              </div>
-
-              {/* Feature 2 */}
-              <div className="surface-layer rounded-xl p-6 transition-all duration-200 hover:border-[var(--border-strong)] hover:bg-[var(--surface-3)]">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2C354B] bg-[#141824]">
-                  <Calendar className="h-6 w-6 text-[#00C16A]" />
-                </div>
-                <h3 className="mt-4 text-xl font-semibold text-[#F4F4F5]">
-                  매치 스케줄링
-                </h3>
-                <p className="mt-2 text-sm text-[#A1A1AA]">
-                  경기 날짜·시간·구장을 라인업처럼 정리하고, 킥오프 정보를
-                  팀원들과 공유하세요.
-                </p>
-              </div>
-
-              {/* Feature 3 */}
-              <div className="surface-layer rounded-xl p-6 transition-all duration-200 hover:border-[var(--border-strong)] hover:bg-[var(--surface-3)]">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2C354B] bg-[#141824]">
-                  <CheckCircle className="h-6 w-6 text-[#00C16A]" />
-                </div>
-                <h3 className="mt-4 text-xl font-semibold text-[#F4F4F5]">
-                  출석 체크
-                </h3>
-                <p className="mt-2 text-sm text-[#A1A1AA]">
-                  참석·불참·미정을 받아 라인업 공석을 확인하고, 확정된 멤버로
-                  작전을 세워보세요.
-                </p>
-              </div>
-
-              {/* Feature 4 */}
-              <div className="surface-layer rounded-xl p-6 transition-all duration-200 hover:border-[var(--border-strong)] hover:bg-[var(--surface-3)]">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2C354B] bg-[#141824]">
-                  <Zap className="h-6 w-6 text-[#00C16A]" />
-                </div>
-                <h3 className="mt-4 text-xl font-semibold text-[#F4F4F5]">
-                  경기 브리핑
-                </h3>
-                <p className="mt-2 text-sm text-[#A1A1AA]">
-                  카카오톡 없이도 경기 정보와 변경 사항을 빠르게 공지하고 확인할
-                  수 있습니다.
-                </p>
-              </div>
-
-              {/* Feature 5 */}
-              <div className="surface-layer rounded-xl p-6 transition-all duration-200 hover:border-[var(--border-strong)] hover:bg-[var(--surface-3)]">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2C354B] bg-[#141824]">
-                  <Users className="h-6 w-6 text-[#00C16A]" />
-                </div>
-                <h3 className="mt-4 text-xl font-semibold text-[#F4F4F5]">
-                  감독 모드
-                </h3>
-                <p className="mt-2 text-sm text-[#A1A1AA]">
-                  팀장은 경기 편성, 공지, 멤버 관리를 한 화면에서 지휘할 수
-                  있습니다.
-                </p>
-              </div>
-
-              {/* Feature 6 */}
-              <div className="surface-layer rounded-xl p-6 transition-all duration-200 hover:border-[var(--border-strong)] hover:bg-[var(--surface-3)]">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2C354B] bg-[#141824]">
-                  <Calendar className="h-6 w-6 text-[#00C16A]" />
-                </div>
-                <h3 className="mt-4 text-xl font-semibold text-[#F4F4F5]">
-                  빠른 합류
-                </h3>
-                <p className="mt-2 text-sm text-[#A1A1AA]">
-                  Google 계정으로 로그인해 라커룸에 합류하고, 매치 브리핑을 바로
-                  확인하세요.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <FeaturesSection />
 
       {/* CTA Section */}
       <section className="container mx-auto px-4 py-16">

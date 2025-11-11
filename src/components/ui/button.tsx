@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
@@ -5,7 +7,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary touch-manipulation active:scale-[0.97]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary touch-manipulation active:scale-[0.97] relative overflow-hidden",
   {
     variants: {
       variant: {
@@ -41,17 +43,52 @@ function Button({
   variant,
   size,
   asChild = false,
+  onClick,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
   }) {
   const Comp = asChild ? Slot : "button"
+  const buttonRef = React.useRef<HTMLButtonElement>(null)
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // 리플 효과 생성
+    if (buttonRef.current && !asChild) {
+      const button = buttonRef.current
+      const rect = button.getBoundingClientRect()
+      const x = e.clientX - rect.left
+      const y = e.clientY - rect.top
+
+      const ripple = document.createElement("span")
+      const size = Math.max(rect.width, rect.height)
+      ripple.style.width = ripple.style.height = `${size}px`
+      ripple.style.left = `${x - size / 2}px`
+      ripple.style.top = `${y - size / 2}px`
+      ripple.style.position = "absolute"
+      ripple.style.borderRadius = "50%"
+      ripple.style.background = "rgba(255, 255, 255, 0.3)"
+      ripple.style.transform = "scale(0)"
+      ripple.style.animation = "ripple 600ms ease-out"
+      ripple.style.pointerEvents = "none"
+      ripple.style.zIndex = "1"
+
+      button.appendChild(ripple)
+
+      setTimeout(() => {
+        ripple.remove()
+      }, 600)
+    }
+
+    onClick?.(e)
+  }
 
   return (
     <Comp
+      ref={buttonRef}
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
+      onClick={handleClick}
       {...props}
     />
   )
