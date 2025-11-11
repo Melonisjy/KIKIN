@@ -113,6 +113,27 @@ export default async function HomePage() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // 실시간 통계 가져오기 (API 라우트 사용)
+  let todayMatchesCount = 0;
+  let totalTeamsCount = 0;
+
+  try {
+    const statsResponse = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+      }/api/stats`,
+      { cache: "no-store" }
+    );
+    if (statsResponse.ok) {
+      const stats = await statsResponse.json();
+      todayMatchesCount = stats.todayMatchesCount || 0;
+      totalTeamsCount = stats.totalTeamsCount || 0;
+    }
+  } catch (error) {
+    // 통계 조회 실패 시 기본값 사용
+    console.error("통계 조회 실패:", error);
+  }
+
   let teamName: string | null = null;
   let isLeader = false;
   let focusActions: FocusAction[] = [];
@@ -298,6 +319,8 @@ export default async function HomePage() {
           coachMessage={coachMessage}
           focusActions={focusActions}
           nextMatchInfo={nextMatchInfo}
+          todayMatchesCount={todayMatchesCount || 0}
+          totalTeamsCount={totalTeamsCount || 0}
         />
       </section>
 

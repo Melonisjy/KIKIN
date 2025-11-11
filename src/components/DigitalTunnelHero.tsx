@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { BellRing } from "lucide-react";
+import { BellRing, ArrowRight, Users, Calendar } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import styles from "@/styles/digital-tunnel.module.scss";
 
 type HeroState = "idle" | "pre" | "live" | "post" | "scheduled";
@@ -26,6 +27,8 @@ interface DigitalTunnelHeroProps {
     label: string;
     location?: string | null;
   } | null;
+  todayMatchesCount?: number;
+  totalTeamsCount?: number;
 }
 
 const accentMap: Record<NonNullable<FocusAction["accent"]>, string> = {
@@ -80,6 +83,8 @@ export function DigitalTunnelHero({
   coachMessage,
   focusActions,
   nextMatchInfo,
+  todayMatchesCount = 0,
+  totalTeamsCount = 0,
 }: DigitalTunnelHeroProps) {
   const displayTeam = teamName ? `${teamName} 라커룸` : "킥-인 라커룸";
 
@@ -89,7 +94,30 @@ export function DigitalTunnelHero({
         <div className={styles.tunnelCore} />
         <div className={styles.tunnelGrid} />
         <div className={styles.lightSweep} />
+        <div className={styles.matchPrepAnimation} />
         <div className={styles.tunnelContent}>
+          {/* 실시간 통계 배지 */}
+          {!isLoggedIn && (
+            <div className="mb-6 flex flex-wrap items-center justify-center gap-3">
+              {todayMatchesCount > 0 && (
+                <div className="flex items-center gap-2 rounded-full border border-[#00C16A]/30 bg-[#00C16A]/10 px-4 py-2 backdrop-blur-sm">
+                  <Calendar className="h-4 w-4 text-[#00C16A]" />
+                  <span className="text-sm font-semibold text-[#9FF4D2]">
+                    오늘 <span className="text-[#00C16A]">{todayMatchesCount}</span>팀이 경기 준비 중
+                  </span>
+                </div>
+              )}
+              {totalTeamsCount > 0 && (
+                <div className="flex items-center gap-2 rounded-full border border-[#00C16A]/30 bg-[#00C16A]/10 px-4 py-2 backdrop-blur-sm">
+                  <Users className="h-4 w-4 text-[#00C16A]" />
+                  <span className="text-sm font-semibold text-[#9FF4D2]">
+                    <span className="text-[#00C16A]">{totalTeamsCount.toLocaleString()}</span>팀이 사용 중
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-xl space-y-4">
               {renderStateBadge(heroState)}
@@ -99,6 +127,24 @@ export function DigitalTunnelHero({
               <p className="text-base text-[#CBD5F5] sm:text-lg">
                 {heroSubheadline}
               </p>
+              
+              {/* 대형 CTA 버튼 (로그인 전) */}
+              {!isLoggedIn && (
+                <div className="pt-2">
+                  <Link href="/login">
+                    <Button
+                      size="lg"
+                      className="group relative h-14 w-full bg-gradient-to-r from-[#00C16A] to-[#00D97E] px-8 text-base font-bold text-[#0F1115] shadow-[0_8px_32px_rgba(0,193,106,0.4)] transition-all duration-300 hover:scale-105 hover:shadow-[0_12px_48px_rgba(0,193,106,0.5)] sm:w-auto"
+                    >
+                      <span className="flex items-center gap-2">
+                        지금 킥오프하기
+                        <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                      </span>
+                    </Button>
+                  </Link>
+                </div>
+              )}
+
               <div className="rounded-xl bg-[#080A12]/60 px-4 py-3 text-sm text-[#94A3C8] backdrop-blur-sm sm:text-base">
                 <span className="font-semibold text-[#E0ECFF]">AI 코치</span>가
                 전하는 말 &mdash; {coachMessage}
