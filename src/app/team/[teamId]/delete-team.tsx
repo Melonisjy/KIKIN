@@ -72,9 +72,7 @@ export function DeleteTeam({ teamId, teamName, isLeader }: DeleteTeamProps) {
     <>
       <Button
         variant="destructive"
-        size="sm"
         onClick={() => setIsOpen(true)}
-        className="mt-4"
       >
         <Trash2 className="mr-2 h-4 w-4" />
         팀 삭제

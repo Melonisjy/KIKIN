@@ -14,37 +14,37 @@ export function TeamTabs({ overview, analytics }: TeamTabsProps) {
   );
 
   return (
-    <div className="space-y-4">
-      {/* 탭 헤더 */}
-      <div className="flex items-center gap-2 border-b border-[var(--border-soft)]">
+    <div>
+      {/* 탭 헤더 - Vercel 스타일 */}
+      <div className="flex items-center gap-1 border-b border-[var(--border-soft)] mb-6">
         <button
           onClick={() => setActiveTab("overview")}
-          className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors border-b-2 cursor-pointer ${
+          className={`flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors border-b-2 cursor-pointer -mb-px ${
             activeTab === "overview"
-              ? "border-[#00C16A] text-[#00C16A]"
-              : "border-transparent text-[#A1A1AA] hover:text-[#F4F4F5]"
+              ? "border-[#00C16A] text-[#F4F4F5]"
+              : "border-transparent text-[#71717A] hover:text-[#A1A1AA]"
           }`}
           type="button"
         >
-          <LayoutDashboard className="h-4 w-4" />
+          <LayoutDashboard className="h-3.5 w-3.5" />
           개요
         </button>
         <button
           onClick={() => setActiveTab("analytics")}
-          className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors border-b-2 cursor-pointer ${
+          className={`flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors border-b-2 cursor-pointer -mb-px ${
             activeTab === "analytics"
-              ? "border-[#00C16A] text-[#00C16A]"
-              : "border-transparent text-[#A1A1AA] hover:text-[#F4F4F5]"
+              ? "border-[#00C16A] text-[#F4F4F5]"
+              : "border-transparent text-[#71717A] hover:text-[#A1A1AA]"
           }`}
           type="button"
         >
-          <TrendingUp className="h-4 w-4" />
+          <TrendingUp className="h-3.5 w-3.5" />
           통계
         </button>
       </div>
 
       {/* 탭 컨텐츠 */}
-      <div className="min-h-[400px]">
+      <div>
         {activeTab === "overview" && overview}
         {activeTab === "analytics" && analytics}
       </div>
