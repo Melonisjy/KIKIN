@@ -188,7 +188,7 @@ export function NotificationBell() {
       </Button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-2rem)] rounded-lg border border-[#2C354B] bg-[#141824] shadow-lg z-50 max-h-[500px] overflow-hidden flex flex-col">
+        <div className="absolute right-0 top-full z-[200] mt-2 flex max-h-[500px] w-80 max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-lg border border-[#2C354B] bg-[#141824] shadow-[0_22px_45px_rgba(8,12,24,0.55)]">
           <div className="flex items-center justify-between p-4 border-b border-[#2C354B]">
             <h3 className="text-lg font-semibold text-[#F4F4F5]">알림</h3>
             {unreadCount > 0 && (

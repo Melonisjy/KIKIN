@@ -156,7 +156,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="w-full border-b border-[#2C354B] bg-[#0F1115]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0F1115]/60">
+      <nav className="relative z-[250] w-full border-b border-[#2C354B] bg-[#0F1115]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0F1115]/60">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}

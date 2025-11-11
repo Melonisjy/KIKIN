@@ -172,6 +172,38 @@ export default async function TeamDetailPage({ params }: PageProps) {
     }
   }
 
+  const noticeAckStats: Record<
+    string,
+    { count: number; hasAcknowledged: boolean }
+  > = {};
+
+  if (notices && notices.length > 0) {
+    const noticeIds = notices.map((notice: any) => notice.id);
+    const { data: noticeReceipts } = await supabase
+      .from("team_notice_receipts")
+      .select("notice_id, user_id")
+      .in("notice_id", noticeIds);
+
+    noticeIds.forEach((noticeId: string) => {
+      noticeAckStats[noticeId] = {
+        count: 0,
+        hasAcknowledged: false,
+      };
+    });
+
+    noticeReceipts?.forEach((receipt: any) => {
+      const current = noticeAckStats[receipt.notice_id] || {
+        count: 0,
+        hasAcknowledged: false,
+      };
+      current.count += 1;
+      if (receipt.user_id === user.id) {
+        current.hasAcknowledged = true;
+      }
+      noticeAckStats[receipt.notice_id] = current;
+    });
+  }
+
   const isLeader = member.role === "leader";
 
   const onboardingSteps = isLeader
@@ -567,6 +599,8 @@ export default async function TeamDetailPage({ params }: PageProps) {
                 isLeader={isLeader}
                 noticeAuthorMap={noticeAuthorMap}
                 totalCount={noticesCount || 0}
+                totalMembers={totalMembers}
+                ackStats={noticeAckStats}
               />
 
               <div
