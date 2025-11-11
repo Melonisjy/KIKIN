@@ -329,3 +329,13 @@
   }
 }
 
+// 스크롤바 숨기기 (모바일 스와이프용)
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+

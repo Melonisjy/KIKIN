@@ -5,6 +5,7 @@ import { Users, Calendar, CheckCircle, Zap, ArrowRight } from "lucide-react";
 import { DigitalTunnelHero, FocusAction } from "@/components/DigitalTunnelHero";
 import { PreLoginOnboarding } from "@/components/PreLoginOnboarding";
 import { FeaturesSection } from "@/components/FeaturesSection";
+import { MobileFixedCTA } from "@/components/MobileFixedCTA";
 
 type HeroState = "idle" | "pre" | "live" | "post" | "scheduled";
 
@@ -337,7 +338,7 @@ export default async function HomePage() {
       <FeaturesSection />
 
       {/* CTA Section */}
-      <section className="container mx-auto px-4 py-16">
+      <section className="container mx-auto px-4 py-16 pb-24 sm:pb-16">
         <div className="surface-layer mx-auto max-w-2xl rounded-xl p-8 text-center transition-all duration-200 hover:border-[var(--border-strong)] hover:bg-[var(--surface-3)]">
           <h2 className="text-2xl font-bold text-[#00C16A] sm:text-3xl">
             지금 바로 킥오프하세요
@@ -345,7 +346,7 @@ export default async function HomePage() {
           <p className="mt-4 text-[#A1A1AA]">
             킥-인 라커룸에서 팀 스케줄과 출석을 한 번에 정리해 보세요.
           </p>
-          <div className="mt-8">
+          <div className="mt-8 hidden sm:block">
             {!user ? (
               <Link href="/login">
                 <Button size="lg" className="w-full sm:w-auto">
@@ -364,6 +365,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* 모바일 고정 CTA */}
+      <MobileFixedCTA user={user} />
     </div>
   );
 }
