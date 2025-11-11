@@ -206,30 +206,9 @@ export function DigitalTunnelHero({
             })}
 
             {!isLoggedIn && (
-              <>
-                <Link
-                  href="/login"
-                  className={`${accentMap.primary} group flex flex-col gap-2 rounded-xl px-4 py-3 transition-all duration-200`}
-                >
-                  <span className="text-sm font-semibold text-[#F8FAFC] group-hover:translate-x-1 transition-transform duration-200">
-                    킥-인 라커룸 입장
-                  </span>
-                  <p className="text-xs text-[#A0AABE]">
-                    풋살 팀 스케줄을 한 곳에서 관리하고, 경기 라인업을 정비하세요.
-                  </p>
-                </Link>
-                <Link
-                  href="/locker-room"
-                  className={`${accentMap.secondary} flex flex-col gap-2 rounded-xl px-4 py-3 transition-all duration-200`}
-                >
-                  <span className="text-sm font-semibold text-[#F8FAFC]">
-                    서비스 둘러보기
-                  </span>
-                  <p className="text-xs text-[#A0AABE]">
-                    라커룸 기능과 경기 브리핑, 공지 기능을 미리 엿볼 수 있어요.
-                  </p>
-                </Link>
-              </>
+              <div className="col-span-full">
+                {/* 로그인 전 온보딩은 page.tsx에서 별도로 표시 */}
+              </div>
             )}
           </div>
         </div>

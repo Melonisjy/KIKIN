@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Users, Calendar, CheckCircle, Zap, ArrowRight } from "lucide-react";
 import { DigitalTunnelHero, FocusAction } from "@/components/DigitalTunnelHero";
+import { PreLoginOnboarding } from "@/components/PreLoginOnboarding";
 
 type HeroState = "idle" | "pre" | "live" | "post" | "scheduled";
 
@@ -310,6 +311,13 @@ export default async function HomePage() {
     <div className="flex min-h-[calc(100vh-4rem)] flex-col">
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-12 sm:py-16">
+        {/* 로그인 전 온보딩 */}
+        {!user && (
+          <div className="mb-8">
+            <PreLoginOnboarding />
+          </div>
+        )}
+
         <DigitalTunnelHero
           isLoggedIn={Boolean(user)}
           teamName={teamName}

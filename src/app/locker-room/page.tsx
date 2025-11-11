@@ -11,6 +11,8 @@ import { SetNameModal } from "@/components/SetNameModal";
 import { ProfileCard } from "@/components/ProfileCard";
 import { MatchCard } from "@/components/MatchCard";
 import { OnboardingGuide } from "@/components/OnboardingGuide";
+import { QuickTour } from "@/components/QuickTour";
+import { EmptyStateGuide } from "@/components/EmptyStateGuide";
 import { PersonalGrowthDashboard } from "./personal-growth-dashboard";
 
 export default async function LockerRoomPage() {
@@ -307,21 +309,7 @@ const voteReminderMap: Record<string, { message: string }> = {};
                 </div>
               </Suspense>
             ) : (
-              <div className="rounded-lg border border-dashed border-[#2C354B] bg-[#1A2333]/65 p-12 text-center">
-                <Users className="mx-auto h-12 w-12 text-[#A1A1AA] mb-4" />
-                <p className="text-[#A1A1AA] mb-4">
-                  아직 합류한 팀이 없어요. 첫 라인업을 꾸려볼까요?
-                </p>
-                <div className="flex flex-col gap-2 items-center sm:flex-row sm:justify-center">
-                  <LockerRoomActions />
-                  <Link href="/team/new">
-                    <Button>
-                      <Plus className="mr-2 h-4 w-4" />
-                      첫 팀 킥오프
-                    </Button>
-                  </Link>
-                </div>
-              </div>
+              <EmptyStateGuide />
             )}
           </section>
 
