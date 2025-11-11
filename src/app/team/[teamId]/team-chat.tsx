@@ -24,8 +24,22 @@ export function TeamChat({ teamId, currentUserId }: TeamChatProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [currentUserName, setCurrentUserName] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const supabase = createClient();
+
+  // 현재 사용자 이름 가져오기
+  useEffect(() => {
+    const fetchCurrentUserName = async () => {
+      const { data: profile } = await supabase
+        .from("user_profiles")
+        .select("name")
+        .eq("id", currentUserId)
+        .single();
+      setCurrentUserName(profile?.name || null);
+    };
+    fetchCurrentUserName();
+  }, [currentUserId, supabase]);
 
   // 메시지 목록 가져오기
   useEffect(() => {
@@ -83,21 +97,33 @@ export function TeamChat({ teamId, currentUserId }: TeamChatProps) {
         },
         async (payload) => {
           // 새 메시지가 추가되면 사용자 이름 가져오기
-          const { data: profile } = await supabase
-            .from("user_profiles")
-            .select("name")
-            .eq("id", payload.new.user_id)
-            .single();
+          try {
+            const { data: profile } = await supabase
+              .from("user_profiles")
+              .select("name")
+              .eq("id", payload.new.user_id)
+              .single();
 
-          const newMessage: ChatMessage = {
-            id: payload.new.id,
-            user_id: payload.new.user_id,
-            message: payload.new.message,
-            created_at: payload.new.created_at,
-            user_name: profile?.name || null,
-          };
+            const newMessage: ChatMessage = {
+              id: payload.new.id,
+              user_id: payload.new.user_id,
+              message: payload.new.message,
+              created_at: payload.new.created_at,
+              user_name: profile?.name || null,
+            };
 
-          setMessages((prev) => [...prev, newMessage]);
+            setMessages((prev) => [...prev, newMessage]);
+          } catch (err) {
+            // 프로필을 가져오지 못해도 메시지는 표시
+            const newMessage: ChatMessage = {
+              id: payload.new.id,
+              user_id: payload.new.user_id,
+              message: payload.new.message,
+              created_at: payload.new.created_at,
+              user_name: null,
+            };
+            setMessages((prev) => [...prev, newMessage]);
+          }
         }
       )
       .subscribe();
@@ -186,18 +212,23 @@ export function TeamChat({ teamId, currentUserId }: TeamChatProps) {
             return (
               <div
                 key={msg.id}
-                className={`flex ${isOwnMessage ? "justify-end" : "justify-start"}`}
+                className={`flex items-start gap-2 ${isOwnMessage ? "justify-end" : "justify-start"}`}
               >
-                <div
-                  className={`max-w-[70%] ${
-                    isOwnMessage ? "items-end" : "items-start"
-                  } flex flex-col gap-1`}
-                >
-                  {!isOwnMessage && (
-                    <span className="text-xs text-[#71717A] px-2">
+                {!isOwnMessage && (
+                  <div className="flex flex-col items-start gap-1">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#00C16A]/15 text-[#00E693] text-xs font-semibold shrink-0">
+                      {(msg.user_name || "이름 없음").charAt(0).toUpperCase()}
+                    </div>
+                    <span className="text-xs text-[#71717A] max-w-[50px] truncate">
                       {msg.user_name || "이름 없음"}
                     </span>
-                  )}
+                  </div>
+                )}
+                <div
+                  className={`max-w-[70%] flex flex-col gap-1 ${
+                    isOwnMessage ? "items-end" : "items-start"
+                  }`}
+                >
                   <div
                     className={`rounded-lg px-3 py-2 ${
                       isOwnMessage
@@ -209,10 +240,20 @@ export function TeamChat({ teamId, currentUserId }: TeamChatProps) {
                       {msg.message}
                     </p>
                   </div>
-                  <span className="text-xs text-[#71717A] px-2">
+                  <span className={`text-xs text-[#71717A] px-2 ${isOwnMessage ? "text-right" : "text-left"}`}>
                     {formatTime(msg.created_at)}
                   </span>
                 </div>
+                {isOwnMessage && (
+                  <div className="flex flex-col items-end gap-1">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#00C16A]/30 text-[#0F1115] text-xs font-semibold shrink-0">
+                      {(currentUserName || "나").charAt(0).toUpperCase()}
+                    </div>
+                    <span className="text-xs text-[#71717A] max-w-[50px] truncate">
+                      {currentUserName || "나"}
+                    </span>
+                  </div>
+                )}
               </div>
             );
           })
