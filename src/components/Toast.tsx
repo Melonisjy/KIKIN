@@ -122,7 +122,7 @@ export function ToastContainer() {
 
   return createPortal(
     <div
-      className="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"
+      className="fixed top-4 right-4 z-[300] flex flex-col gap-2 pointer-events-none"
       aria-live="polite"
       aria-label="알림"
     >
