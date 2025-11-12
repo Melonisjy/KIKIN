@@ -17,26 +17,35 @@ interface TeamCardProps {
 }
 
 function TeamCardComponent({ team, role, joinedAt, memberCount, leaderName }: TeamCardProps) {
+  const roleLabel = role === "leader" ? "감독" : "선수";
+  const roleAriaLabel = role === "leader" ? "팀 감독" : "팀 선수";
+  
   return (
-    <Link href={`/team/${team.id}`} className={`${styles.teamCard} group`}>
-      <div className={styles.teamCardContent}>
+    <Link 
+      href={`/team/${team.id}`} 
+      className={`${styles.teamCard} group`}
+      aria-label={`${team.name} 팀, ${roleAriaLabel}${leaderName ? `, 감독: ${leaderName}` : ""}${memberCount !== undefined ? `, 라인업 ${memberCount}명` : ""}`}
+    >
+      <article className={styles.teamCardContent}>
         <div className={styles.teamCardHeader}>
-          <div className={styles.teamIcon}>
+          <div className={styles.teamIcon} aria-hidden="true">
             <Users className={styles.icon} />
           </div>
           <span
             className={`${styles.roleBadge} ${
               role === "leader" ? styles.roleLeader : styles.roleMember
             }`}
+            aria-label={roleAriaLabel}
+            role="status"
           >
-            {role === "leader" ? "감독" : "선수"}
+            {roleLabel}
           </span>
         </div>
 
         <div className="flex items-baseline gap-3 flex-wrap">
           <h3 className={`${styles.teamName} mb-0`}>{team.name}</h3>
           {leaderName && (
-            <span className="text-sm text-[#A1A1AA] leading-none">
+            <span className="text-sm text-[#A1A1AA] leading-none" aria-label={`감독: ${leaderName}`}>
               감독: {leaderName}
             </span>
           )}
@@ -48,15 +57,19 @@ function TeamCardComponent({ team, role, joinedAt, memberCount, leaderName }: Te
 
         <div className={styles.teamFooter}>
           {memberCount !== undefined && (
-            <span className={styles.teamMemberCount}>
+            <span className={styles.teamMemberCount} aria-label={`라인업 ${memberCount}명`}>
               라인업 {memberCount}명
             </span>
           )}
-          <span className={styles.teamDate}>
+          <time 
+            dateTime={joinedAt}
+            className={styles.teamDate}
+            aria-label={`합류일: ${new Date(joinedAt).toLocaleDateString("ko-KR")}`}
+          >
             합류일: {new Date(joinedAt).toLocaleDateString("ko-KR")}
-          </span>
+          </time>
         </div>
-      </div>
+      </article>
     </Link>
   );
 }

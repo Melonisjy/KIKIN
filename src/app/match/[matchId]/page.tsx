@@ -133,26 +133,33 @@ export default async function MatchDetailPage({ params }: PageProps) {
       </Link>
 
       {/* 매치 브리핑 */}
-      <div className="surface-layer rounded-lg p-4 sm:p-6 mb-6">
+      <article className="surface-layer rounded-lg p-4 sm:p-6 mb-6" aria-labelledby="match-briefing-title">
         <div className="flex items-start justify-between gap-3 sm:gap-4 mb-4">
           <div className="flex-1 min-w-0">
+            <h1 id="match-briefing-title" className="sr-only">경기 정보</h1>
             <div className="flex items-center gap-2 sm:gap-3 mb-3 flex-wrap">
-              <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-[#A1A1AA] flex-shrink-0" />
-              <span className="text-base sm:text-xl font-semibold text-[#F4F4F5] whitespace-nowrap">
+              <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-[#A1A1AA] flex-shrink-0" aria-hidden="true" />
+              <time 
+                dateTime={`${match.date}T${match.time}`}
+                className="text-base sm:text-xl font-semibold text-[#F4F4F5] whitespace-nowrap"
+              >
                 {matchDate.toLocaleDateString("ko-KR", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
                   weekday: "long",
                 })}
-              </span>
-              <span className="text-sm sm:text-lg text-[#A1A1AA] whitespace-nowrap">
+              </time>
+              <time 
+                dateTime={match.time}
+                className="text-sm sm:text-lg text-[#A1A1AA] whitespace-nowrap"
+              >
                 {match.time.slice(0, 5)}
-              </span>
+              </time>
             </div>
             <div className="flex items-center gap-2 sm:gap-3 mb-4">
-              <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-[#A1A1AA] flex-shrink-0" />
-              <span className="text-sm sm:text-base text-[#A1A1AA] whitespace-nowrap">{match.location}</span>
+              <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-[#A1A1AA] flex-shrink-0" aria-hidden="true" />
+              <address className="text-sm sm:text-base text-[#A1A1AA] whitespace-nowrap not-italic">{match.location}</address>
             </div>
             {match.note && (
               <div className="mt-4 rounded-lg bg-[#1A2333]/70 p-4">
@@ -190,45 +197,49 @@ export default async function MatchDetailPage({ params }: PageProps) {
 
       {/* 투표 버튼 */}
       {!isPast && match.status !== "cancelled" && (
-        <div className="surface-layer rounded-lg p-4 sm:p-6 mb-6">
-          <h2 className="text-base sm:text-lg font-semibold text-[#F4F4F5] mb-4 whitespace-nowrap">
+        <section className="surface-layer rounded-lg p-4 sm:p-6 mb-6" aria-labelledby="vote-section-title">
+          <h2 id="vote-section-title" className="text-base sm:text-lg font-semibold text-[#F4F4F5] mb-4 whitespace-nowrap">
             출석 투표
           </h2>
           <MatchParticipantButtons
             matchId={matchId}
             currentStatus={userParticipant?.status || null}
           />
-        </div>
+        </section>
       )}
 
       {/* 투표자 목록 */}
-      <div className="surface-layer rounded-lg p-4 sm:p-6">
+      <section className="surface-layer rounded-lg p-4 sm:p-6" aria-labelledby="participants-section-title">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4">
           <h2 className="text-base sm:text-lg font-semibold text-[#F4F4F5] whitespace-nowrap">
             출석 현황 ({totalMembers}명)
           </h2>
-          <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-[#A1A1AA]">
-            <span className="flex items-center gap-1 whitespace-nowrap flex-shrink-0">
-              <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#00C16A]" />
+          <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-[#A1A1AA]" role="group" aria-label="출석 통계">
+            <span className="flex items-center gap-1 whitespace-nowrap flex-shrink-0" aria-label={`참석 ${goingCount}명`}>
+              <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#00C16A]" aria-hidden="true" />
               참석: {goingCount}
             </span>
-            <span className="flex items-center gap-1 whitespace-nowrap flex-shrink-0">
-              <XCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-400" />
+            <span className="flex items-center gap-1 whitespace-nowrap flex-shrink-0" aria-label={`불참 ${notGoingCount}명`}>
+              <XCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-400" aria-hidden="true" />
               불참: {notGoingCount}
             </span>
-            <span className="flex items-center gap-1 whitespace-nowrap flex-shrink-0">
-              <HelpCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-yellow-400" />
+            <span className="flex items-center gap-1 whitespace-nowrap flex-shrink-0" aria-label={`미정 ${maybeCount}명`}>
+              <HelpCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-yellow-400" aria-hidden="true" />
               미정: {maybeCount}
             </span>
-            <span className="flex items-center gap-1 whitespace-nowrap flex-shrink-0">
-              <MinusCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#71717A]" />
+            <span className="flex items-center gap-1 whitespace-nowrap flex-shrink-0" aria-label={`미투표 ${notVotedCount}명`}>
+              <MinusCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#71717A]" aria-hidden="true" />
               미투표: {notVotedCount}
             </span>
           </div>
         </div>
 
         {teamMembersError || participantsError ? (
-          <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-destructive">
+          <div 
+            className="rounded-lg border border-destructive bg-destructive/10 p-4 text-destructive"
+            role="alert"
+            aria-live="assertive"
+          >
             <p>출석 정보를 불러오는 중 오류가 발생했습니다.</p>
             <p className="mt-2 text-sm">
               {teamMembersError?.message || participantsError?.message}
@@ -290,11 +301,11 @@ export default async function MatchDetailPage({ params }: PageProps) {
               })}
           </div>
         ) : (
-          <div className="text-center py-8 text-[#A1A1AA]">
+          <div className="text-center py-8 text-[#A1A1AA]" role="status" aria-live="polite">
             아직 투표자가 없습니다.
           </div>
         )}
-      </div>
-    </div>
+        </section>
+      </section>
   );
 }

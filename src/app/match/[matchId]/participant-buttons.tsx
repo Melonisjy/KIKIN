@@ -110,32 +110,48 @@ export function MatchParticipantButtons({
   ];
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3" role="group" aria-label="출석 투표 옵션">
       <div className="flex gap-3">
         {buttons.map(({ status: btnStatus, label, icon: Icon, className, activeClassName }) => {
           const isActive = status === btnStatus;
+          const statusLabels: Record<string, string> = {
+            going: "참석",
+            not_going: "불참",
+            maybe: "미정",
+          };
           return (
             <button
               key={btnStatus}
               onClick={() => handleStatusChange(btnStatus)}
               disabled={isLoading}
-              className={`flex-1 flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
+              aria-pressed={isActive}
+              aria-label={`${statusLabels[btnStatus]}${isActive ? " 선택됨" : ""}`}
+              className={`flex-1 flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00C16A] ${
                 isActive ? activeClassName : className
               }`}
             >
-              <Icon className="h-5 w-5" />
-              {label}
+              <Icon className="h-5 w-5" aria-hidden="true" />
+              <span>{label}</span>
             </button>
           );
         })}
       </div>
       {error && (
-        <div className="rounded-lg border border-destructive bg-destructive/10 p-3 text-sm text-destructive">
+        <div 
+          className="rounded-lg border border-destructive bg-destructive/10 p-3 text-sm text-destructive"
+          role="alert"
+          aria-live="assertive"
+        >
           {error}
         </div>
       )}
       {isLoading && (
-        <div className="text-center text-sm text-[#A1A1AA]">
+        <div 
+          className="text-center text-sm text-[#A1A1AA]"
+          role="status"
+          aria-live="polite"
+          aria-label="저장 중"
+        >
           저장 중...
         </div>
       )}

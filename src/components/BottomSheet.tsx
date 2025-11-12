@@ -62,6 +62,45 @@ export function BottomSheet({
     return () => document.removeEventListener("keydown", handleEscape);
   }, [isOpen, onClose]);
 
+  // 포커스 트랩 (모달 내부에 포커스 유지)
+  useEffect(() => {
+    if (!isOpen || !shouldRender) return;
+
+    const modalElement = document.querySelector('[role="dialog"]') as HTMLElement;
+    if (!modalElement) return;
+
+    const focusableElements = modalElement.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    const firstElement = focusableElements[0] as HTMLElement;
+    const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+
+    const handleTabKey = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+
+      if (e.shiftKey) {
+        // Shift + Tab
+        if (document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement?.focus();
+        }
+      } else {
+        // Tab
+        if (document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement?.focus();
+        }
+      }
+    };
+
+    modalElement.addEventListener("keydown", handleTabKey);
+    firstElement?.focus();
+
+    return () => {
+      modalElement.removeEventListener("keydown", handleTabKey);
+    };
+  }, [isOpen, shouldRender]);
+
   if (!shouldRender) return null;
 
   const handleBackdropClick = (e: React.MouseEvent) => {

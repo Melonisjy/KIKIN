@@ -254,18 +254,24 @@ const teamLeaderMap = new Map<string, boolean>();
         ]}
       />
       <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
+        <a href="#main-content" className="skip-link">
+          메인 콘텐츠로 건너뛰기
+        </a>
+        <header className="mb-8">
           <h1 className="text-3xl font-bold text-[#F4F4F5]">라커룸</h1>
           <p className="mt-2 text-[#A1A1AA]">
             {userName || user.email} 선수, 라인업 정비가 완료되면 곧 킥오프입니다.
           </p>
-        </div>
+        </header>
 
-        <div className="space-y-4 md:space-y-6">
+        <main id="main-content" className="space-y-4 md:space-y-6">
           {/* 프로필 섹션 */}
-          <section>
-            <h2 className="sticky top-16 z-10 mb-3 md:mb-4 text-xl md:text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2 bg-[#0F1115] py-2 md:py-3 -mx-4 px-4 md:mx-0 md:px-0 backdrop-blur-sm md:backdrop-blur-none md:bg-transparent md:static md:top-auto md:z-auto">
-              <User className="h-5 w-5 md:h-6 md:w-6" />
+          <section aria-labelledby="profile-section">
+            <h2 
+              id="profile-section"
+              className="sticky top-16 z-10 mb-3 md:mb-4 text-xl md:text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2 bg-[#0F1115] py-2 md:py-3 -mx-4 px-4 md:mx-0 md:px-0 backdrop-blur-sm md:backdrop-blur-none md:bg-transparent md:static md:top-auto md:z-auto"
+            >
+              <User className="h-5 w-5 md:h-6 md:w-6" aria-hidden="true" />
               선수 카드
             </h2>
             <div className="space-y-3 md:space-y-4">
@@ -275,13 +281,16 @@ const teamLeaderMap = new Map<string, boolean>();
           </section>
 
           {/* 내 팀 섹션 */}
-          <section>
+          <section aria-labelledby="teams-section">
             <div className="sticky top-16 z-10 mb-3 md:mb-4 flex flex-col gap-3 md:gap-4 sm:flex-row sm:items-center sm:justify-between bg-[#0F1115] py-2 md:py-3 -mx-4 px-4 md:mx-0 md:px-0 backdrop-blur-sm md:backdrop-blur-none md:bg-transparent md:static md:top-auto md:z-auto">
-              <h2 className="text-xl md:text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
-                <Users className="h-5 w-5 md:h-6 md:w-6" />
+              <h2 
+                id="teams-section"
+                className="text-xl md:text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2"
+              >
+                <Users className="h-5 w-5 md:h-6 md:w-6" aria-hidden="true" />
                 나의 라인업
                 {teams && teams.length > 0 && (
-                  <span className="text-base md:text-lg font-medium text-[#A1A1AA] ml-2">
+                  <span className="text-base md:text-lg font-medium text-[#A1A1AA] ml-2" aria-label={`총 ${teams.length}개 팀`}>
                     ({teams.length})
                   </span>
                 )}
@@ -331,19 +340,26 @@ const teamLeaderMap = new Map<string, boolean>();
           </section>
 
           {/* 최근 경기 섹션 */}
-          <section>
-            <h2 className="sticky top-16 z-10 mb-3 md:mb-4 text-xl md:text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2 bg-[#0F1115] py-2 md:py-3 -mx-4 px-4 md:mx-0 md:px-0 backdrop-blur-sm md:backdrop-blur-none md:bg-transparent md:static md:top-auto md:z-auto">
-              <Calendar className="h-5 w-5 md:h-6 md:w-6" />
+          <section aria-labelledby="matches-section">
+            <h2 
+              id="matches-section"
+              className="sticky top-16 z-10 mb-3 md:mb-4 text-xl md:text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2 bg-[#0F1115] py-2 md:py-3 -mx-4 px-4 md:mx-0 md:px-0 backdrop-blur-sm md:backdrop-blur-none md:bg-transparent md:static md:top-auto md:z-auto"
+            >
+              <Calendar className="h-5 w-5 md:h-6 md:w-6" aria-hidden="true" />
               최근 경기 브리핑
               {recentMatches.length > 0 && (
-                <span className="text-base md:text-lg font-medium text-[#A1A1AA] ml-2">
+                <span className="text-base md:text-lg font-medium text-[#A1A1AA] ml-2" aria-label={`총 ${recentMatches.length}개 경기`}>
                   ({recentMatches.length})
                 </span>
               )}
             </h2>
 
             {matchesError ? (
-              <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-destructive">
+              <div 
+                className="rounded-lg border border-destructive bg-destructive/10 p-4 text-destructive"
+                role="alert"
+                aria-live="assertive"
+              >
                 <p>경기 정보를 불러오는 중 오류가 발생했습니다.</p>
                 <p className="mt-2 text-sm">{matchesError.message}</p>
               </div>
@@ -385,7 +401,7 @@ const teamLeaderMap = new Map<string, boolean>();
               </div>
             )}
           </section>
-        </div>
+        </main>
       </div>
     </>
   );

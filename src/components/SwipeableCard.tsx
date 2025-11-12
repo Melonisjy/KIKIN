@@ -171,6 +171,8 @@ export function SwipeableCard({
           transform: `translateX(${translateX}px)`,
           touchAction: "pan-y",
         }}
+        role="presentation"
+        aria-hidden={translateX !== 0 ? "true" : undefined}
       >
         {children}
       </div>
