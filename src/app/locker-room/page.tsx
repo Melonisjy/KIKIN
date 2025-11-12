@@ -244,14 +244,14 @@ const voteReminderMap: Record<string, { message: string }> = {};
           </p>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4 md:space-y-6">
           {/* 프로필 섹션 */}
           <section>
-            <h2 className="mb-4 text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
-              <User className="h-6 w-6" />
+            <h2 className="mb-3 md:mb-4 text-xl md:text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
+              <User className="h-5 w-5 md:h-6 md:w-6" />
               선수 카드
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-3 md:space-y-4">
               <ProfileCard userName={userName} userEmail={user.email || ""} />
               <PersonalGrowthDashboard userId={user.id} />
             </div>
@@ -259,12 +259,12 @@ const voteReminderMap: Record<string, { message: string }> = {};
 
           {/* 내 팀 섹션 */}
           <section>
-            <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
-                <Users className="h-6 w-6" />
+            <div className="mb-3 md:mb-4 flex flex-col gap-3 md:gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <h2 className="text-xl md:text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
+                <Users className="h-5 w-5 md:h-6 md:w-6" />
                 나의 라인업
                 {teams && teams.length > 0 && (
-                  <span className="text-lg font-medium text-[#A1A1AA] ml-2">
+                  <span className="text-base md:text-lg font-medium text-[#A1A1AA] ml-2">
                     ({teams.length})
                   </span>
                 )}
@@ -287,7 +287,7 @@ const voteReminderMap: Record<string, { message: string }> = {};
               </div>
             ) : teams && teams.length > 0 ? (
               <Suspense fallback={<TeamListSkeleton />}>
-                <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-3 md:gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
                   {teams.map((member: any) => {
                     const team = member.teams;
                     if (!team) return null;
@@ -315,11 +315,11 @@ const voteReminderMap: Record<string, { message: string }> = {};
 
           {/* 최근 경기 섹션 */}
           <section>
-            <h2 className="mb-4 text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
-              <Calendar className="h-6 w-6" />
+            <h2 className="mb-3 md:mb-4 text-xl md:text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
+              <Calendar className="h-5 w-5 md:h-6 md:w-6" />
               최근 경기 브리핑
               {recentMatches.length > 0 && (
-                <span className="text-lg font-medium text-[#A1A1AA] ml-2">
+                <span className="text-base md:text-lg font-medium text-[#A1A1AA] ml-2">
                   ({recentMatches.length})
                 </span>
               )}
@@ -331,7 +331,7 @@ const voteReminderMap: Record<string, { message: string }> = {};
                 <p className="mt-2 text-sm">{matchesError.message}</p>
               </div>
             ) : recentMatches.length > 0 ? (
-              <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-3 md:gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
                 {recentMatches.map((match: any) => {
                   const teamName =
                     teamNameMap.get(match.team_id) || "알 수 없는 팀";

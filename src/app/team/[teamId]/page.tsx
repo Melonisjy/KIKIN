@@ -571,12 +571,12 @@ export default async function TeamDetailPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* 메인 컨텐츠 - Vercel 스타일 그리드 */}
+        {/* 메인 컨텐츠 - 최적화된 그리드 시스템 */}
         <TeamTabs
           overview={
-            <div className="grid gap-8 lg:grid-cols-12">
+            <div className="grid gap-4 md:gap-6 lg:gap-8 lg:grid-cols-12">
               {/* 메인 컬럼 */}
-              <div className="lg:col-span-8 space-y-8">
+              <div className="lg:col-span-8 space-y-4 md:space-y-6 lg:space-y-8">
                 {/* 공지 섹션 */}
                 <section>
                   <NoticesSection
@@ -607,7 +607,7 @@ export default async function TeamDetailPage({ params }: PageProps) {
               </div>
 
               {/* 사이드바 */}
-              <aside className="lg:col-span-4 space-y-6">
+              <aside className="lg:col-span-4 space-y-4 md:space-y-6">
                 {/* 업데이트 피드 */}
                 <TeamUpdateFeed items={teamUpdates} />
 
