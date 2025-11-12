@@ -10,6 +10,7 @@ import { LockerRoomActions } from "./locker-room-actions";
 import { SetNameModal } from "@/components/SetNameModal";
 import { ProfileCard } from "@/components/ProfileCard";
 import { MatchCard } from "@/components/MatchCard";
+import { SwipeableMatchCard } from "@/components/SwipeableMatchCard";
 import { OnboardingGuide } from "@/components/OnboardingGuide";
 import { QuickTour } from "@/components/QuickTour";
 import { EmptyStateGuide } from "@/components/EmptyStateGuide";
@@ -115,6 +116,8 @@ let matchParticipantStats: Record<
   { going: number; notGoing: number; maybe: number }
 > = {};
 const voteReminderMap: Record<string, { message: string }> = {};
+const userMatchStatusMap: Record<string, "going" | "not_going" | "maybe"> = {};
+const teamLeaderMap = new Map<string, boolean>();
 
   if (teamIds.length > 0) {
     // 팀 이름 맵 생성
@@ -149,7 +152,7 @@ const voteReminderMap: Record<string, { message: string }> = {};
         const now = new Date();
         const REMINDER_THRESHOLD_HOURS = 18;
 
-        // 각 경기별로 통계 계산
+        // 각 경기별로 통계 계산 및 사용자 상태 저장
         matchIds.forEach((matchId: string) => {
           const matchParticipants =
             participants?.filter((p: any) => p.match_id === matchId) || [];
@@ -163,12 +166,26 @@ const voteReminderMap: Record<string, { message: string }> = {};
               .length,
           };
 
+          // 사용자의 투표 상태 저장
+          const userParticipant = matchParticipants.find(
+            (p: any) => p.user_id === user.id
+          );
+          if (userParticipant) {
+            userMatchStatusMap[matchId] = userParticipant.status;
+          }
+
           const match = recentMatches.find((m: any) => m.id === matchId);
           if (!match) return;
 
-          const userResponded = matchParticipants.some(
-            (participant: any) => participant.user_id === user.id
-          );
+          // 팀장 여부 확인
+          if (!teamLeaderMap.has(match.team_id)) {
+            const member = teams?.find(
+              (m: any) => m.teams?.id === match.team_id && m.user_id === user.id
+            );
+            teamLeaderMap.set(match.team_id, member?.role === "leader" || false);
+          }
+
+          const userResponded = !!userParticipant;
 
           if (userResponded || match.status === "cancelled") {
             return;
@@ -247,7 +264,7 @@ const voteReminderMap: Record<string, { message: string }> = {};
         <div className="space-y-4 md:space-y-6">
           {/* 프로필 섹션 */}
           <section>
-            <h2 className="mb-3 md:mb-4 text-xl md:text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
+            <h2 className="sticky top-16 z-10 mb-3 md:mb-4 text-xl md:text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2 bg-[#0F1115] py-2 md:py-3 -mx-4 px-4 md:mx-0 md:px-0 backdrop-blur-sm md:backdrop-blur-none md:bg-transparent md:static md:top-auto md:z-auto">
               <User className="h-5 w-5 md:h-6 md:w-6" />
               선수 카드
             </h2>
@@ -259,7 +276,7 @@ const voteReminderMap: Record<string, { message: string }> = {};
 
           {/* 내 팀 섹션 */}
           <section>
-            <div className="mb-3 md:mb-4 flex flex-col gap-3 md:gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="sticky top-16 z-10 mb-3 md:mb-4 flex flex-col gap-3 md:gap-4 sm:flex-row sm:items-center sm:justify-between bg-[#0F1115] py-2 md:py-3 -mx-4 px-4 md:mx-0 md:px-0 backdrop-blur-sm md:backdrop-blur-none md:bg-transparent md:static md:top-auto md:z-auto">
               <h2 className="text-xl md:text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
                 <Users className="h-5 w-5 md:h-6 md:w-6" />
                 나의 라인업
@@ -315,7 +332,7 @@ const voteReminderMap: Record<string, { message: string }> = {};
 
           {/* 최근 경기 섹션 */}
           <section>
-            <h2 className="mb-3 md:mb-4 text-xl md:text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2">
+            <h2 className="sticky top-16 z-10 mb-3 md:mb-4 text-xl md:text-2xl font-semibold text-[#F4F4F5] flex items-center gap-2 bg-[#0F1115] py-2 md:py-3 -mx-4 px-4 md:mx-0 md:px-0 backdrop-blur-sm md:backdrop-blur-none md:bg-transparent md:static md:top-auto md:z-auto">
               <Calendar className="h-5 w-5 md:h-6 md:w-6" />
               최근 경기 브리핑
               {recentMatches.length > 0 && (
@@ -335,8 +352,11 @@ const voteReminderMap: Record<string, { message: string }> = {};
                 {recentMatches.map((match: any) => {
                   const teamName =
                     teamNameMap.get(match.team_id) || "알 수 없는 팀";
+                  const isLeader = teamLeaderMap.get(match.team_id) || false;
+                  const currentStatus = userMatchStatusMap[match.id] || null;
+                  
                   return (
-                    <MatchCard
+                    <SwipeableMatchCard
                       key={match.id}
                       match={{
                         id: match.id,
@@ -350,6 +370,8 @@ const voteReminderMap: Record<string, { message: string }> = {};
                       teamName={teamName}
                       participantStats={matchParticipantStats[match.id]}
                       voteReminder={voteReminderMap[match.id] || null}
+                      currentStatus={currentStatus}
+                      isLeader={isLeader}
                     />
                   );
                 })}
