@@ -85,7 +85,8 @@ export function SwipeableCard({
     setIsDragging(false);
   };
 
-  const handleActionClick = (action: SwipeAction) => {
+  const handleActionClick = (action: SwipeAction, e: React.MouseEvent) => {
+    e.stopPropagation();
     action.onAction();
     setTranslateX(0);
   };
