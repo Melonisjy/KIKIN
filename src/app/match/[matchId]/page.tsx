@@ -193,7 +193,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
               : "취소"}
           </span>
         </div>
-      </div>
+      </article>
 
       {/* 투표 버튼 */}
       {!isPast && match.status !== "cancelled" && (
@@ -247,7 +247,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
           </div>
         ) : teamMembers && teamMembers.length > 0 ? (
           <div className="space-y-2">
-            {teamMembers
+            {(teamMembers || [])
               .slice()
               .sort((a: any, b: any) => {
                 const aHasVoted = participantsByUserId.has(a.user_id);
@@ -278,8 +278,8 @@ export default async function MatchDetailPage({ params }: PageProps) {
                 // 프로필에서 이름 가져오기, 없으면 이메일 또는 기본값 사용
                 const participantName = profileMap.get(teamMember.user_id);
                 const displayName =
-                  teamMember.user_id === user.id
-                    ? participantName || user.email?.split("@")[0] || "나"
+                  teamMember.user_id === user?.id
+                    ? participantName || user?.email?.split("@")[0] || "나"
                     : participantName || "이름 없음";
 
                 return (
@@ -305,7 +305,7 @@ export default async function MatchDetailPage({ params }: PageProps) {
             아직 투표자가 없습니다.
           </div>
         )}
-        </section>
       </section>
+    </div>
   );
 }
